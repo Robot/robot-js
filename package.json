@@ -1,0 +1,37 @@
+{
+	"name"				: "robot",
+	"version"			: "0.0.0",
+	"license"			: "Zlib",
+	"main"				: "Library/Robot.js",
+	"homepage"			: "robot.github.io/",
+	"description"		: "Native cross-platform system automation",
+
+	"contributors" :
+	[
+		{
+			"name"		: "David Krutsko",
+			"email"		: "dave@krutsko.net",
+			"url"		: "dave.krutsko.net"
+		}
+	],
+
+	"repository" :
+	{
+		"type"			: "git",
+		"url"			: "github.com/robot/node-robot.git"
+	},
+
+	"bugs" :
+	{
+		"url"			: "github.com/robot/node-robot/issues"
+	},
+
+	"keywords" :
+	[
+	],
+
+	"engines" :
+	{
+		"node"			: ">= 0.12.0"
+	}
+}

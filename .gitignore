@@ -1,1 +1,9 @@
+ipch/
+*.node
+*.user
+*.sdf
+*.suo
+*.opensdf
+.DS_STORE
+Binaries/
 node_modules/
