@@ -23,6 +23,13 @@ module.exports = function (robot)
 
 	function Point (ax, ay)
 	{
+		// Auto instantiate the Point
+		if (!(this instanceof Point))
+			return new Point (ax, ay);
+
+		var p = Point.normalize (ax, ay);
+		this.x = p.x;
+		this.y = p.y;
 	}
 
 
@@ -35,12 +42,16 @@ module.exports = function (robot)
 
 	Point.prototype.isZero = function()
 	{
+		return this.x === 0
+			&& this.y === 0;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Point.prototype.toSize = function()
 	{
+		return robot.Size
+			(this.x, this.y);
 	};
 
 
@@ -53,6 +64,26 @@ module.exports = function (robot)
 
 	Point.normalize = function (ax, ay)
 	{
+		if (ax instanceof Point)
+			return ax;
+
+		if (ax === undefined)
+			return { x: 0, y: 0 };
+
+		if (typeof ax   === "object" &&
+			typeof ax.x === "number" &&
+			typeof ax.y === "number")
+			return ax;
+
+		if (typeof ax === "number")
+		{
+			if (typeof ay === "number")
+				return { x: ax, y: ay };
+				return { x: ax, y: ax };
+		}
+
+		throw new TypeError
+			("Invalid arguments");
 	};
 
 
@@ -65,30 +96,43 @@ module.exports = function (robot)
 
 	Point.prototype.add = function (ax, ay)
 	{
+		var p = Point.normalize (ax, ay);
+		return Point
+			(this.x + p.x, this.y + p.y);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Point.prototype.sub = function (ax, ay)
 	{
+		var p = Point.normalize (ax, ay);
+		return Point
+			(this.x - p.x, this.y - p.y);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Point.prototype.eq = function (ax, ay)
 	{
+		var p = Point.normalize (ax, ay);
+		return this.x === p.x
+			&& this.y === p.y;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Point.prototype.ne = function (ax, ay)
 	{
+		var p = Point.normalize (ax, ay);
+		return this.x !== p.x
+			|| this.y !== p.y;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Point.prototype.neg = function()
 	{
+		return Point (-this.x, -this.y);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

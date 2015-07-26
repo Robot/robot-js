@@ -23,6 +23,13 @@ module.exports = function (robot)
 
 	function Size (aw, ah)
 	{
+		// Auto instantiate the Size
+		if (!(this instanceof Size))
+			return new Size (aw, ah);
+
+		var s = Size.normalize (aw, ah);
+		this.w = s.w;
+		this.h = s.h;
 	}
 
 
@@ -35,12 +42,16 @@ module.exports = function (robot)
 
 	Size.prototype.isEmpty = function()
 	{
+		return this.w === 0
+			&& this.h === 0;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Size.prototype.toPoint = function()
 	{
+		return robot.Point
+			(this.w, this.h);
 	};
 
 
@@ -53,6 +64,26 @@ module.exports = function (robot)
 
 	Size.normalize = function (aw, ah)
 	{
+		if (aw instanceof Size)
+			return aw;
+
+		if (aw === undefined)
+			return { w: 0, h: 0 };
+
+		if (typeof aw   === "object" &&
+			typeof aw.w === "number" &&
+			typeof aw.h === "number")
+			return aw;
+
+		if (typeof aw === "number")
+		{
+			if (typeof ah === "number")
+				return { w: aw, h: ah };
+				return { w: aw, h: aw };
+		}
+
+		throw new TypeError
+			("Invalid arguments");
 	};
 
 
@@ -65,24 +96,36 @@ module.exports = function (robot)
 
 	Size.prototype.add = function (aw, ah)
 	{
+		var s = Size.normalize (aw, ah);
+		return Size
+			(this.w + s.w, this.h + s.h);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Size.prototype.sub = function (aw, ah)
 	{
+		var s = Size.normalize (aw, ah);
+		return Size
+			(this.w - s.w, this.h - s.h);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Size.prototype.eq = function (aw, ah)
 	{
+		var s = Size.normalize (aw, ah);
+		return this.w === s.w
+			&& this.h === s.h;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Size.prototype.ne = function (aw, ah)
 	{
+		var s = Size.normalize (aw, ah);
+		return this.w !== s.w
+			|| this.h !== s.h;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
