@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, getchar, assert)
+module.exports = function (robot, log, sprintf, getchar, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -59,10 +59,10 @@ module.exports = function (robot, log, getchar, assert)
 		assert (h8.eq (0x94942DD5));
 		assert (h9.eq (0x50297B6B));
 
-		assert ( (h1.eq (h1)));
-		assert (!(h1.eq (h2)));
-		assert (!(h1.ne (h1)));
-		assert ( (h1.ne (h2)));
+		assert ( h1.eq (h1));
+		assert (!h1.eq (h2));
+		assert (!h1.ne (h1));
+		assert ( h1.ne (h2));
 
 		assert (h2.eq (h3));
 		assert (h3.eq (h2));
@@ -133,10 +133,10 @@ module.exports = function (robot, log, getchar, assert)
 
 		c2.setARGB (0xFF64D7B4);
 
-		assert ( (c1.eq (c1)));
-		assert (!(c1.eq (c2)));
-		assert (!(c1.ne (c1)));
-		assert ( (c1.ne (c2)));
+		assert ( c1.eq (c1));
+		assert (!c1.eq (c2));
+		assert (!c1.ne (c1));
+		assert ( c1.ne (c2));
 
 		assert (c2.ne (c3));
 		assert (c3.ne (c2));
@@ -335,10 +335,10 @@ module.exports = function (robot, log, getchar, assert)
 		assert (r8.min ===  6 && r8.max === 2);
 		assert (r9.min === -3 && r9.max === 8);
 
-		assert ( (r1.eq (r1)));
-		assert (!(r1.eq (r2)));
-		assert (!(r1.ne (r1)));
-		assert ( (r1.ne (r2)));
+		assert ( r1.eq (r1));
+		assert (!r1.eq (r2));
+		assert (!r1.ne (r1));
+		assert ( r1.ne (r2));
 
 		assert (r6.ne (r2));
 		assert (r2.ne (r6));
@@ -533,10 +533,10 @@ module.exports = function (robot, log, getchar, assert)
 		assert (s8.w ===  6 && s8.h ===  2);
 		assert (s9.w === -3 && s9.h ===  8);
 
-		assert ( (p1.eq (p1)));
-		assert (!(p1.eq (p2)));
-		assert (!(p1.ne (p1)));
-		assert ( (p1.ne (p2)));
+		assert ( p1.eq (p1));
+		assert (!p1.eq (p2));
+		assert (!p1.ne (p1));
+		assert ( p1.ne (p2));
 
 		assert (p6.ne (p2));
 		assert (p2.ne (p6));
@@ -547,10 +547,10 @@ module.exports = function (robot, log, getchar, assert)
 		assert (p9.eq (p5));
 		assert (p5.eq (p9));
 
-		assert ( (s1.eq (s1)));
-		assert (!(s1.eq (s2)));
-		assert (!(s1.ne (s1)));
-		assert ( (s1.ne (s2)));
+		assert ( s1.eq (s1));
+		assert (!s1.eq (s2));
+		assert (!s1.ne (s1));
+		assert ( s1.ne (s2));
 
 		assert (s6.ne (s2));
 		assert (s2.ne (s6));
@@ -846,10 +846,10 @@ module.exports = function (robot, log, getchar, assert)
 		assert (b5.getSize().w ===  2 && b5.getSize().h ===  8);
 		assert (b6.getSize().w === -8 && b6.getSize().h === -4);
 
-		assert ( (b1.eq (b1)));
-		assert (!(b1.eq (b2)));
-		assert (!(b1.ne (b1)));
-		assert ( (b1.ne (b2)));
+		assert ( b1.eq (b1));
+		assert (!b1.eq (b2));
+		assert (!b1.ne (b1));
+		assert ( b1.ne (b2));
 
 		assert (b6.ne (b2));
 		assert (b2.ne (b6));

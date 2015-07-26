@@ -46,7 +46,6 @@
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -189,12 +188,6 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">$(IntDir)\Addon\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="Screen.cc">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">$(IntDir)\Addon\</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">$(IntDir)\Addon\</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">$(IntDir)\Addon\</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">$(IntDir)\Addon\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="Timer.cc">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">$(IntDir)\Addon\</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">$(IntDir)\Addon\</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">$(IntDir)\Addon\</ObjectFileName>

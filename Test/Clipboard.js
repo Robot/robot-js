@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, getchar, assert)
+module.exports = function (robot, log, sprintf, getchar, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Main                                                                       //
@@ -21,12 +21,8 @@ module.exports = function (robot, log, getchar, assert)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	function Clipboard()
+	return function()
 	{
 		return true;
-	}
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	return Clipboard;
+	};
 };

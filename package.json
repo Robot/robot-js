@@ -30,6 +30,11 @@
 	[
 	],
 
+	"devDependencies" :
+	{
+		"sprintf-js"	: "1.x.x"
+	},
+
 	"engines" :
 	{
 		"node"			: ">= 0.12.0"

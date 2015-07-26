@@ -54,9 +54,6 @@
     <ClInclude Include="Screen.h">
       <Filter>Addon</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Addon</Filter>
-    </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Addon</Filter>
     </ClInclude>
@@ -144,9 +141,6 @@
       <Filter>Addon</Filter>
     </ClCompile>
     <ClCompile Include="Screen.cc">
-      <Filter>Addon</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cc">
       <Filter>Addon</Filter>
     </ClCompile>
     <ClCompile Include="Window.cc">
