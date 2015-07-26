@@ -4,7 +4,7 @@
 	"license"			: "Zlib",
 	"main"				: "Library/Robot.js",
 	"homepage"			: "robot.github.io/",
-	"description"		: "Native cross-platform system automation",
+	"description"		: "Native system automation for node.js",
 
 	"contributors" :
 	[

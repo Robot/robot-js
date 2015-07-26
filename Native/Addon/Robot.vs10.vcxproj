@@ -225,6 +225,16 @@
     <None Include="..\..\Library\Size.js" />
     <None Include="..\..\Library\Timer.js" />
     <None Include="..\..\Library\Window.js" />
+    <None Include="..\..\Test\Clipboard.js" />
+    <None Include="..\..\Test\Keyboard.js" />
+    <None Include="..\..\Test\Memory.js" />
+    <None Include="..\..\Test\Mouse.js" />
+    <None Include="..\..\Test\Process.js" />
+    <None Include="..\..\Test\Screen.js" />
+    <None Include="..\..\Test\Test.js" />
+    <None Include="..\..\Test\Timer.js" />
+    <None Include="..\..\Test\Types.js" />
+    <None Include="..\..\Test\Window.js" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{18FA4B6A-BB03-4F80-92C2-D6237372FE11}</ProjectGuid>
