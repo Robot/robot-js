@@ -30,6 +30,13 @@
 	[
 	],
 
+	"os" :
+	[
+		"linux",
+		"darwin",
+		"win32"
+	],
+
 	"devDependencies" :
 	{
 		"sprintf-js"	: "1.x.x"

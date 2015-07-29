@@ -205,8 +205,8 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (t1.eq, t1, [   ]); assert (t1.eq, t1, ["a"]);
 		assert (t1.ne, t1, [   ]); assert (t1.ne, t1, ["a"]);
 
-		assert (Timer.sleep, t1, ["BadParam"]);
-		assert (Timer.sleep, t1, [{ min: 0 }]);
+		assert (Timer.sleep, Timer, ["BadParam"]);
+		assert (Timer.sleep, Timer, [{ min: 0 }]);
 
 		log (">> Success\n\n"); return true;
 	};

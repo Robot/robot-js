@@ -11,11 +11,16 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include <node.h>
-using namespace v8;
+#include "Keyboard.h"
+#include "Mouse.h"
 
-#include <Robot.h>
-using namespace Robot;
+#include "Process.h"
+#include "Module.h"
+#include "Memory.h"
+
+#include "Window.h"
+#include "Screen.h"
+#include "Clipboard.h"
 
 
 
@@ -59,6 +64,9 @@ static void TimerGetCpu (const FunctionCallbackInfo<Value>& args)
 
 static void Initialize (Handle<Object> exports)
 {
+	KeyboardWrap::Initialize (exports);
+	   MouseWrap::Initialize (exports);
+
 	NODE_SET_METHOD (exports, "timerSleep" , TimerSleep );
 	NODE_SET_METHOD (exports, "timerGetCpu", TimerGetCpu);
 }
