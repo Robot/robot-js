@@ -309,8 +309,9 @@
       <PreprocessorDefinitions>UNICODE;WIN32;NDEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;$(SolutionDir)\Robot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4661</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -334,8 +335,9 @@
       <PreprocessorDefinitions>UNICODE;WIN32;NDEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;$(SolutionDir)\Robot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4661</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -355,8 +357,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNICODE;WIN32;DEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;$(SolutionDir)\Robot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4661</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -374,8 +377,9 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNICODE;WIN32;DEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;$(SolutionDir)\Robot\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.6\src\;$(UserProfile)\.node-gyp\0.12.6\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.6\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4661</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
