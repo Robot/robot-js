@@ -187,6 +187,17 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (Mouse.setPos,   Mouse, ["a"]);
 		assert (Mouse.getState, Mouse, ["a"]);
 
+		assert (typeof m.click   (robot.BUTTON_LEFT) === "undefined");
+		assert (typeof m.press   (robot.BUTTON_LEFT) === "undefined");
+		assert (typeof m.release (robot.BUTTON_LEFT) === "undefined");
+		assert (typeof m.scrollH (1                ) === "undefined");
+		assert (typeof m.scrollV (1                ) === "undefined");
+
+		assert (       Mouse.getPos   () instanceof Point);
+		assert (typeof Mouse.setPos   () === "undefined" );
+		assert (typeof Mouse.getState () === "object"    );
+		assert (typeof Mouse.getState (robot.BUTTON_LEFT) === "boolean");
+
 		return true;
 	}
 

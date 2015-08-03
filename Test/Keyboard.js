@@ -867,6 +867,14 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (Keyboard.compile,  Keyboard, [   ]);
 		assert (Keyboard.getState, Keyboard, ["a"]);
 
+		assert (typeof k.click   (robot.KEY_A) === "undefined");
+		assert (typeof k.press   (robot.KEY_A) === "undefined");
+		assert (typeof k.release (robot.KEY_A) === "undefined");
+
+		assert (       Keyboard.compile  ("a") instanceof Array);
+		assert (typeof Keyboard.getState (   ) === "object"    );
+		assert (typeof Keyboard.getState (robot.KEY_A) === "boolean");
+
 		return true;
 	}
 

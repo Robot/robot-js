@@ -198,15 +198,32 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (t1.hasExpired, t1, [   ]);
 		assert (t1.hasExpired, t1, ["a"]);
 
-		assert (t1.lt, t1, [   ]); assert (t1.lt, t1, ["a"]);
-		assert (t1.gt, t1, [   ]); assert (t1.gt, t1, ["a"]);
-		assert (t1.le, t1, [   ]); assert (t1.le, t1, ["a"]);
-		assert (t1.ge, t1, [   ]); assert (t1.ge, t1, ["a"]);
-		assert (t1.eq, t1, [   ]); assert (t1.eq, t1, ["a"]);
-		assert (t1.ne, t1, [   ]); assert (t1.ne, t1, ["a"]);
+		assert (t1.lt, t1, [ ]); assert (t1.lt, t1, ["a"]);
+		assert (t1.gt, t1, [ ]); assert (t1.gt, t1, ["a"]);
+		assert (t1.le, t1, [ ]); assert (t1.le, t1, ["a"]);
+		assert (t1.ge, t1, [ ]); assert (t1.ge, t1, ["a"]);
+		assert (t1.eq, t1, [ ]); assert (t1.eq, t1, ["a"]);
+		assert (t1.ne, t1, [ ]); assert (t1.ne, t1, ["a"]);
 
 		assert (Timer.sleep, Timer, ["BadParam"]);
 		assert (Timer.sleep, Timer, [{ min: 0 }]);
+
+		assert (typeof t1.start      ( ) === "undefined");
+		assert (typeof t1.reset      ( ) === "undefined");
+		assert (typeof t1.restart    ( ) === "number"   );
+		assert (typeof t1.getElapsed ( ) === "number"   );
+		assert (typeof t1.hasStarted ( ) === "boolean"  );
+		assert (typeof t1.hasExpired (0) === "boolean"  );
+
+		assert (typeof Timer.sleep      (8) === "undefined");
+		assert (typeof Timer.getCpuTime ( ) === "number"   );
+
+		assert (typeof t1.lt (t2) === "boolean");
+		assert (typeof t1.gt (t2) === "boolean");
+		assert (typeof t1.le (t2) === "boolean");
+		assert (typeof t1.ge (t2) === "boolean");
+		assert (typeof t1.eq (t2) === "boolean");
+		assert (typeof t1.ne (t2) === "boolean");
 
 		log (">> Success\n\n"); return true;
 	};

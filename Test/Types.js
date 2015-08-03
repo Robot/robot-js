@@ -106,6 +106,13 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (h1.eq, h1, ["a"]);
 		assert (h1.ne, h1, ["a"]);
 
+		assert (typeof h1.append ("") === "undefined");
+
+		assert (typeof h1.eq (h2) === "boolean");
+		assert (typeof h1.ne (h2) === "boolean");
+		assert (typeof h1.eq (10) === "boolean");
+		assert (typeof h1.ne (10) === "boolean");
+
 		return true;
 	}
 
@@ -187,6 +194,16 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (c1.ne, c1, [{ g: 0 }]);
 		assert (c1.eq, c1, [{ b: 0 }]);
 		assert (c1.ne, c1, [{ a: 0 }]);
+
+		assert (typeof c1.getARGB ( ) === "number"   );
+		assert (typeof c1.setARGB (0) === "undefined");
+
+		assert (typeof Color.normalize() === "object");
+
+		assert (typeof c1.eq (  ) === "boolean");
+		assert (typeof c1.ne (  ) === "boolean");
+		assert (typeof c1.eq (c2) === "boolean");
+		assert (typeof c1.ne (c2) === "boolean");
 
 		return true;
 	}
@@ -387,6 +404,18 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		assert (r1.eq, r1, [{ min: 0 }]);
 		assert (r1.ne, r1, [{ max: 0 }]);
+
+		assert (typeof r1.getRange  ( ) === "number"   );
+		assert (typeof r1.setRange  ( ) === "undefined");
+		assert (typeof r1.getRandom ( ) === "number"   );
+		assert (typeof r1.contains  (0) === "boolean"  );
+
+		assert (typeof Color.normalize() === "object");
+
+		assert (typeof r1.eq (  ) === "boolean");
+		assert (typeof r1.ne (  ) === "boolean");
+		assert (typeof r1.eq (r2) === "boolean");
+		assert (typeof r1.ne (r2) === "boolean");
 
 		return true;
 	}
@@ -635,14 +664,14 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		b7.setLTRB (3,  9, 8, 10);
 		b8.setLTRB (5, 13, 7,  6);
-		assert (!b1.containsBounds (b7)); assert (!b1.intersects (b7));
-		assert ( b2.containsBounds (b7)); assert ( b2.intersects (b7));
-		assert (!b4.containsBounds (b7)); assert (!b4.intersects (b7));
-		assert (!b6.containsBounds (b7)); assert (!b6.intersects (b7));
-		assert (!b1.containsBounds (b8)); assert (!b1.intersects (b8));
-		assert (!b2.containsBounds (b8)); assert ( b2.intersects (b8));
-		assert (!b4.containsBounds (b8)); assert (!b4.intersects (b8));
-		assert (!b6.containsBounds (b8)); assert (!b6.intersects (b8));
+		assert (!b1.containsB (b7)); assert (!b1.intersects (b7));
+		assert ( b2.containsB (b7)); assert ( b2.intersects (b7));
+		assert (!b4.containsB (b7)); assert (!b4.intersects (b7));
+		assert (!b6.containsB (b7)); assert (!b6.intersects (b7));
+		assert (!b1.containsB (b8)); assert (!b1.intersects (b8));
+		assert (!b2.containsB (b8)); assert ( b2.intersects (b8));
+		assert (!b4.containsB (b8)); assert (!b4.intersects (b8));
+		assert (!b6.containsB (b8)); assert (!b6.intersects (b8));
 
 		assert (b7.unite (b1).eq (Bounds (0, 0, 0, 0))); assert (b7.intersect (b1).eq (Bounds (  3,   9,  5,  1)));
 		assert (b8.unite (b1).eq (Bounds (0, 0, 0, 0))); assert (b8.intersect (b1).eq (Bounds (  5,   6,  2,  7)));
@@ -662,14 +691,14 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		b7.setLTRB (-2, 10, -2, 6);
 		b8.setLTRB (-6,  2, -2, 2);
-		assert (!b3.containsBounds (b7)); assert (!b3.intersects (b7));
-		assert (!b4.containsBounds (b7)); assert (!b4.intersects (b7));
-		assert (!b5.containsBounds (b7)); assert ( b5.intersects (b7));
-		assert (!b6.containsBounds (b7)); assert (!b6.intersects (b7));
-		assert (!b3.containsBounds (b8)); assert ( b3.intersects (b8));
-		assert (!b4.containsBounds (b8)); assert (!b4.intersects (b8));
-		assert (!b5.containsBounds (b8)); assert (!b5.intersects (b8));
-		assert (!b6.containsBounds (b8)); assert ( b6.intersects (b8));
+		assert (!b3.containsB (b7)); assert (!b3.intersects (b7));
+		assert (!b4.containsB (b7)); assert (!b4.intersects (b7));
+		assert (!b5.containsB (b7)); assert ( b5.intersects (b7));
+		assert (!b6.containsB (b7)); assert (!b6.intersects (b7));
+		assert (!b3.containsB (b8)); assert ( b3.intersects (b8));
+		assert (!b4.containsB (b8)); assert (!b4.intersects (b8));
+		assert (!b5.containsB (b8)); assert (!b5.intersects (b8));
+		assert (!b6.containsB (b8)); assert ( b6.intersects (b8));
 
 		assert (b3.unite (b7).eq (Bounds ( 0, 0, 0, 0))); assert (b3.intersect (b7).eq (Bounds ( -4,  -1, 3, 11)));
 		assert (b4.unite (b7).eq (Bounds ( 0, 0, 0, 0))); assert (b4.intersect (b7).eq (Bounds (-11, -11, 9, 21)));
@@ -686,14 +715,14 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		b7 = Bounds (-2, 1, -1, -1);
 		b8 = Bounds (-3, 3, -2,  1);
-		assert (!b1.containsBounds (b7)); assert (!b1.intersects (b7));
-		assert (!b2.containsBounds (b7)); assert (!b2.intersects (b7));
-		assert ( b3.containsBounds (b7)); assert ( b3.intersects (b7));
-		assert (!b6.containsBounds (b7)); assert (!b6.intersects (b7));
-		assert (!b1.containsBounds (b8)); assert (!b1.intersects (b8));
-		assert (!b2.containsBounds (b8)); assert (!b2.intersects (b8));
-		assert (!b3.containsBounds (b8)); assert ( b3.intersects (b8));
-		assert (!b6.containsBounds (b8)); assert ( b6.intersects (b8));
+		assert (!b1.containsB (b7)); assert (!b1.intersects (b7));
+		assert (!b2.containsB (b7)); assert (!b2.intersects (b7));
+		assert ( b3.containsB (b7)); assert ( b3.intersects (b7));
+		assert (!b6.containsB (b7)); assert (!b6.intersects (b7));
+		assert (!b1.containsB (b8)); assert (!b1.intersects (b8));
+		assert (!b2.containsB (b8)); assert (!b2.intersects (b8));
+		assert (!b3.containsB (b8)); assert ( b3.intersects (b8));
+		assert (!b6.containsB (b8)); assert ( b6.intersects (b8));
 
 		assert (b1.unite (b7).eq (Bounds ( 0, 0, 0, 0))); assert (b1.intersect (b7).eq (Bounds (-3,  0,  1,  1)));
 		assert (b2.unite (b7).eq (Bounds ( 0, 0, 0, 0))); assert (b2.intersect (b7).eq (Bounds (-3,  0, 12, 11)));
@@ -710,10 +739,10 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		b7 = Bounds (-11, -9, 2,  2);
 		b8 = Bounds ( -8, -5, 2, -2);
-		assert ( b4.containsBounds (b7,  true)); assert ( b4.intersects (b7,  true));
-		assert (!b4.containsBounds (b8,  true)); assert ( b4.intersects (b8,  true));
-		assert (!b4.containsBounds (b7, false)); assert ( b4.intersects (b7, false));
-		assert (!b4.containsBounds (b8, false)); assert (!b4.intersects (b8, false));
+		assert ( b4.containsB (b7,  true)); assert ( b4.intersects (b7,  true));
+		assert (!b4.containsB (b8,  true)); assert ( b4.intersects (b8,  true));
+		assert (!b4.containsB (b7, false)); assert ( b4.intersects (b7, false));
+		assert (!b4.containsB (b8, false)); assert (!b4.intersects (b8, false));
 		assert (b4.unite (b7).eq (Bounds (-11, -9, 2, 2))); assert (b4.intersect (b7).eq (Bounds (-11, -11, 3, 7)));
 		assert (b4.unite (b8).eq (Bounds ( -8, -7, 0, 2))); assert (b4.intersect (b8).eq (Bounds (-11, -11, 5, 7)));
 		b7.normalize(); assert (b7.eq (Bounds (-11, -9, 2, 2)));
@@ -723,10 +752,10 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		b7 = Bounds (-8, -10,  0, 1);
 		b8 = Bounds (-9,  -4, -1, 0);
-		assert ( b4.containsBounds (b7,  true)); assert ( b4.intersects (b7,  true));
-		assert ( b4.containsBounds (b8,  true)); assert ( b4.intersects (b8,  true));
-		assert (!b4.containsBounds (b7, false)); assert (!b4.intersects (b7, false));
-		assert (!b4.containsBounds (b8, false)); assert (!b4.intersects (b8, false));
+		assert ( b4.containsB (b7,  true)); assert ( b4.intersects (b7,  true));
+		assert ( b4.containsB (b8,  true)); assert ( b4.intersects (b8,  true));
+		assert (!b4.containsB (b7, false)); assert (!b4.intersects (b7, false));
+		assert (!b4.containsB (b8, false)); assert (!b4.intersects (b8, false));
 		assert (b4.unite (b7).eq (Bounds ( -8, -10, 0, 1))); assert (b4.intersect (b7).eq (Bounds (-11, -11, 3, 7)));
 		assert (b4.unite (b8).eq (Bounds (-10,  -4, 1, 0))); assert (b4.intersect (b8).eq (Bounds (-11, -11, 3, 7)));
 		b7.normalize(); assert (b7.eq (Bounds ( -8, -10, 0, 1)));
@@ -736,14 +765,14 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		b7 = Bounds (-1, 8, -1,  0);
 		b8 = Bounds (-4, 8,  0, -2);
-		assert ( b5.containsBounds (b7,  true)); assert ( b5.intersects (b7,  true));
-		assert (!b6.containsBounds (b7,  true)); assert (!b6.intersects (b7,  true));
-		assert (!b5.containsBounds (b8,  true)); assert ( b5.intersects (b8,  true));
-		assert ( b6.containsBounds (b8,  true)); assert ( b6.intersects (b8,  true));
-		assert (!b5.containsBounds (b7, false)); assert (!b5.intersects (b7, false));
-		assert (!b6.containsBounds (b7, false)); assert (!b6.intersects (b7, false));
-		assert (!b5.containsBounds (b8, false)); assert (!b5.intersects (b8, false));
-		assert (!b6.containsBounds (b8, false)); assert (!b6.intersects (b8, false));
+		assert ( b5.containsB (b7,  true)); assert ( b5.intersects (b7,  true));
+		assert (!b6.containsB (b7,  true)); assert (!b6.intersects (b7,  true));
+		assert (!b5.containsB (b8,  true)); assert ( b5.intersects (b8,  true));
+		assert ( b6.containsB (b8,  true)); assert ( b6.intersects (b8,  true));
+		assert (!b5.containsB (b7, false)); assert (!b5.intersects (b7, false));
+		assert (!b6.containsB (b7, false)); assert (!b6.intersects (b7, false));
+		assert (!b5.containsB (b8, false)); assert (!b5.intersects (b8, false));
+		assert (!b6.containsB (b8, false)); assert (!b6.intersects (b8, false));
 		assert (b5.unite (b7).eq (Bounds (-2, 8, 1, 0))); assert (b5.intersect (b7).eq (Bounds (-4, 8, 4, 0)));
 		assert (b6.unite (b7).eq (Bounds ( 0, 0, 0, 0))); assert (b6.intersect (b7).eq (Bounds (-4, 0, 3, 8)));
 		assert (b5.unite (b8).eq (Bounds (-4, 8, 0, 0))); assert (b5.intersect (b8).eq (Bounds (-4, 6, 4, 2)));
@@ -778,45 +807,45 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		p5 = Point (-2,  8);
 		p6 = Point (-3, -3);
 
-		assert (!b1.containsPoint (-7,  3));
-		assert ( b1.containsPoint (-6,  3));
-		assert ( b1.containsPoint (-5,  3));
-		assert ( b1.containsPoint ( 3,  3));
-		assert ( b1.containsPoint ( 4,  3));
-		assert (!b1.containsPoint ( 5,  3));
-		assert ( b1.containsPoint ( 0,  7));
-		assert ( b1.containsPoint ( 0,  8));
-		assert (!b1.containsPoint ( 0,  9));
-		assert (!b1.containsPoint ( 0, -3));
-		assert ( b1.containsPoint ( 0, -2));
-		assert ( b1.containsPoint ( 0, -1));
+		assert (!b1.containsP (-7,  3));
+		assert ( b1.containsP (-6,  3));
+		assert ( b1.containsP (-5,  3));
+		assert ( b1.containsP ( 3,  3));
+		assert ( b1.containsP ( 4,  3));
+		assert (!b1.containsP ( 5,  3));
+		assert ( b1.containsP ( 0,  7));
+		assert ( b1.containsP ( 0,  8));
+		assert (!b1.containsP ( 0,  9));
+		assert (!b1.containsP ( 0, -3));
+		assert ( b1.containsP ( 0, -2));
+		assert ( b1.containsP ( 0, -1));
 
-		assert (!b2.containsPoint (p1));
-		assert ( b2.containsPoint (p2));
-		assert (!b2.containsPoint (p3));
-		assert ( b2.containsPoint (p4));
-		assert ( b2.containsPoint (p5));
-		assert ( b2.containsPoint (p6));
+		assert (!b2.containsP (p1));
+		assert ( b2.containsP (p2));
+		assert (!b2.containsP (p3));
+		assert ( b2.containsP (p4));
+		assert ( b2.containsP (p5));
+		assert ( b2.containsP (p6));
 
-		assert (!b1.containsPoint (-7,  3, false));
-		assert (!b1.containsPoint (-6,  3, false));
-		assert ( b1.containsPoint (-5,  3, false));
-		assert ( b1.containsPoint ( 3,  3, false));
-		assert (!b1.containsPoint ( 4,  3, false));
-		assert (!b1.containsPoint ( 5,  3, false));
-		assert ( b1.containsPoint ( 0,  7, false));
-		assert (!b1.containsPoint ( 0,  8, false));
-		assert (!b1.containsPoint ( 0,  9, false));
-		assert (!b1.containsPoint ( 0, -3, false));
-		assert (!b1.containsPoint ( 0, -2, false));
-		assert ( b1.containsPoint ( 0, -1, false));
+		assert (!b1.containsP (-7,  3, false));
+		assert (!b1.containsP (-6,  3, false));
+		assert ( b1.containsP (-5,  3, false));
+		assert ( b1.containsP ( 3,  3, false));
+		assert (!b1.containsP ( 4,  3, false));
+		assert (!b1.containsP ( 5,  3, false));
+		assert ( b1.containsP ( 0,  7, false));
+		assert (!b1.containsP ( 0,  8, false));
+		assert (!b1.containsP ( 0,  9, false));
+		assert (!b1.containsP ( 0, -3, false));
+		assert (!b1.containsP ( 0, -2, false));
+		assert ( b1.containsP ( 0, -1, false));
 
-		assert (!b2.containsPoint (p1, false));
-		assert (!b2.containsPoint (p2, false));
-		assert (!b2.containsPoint (p3, false));
-		assert (!b2.containsPoint (p4, false));
-		assert ( b2.containsPoint (p5, false));
-		assert (!b2.containsPoint (p6, false));
+		assert (!b2.containsP (p1, false));
+		assert (!b2.containsP (p2, false));
+		assert (!b2.containsP (p3, false));
+		assert (!b2.containsP (p4, false));
+		assert ( b2.containsP (p5, false));
+		assert (!b2.containsP (p6, false));
 
 		b1.setPoint ( 2,  8);
 		b2.setPoint ( 7,  3);
@@ -966,21 +995,21 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (b1.setLTRB,   b1, ["a"]);
 		assert (b1.setLTRB,   b1, [100, "a"]);
 
-		assert (b1.containsPoint,  b1, ["a"]);
-		assert (b1.containsBounds, b1, ["a"]);
-		assert (b1.intersects,     b1, ["a"]);
-		assert (b1.setPoint,       b1, ["a"]);
-		assert (b1.setSize,        b1, ["a"]);
-		assert (b1.unite,          b1, ["a"]);
-		assert (b1.intersect,      b1, ["a"]);
+		assert (b1.containsP,  b1, ["a"]);
+		assert (b1.containsB,  b1, ["a"]);
+		assert (b1.intersects, b1, ["a"]);
+		assert (b1.setPoint,   b1, ["a"]);
+		assert (b1.setSize,    b1, ["a"]);
+		assert (b1.unite,      b1, ["a"]);
+		assert (b1.intersect,  b1, ["a"]);
 
-		assert (b1.containsPoint,  b1, [{ x: 0 }]);
-		assert (b1.containsBounds, b1, [{ x: 0 }]);
-		assert (b1.intersects,     b1, [{ x: 0 }]);
-		assert (b1.setPoint,       b1, [{ x: 0 }]);
-		assert (b1.setSize,        b1, [{ x: 0 }]);
-		assert (b1.unite,          b1, [{ x: 0 }]);
-		assert (b1.intersect,      b1, [{ x: 0 }]);
+		assert (b1.containsP,  b1, [{ x: 0 }]);
+		assert (b1.containsB,  b1, [{ x: 0 }]);
+		assert (b1.intersects, b1, [{ x: 0 }]);
+		assert (b1.setPoint,   b1, [{ x: 0 }]);
+		assert (b1.setSize,    b1, [{ x: 0 }]);
+		assert (b1.unite,      b1, [{ x: 0 }]);
+		assert (b1.intersect,  b1, [{ x: 0 }]);
 
 		assert (b1.eq, b1, ["a"]);
 		assert (b1.ne, b1, ["a"]);
@@ -989,6 +1018,63 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (b1.ne, b1, [{ y: 0 }]);
 		assert (b1.eq, b1, [{ w: 0 }]);
 		assert (b1.ne, b1, [{ h: 0 }]);
+
+		assert (typeof p1.isZero() === "boolean"  );
+		assert (       p1.toSize() instanceof Size);
+
+		assert (typeof Point.normalize() === "object");
+
+		assert (       p1.add (  ) instanceof Point);
+		assert (       p1.sub (  ) instanceof Point);
+		assert (typeof p1.eq  (  ) === "boolean"   );
+		assert (typeof p1.ne  (  ) === "boolean"   );
+		assert (typeof p1.eq  (p2) === "boolean"   );
+		assert (typeof p1.ne  (p2) === "boolean"   );
+		assert (       p1.neg (  ) instanceof Point);
+
+		assert (typeof s1.isEmpty() === "boolean"   );
+		assert (       s1.toPoint() instanceof Point);
+
+		assert (typeof Size.normalize() === "object");
+
+		assert (       s1.add (  ) instanceof Size);
+		assert (       s1.sub (  ) instanceof Size);
+		assert (typeof s1.eq  (  ) === "boolean"  );
+		assert (typeof s1.ne  (  ) === "boolean"  );
+		assert (typeof s1.eq  (s2) === "boolean"  );
+		assert (typeof s1.ne  (s2) === "boolean"  );
+
+		assert (typeof b1.isZero     (       ) === "boolean"    );
+		assert (typeof b1.isEmpty    (       ) === "boolean"    );
+		assert (typeof b1.isValid    (       ) === "boolean"    );
+		assert (typeof b1.getLeft    (       ) === "number"     );
+		assert (typeof b1.getTop     (       ) === "number"     );
+		assert (typeof b1.getRight   (       ) === "number"     );
+		assert (typeof b1.getBottom  (       ) === "number"     );
+		assert (typeof b1.setLeft    (0      ) === "undefined"  );
+		assert (typeof b1.setTop     (0      ) === "undefined"  );
+		assert (typeof b1.setRight   (0      ) === "undefined"  );
+		assert (typeof b1.setBottom  (0      ) === "undefined"  );
+		assert (typeof b1.getLTRB    (       ) === "object"     );
+		assert (typeof b1.setLTRB    (0,0,0,0) === "undefined"  );
+		assert (typeof b1.normalize  (       ) === "undefined"  );
+		assert (typeof b1.containsP  (       ) === "boolean"    );
+		assert (typeof b1.containsB  (       ) === "boolean"    );
+		assert (typeof b1.intersects (       ) === "boolean"    );
+		assert (       b1.getPoint   (       ) instanceof Point );
+		assert (typeof b1.setPoint   (       ) === "undefined"  );
+		assert (       b1.getSize    (       ) instanceof Size  );
+		assert (typeof b1.setSize    (       ) === "undefined"  );
+		assert (       b1.getCenter  (       ) instanceof Point );
+		assert (       b1.unite      (       ) instanceof Bounds);
+		assert (       b1.intersect  (       ) instanceof Bounds);
+
+		assert (typeof Bounds.normalize() === "object");
+
+		assert (typeof b1.eq (  ) === "boolean");
+		assert (typeof b1.ne (  ) === "boolean");
+		assert (typeof b1.eq (b2) === "boolean");
+		assert (typeof b1.ne (b2) === "boolean");
 
 		return true;
 	}

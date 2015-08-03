@@ -14,13 +14,7 @@
 #ifndef ADDON_KEYBOARD_H
 #define ADDON_KEYBOARD_H
 
-#include <node.h>
-#include <node_object_wrap.h>
-#include "../Robot/Robot.h"
-
-using namespace v8;
-using namespace node;
-ROBOT_NS_USE_ALL;
+#include "Common.h"
 
 
 

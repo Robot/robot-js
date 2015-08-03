@@ -129,7 +129,6 @@ module.exports = function (robot, native)
 	Mouse.getPos = function()
 	{
 		return robot.Point
-			// Safe to return point
 			(native.Mouse.getPos());
 	};
 

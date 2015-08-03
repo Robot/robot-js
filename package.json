@@ -3,27 +3,26 @@
 	"version"			: "0.0.0",
 	"license"			: "Zlib",
 	"main"				: "Library/Robot.js",
-	"homepage"			: "robot.github.io/",
-	"description"		: "Native system automation for node.js",
 
-	"contributors" :
-	[
-		{
-			"name"		: "David Krutsko",
-			"email"		: "dave@krutsko.net",
-			"url"		: "dave.krutsko.net"
-		}
-	],
+	"description"		: "Native system automation for node.js",
+	"homepage"			: "http://robot.github.io",
+
+	"author" :
+	{
+		"name"			: "David Krutsko",
+		"email"			: "dave@krutsko.net",
+		"url"			: "http://krutsko.net"
+	},
 
 	"repository" :
 	{
 		"type"			: "git",
-		"url"			: "github.com/robot/node-robot.git"
+		"url"			: "https://github.com/Robot/node-robot.git"
 	},
 
 	"bugs" :
 	{
-		"url"			: "github.com/robot/node-robot/issues"
+		"url"			: "https://github.com/Robot/issues/issues"
 	},
 
 	"keywords" :

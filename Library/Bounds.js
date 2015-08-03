@@ -173,7 +173,7 @@ module.exports = function (robot)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Bounds.prototype.containsPoint = function (ax, ay, inc)
+	Bounds.prototype.containsP = function (ax, ay, inc)
 	{
 		var p = robot.Point.normalize (ax, ay);
 
@@ -198,7 +198,7 @@ module.exports = function (robot)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Bounds.prototype.containsBounds = function (ax, ay, aw, ah, inc)
+	Bounds.prototype.containsB = function (ax, ay, aw, ah, inc)
 	{
 		var bnds = Bounds.normalize (ax, ay, aw, ah);
 

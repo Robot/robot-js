@@ -40,6 +40,7 @@
     <ClInclude Include="..\Robot\Types.h" />
     <ClInclude Include="..\Robot\Window.h" />
     <ClInclude Include="Clipboard.h" />
+    <ClInclude Include="Common.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Module.h" />

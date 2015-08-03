@@ -32,10 +32,7 @@
 
 static void TimerSleep (const FunctionCallbackInfo<Value>& args)
 {
-	// Create scope using current isolation
-	Isolate* isolate = Isolate::GetCurrent();
-	HandleScope scope (isolate);
-
+	ISOLATE;
 	// Perform a simple sleep function
 	Timer::Sleep (args[0]->Int32Value());
 }
@@ -44,14 +41,9 @@ static void TimerSleep (const FunctionCallbackInfo<Value>& args)
 
 static void TimerGetCpu (const FunctionCallbackInfo<Value>& args)
 {
-	// Create scope using current isolation
-	Isolate* isolate = Isolate::GetCurrent();
-	HandleScope scope (isolate);
-
-	// Retrieve and return the CPU time
-	uint64 time = Timer::GetCpuTime();
-	args.GetReturnValue().Set (Number::
-		New (isolate, (double) time));
+	ISOLATE;
+	// Retrieve and return current CPU time
+	RETURN_NUM ((double) Timer::GetCpuTime());
 }
 
 
@@ -64,8 +56,16 @@ static void TimerGetCpu (const FunctionCallbackInfo<Value>& args)
 
 static void Initialize (Handle<Object> exports)
 {
-	KeyboardWrap::Initialize (exports);
-	   MouseWrap::Initialize (exports);
+	 KeyboardWrap::Initialize (exports);
+	    MouseWrap::Initialize (exports);
+
+	  ProcessWrap::Initialize (exports);
+//	   ModuleWrap::Initialize (exports);
+//	   MemoryWrap::Initialize (exports);
+
+	   WindowWrap::Initialize (exports);
+//	   ScreenWrap::Initialize (exports);
+//	ClipboardWrap::Initialize (exports);
 
 	NODE_SET_METHOD (exports, "timerSleep" , TimerSleep );
 	NODE_SET_METHOD (exports, "timerGetCpu", TimerGetCpu);

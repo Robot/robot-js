@@ -36,6 +36,9 @@
     <ClInclude Include="Clipboard.h">
       <Filter>Addon</Filter>
     </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
     <ClInclude Include="Keyboard.h">
       <Filter>Addon</Filter>
     </ClInclude>
