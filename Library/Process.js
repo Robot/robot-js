@@ -176,7 +176,28 @@ module.exports = function (robot, native)
 
 	Process.prototype.getWindows = function (title)
 	{
-		// NYI: Not Yet Implemented
+		// Verify that title is valid
+		if (title !== undefined &&
+			typeof title !== "string")
+			throw new TypeError ("Invalid arguments");
+
+		// Retrieve the list of all process windows
+		var results = this._process.getWindows (title);
+
+		var list = new Array (results.length);
+		// Iterate through the list of windows
+		for (var i = 0; i < results.length; ++i)
+		{
+			// Create a new managed window
+			var window = robot.Window (null);
+
+			// Set the cached window data
+			window._handle = results[i].handle;
+			window._window = results[i].window;
+			list[i] = window;
+		}
+
+		return list;
 	};
 
 
