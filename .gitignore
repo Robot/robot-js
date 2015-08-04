@@ -7,5 +7,3 @@ ipch/
 .DS_STORE
 Binaries/
 node_modules/
-Native/Robot/*.h
-Native/Robot/*.cc
