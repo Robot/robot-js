@@ -132,14 +132,14 @@ module.exports = function (robot, native)
 		else d = (Math.random() *
 			(r.max - r.min) | 0) + r.min;
 
-		if (d > 5) native.timerSleep (d);
+		if (d > 5) native.sleep (d);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	Timer.getCpuTime = function()
 	{
-		return native.timerGetCpu();
+		return native.clock();
 	};
 
 

@@ -26,8 +26,6 @@
 
 class ProcessWrap : public ObjectWrap
 {
-	friend class WindowWrap;
-
 private:
 	 ProcessWrap					(void);
 	~ProcessWrap					(void);
@@ -55,7 +53,7 @@ private:
 public:
 	static void		Initialize		(Handle<Object> exports);
 
-private:
+public:
 	Process mProcess;
 
 	// Function which defines class creator

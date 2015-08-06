@@ -24,15 +24,19 @@ SET_WRAP (Keyboard);
 
 void KeyboardWrap::Click (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Keyboard, args.Holder());
+	ISOWRAP (Keyboard, args.Holder());
 
 	mKeyboard->AutoDelay.Min = args[1]->Int32Value();
 	mKeyboard->AutoDelay.Max = args[2]->Int32Value();
-	if (args[0]->IsNumber())
+	if (args[0]->IsInt32())
 		mKeyboard->Click ((Key) args[0]->Int32Value());
 
 	else
 	{
+		// Args should be string
+		if (!args[0]->IsString())
+			THROW (Type, "Invalid arguments");
+
 		String::Utf8Value value (args[0]);
 		auto keys = *value ? *value : "";
 		// Perform a series of keycode actions
@@ -44,7 +48,11 @@ void KeyboardWrap::Click (const FunctionCallbackInfo<Value>& args)
 
 void KeyboardWrap::Press (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Keyboard, args.Holder());
+	ISOWRAP (Keyboard, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	mKeyboard->AutoDelay.Min = args[1]->Int32Value();
 	mKeyboard->AutoDelay.Max = args[2]->Int32Value();
@@ -55,7 +63,11 @@ void KeyboardWrap::Press (const FunctionCallbackInfo<Value>& args)
 
 void KeyboardWrap::Release (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Keyboard, args.Holder());
+	ISOWRAP (Keyboard, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	mKeyboard->AutoDelay.Min = args[1]->Int32Value();
 	mKeyboard->AutoDelay.Max = args[2]->Int32Value();
@@ -67,6 +79,11 @@ void KeyboardWrap::Release (const FunctionCallbackInfo<Value>& args)
 void KeyboardWrap::Compile (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
+
+	// Check for valid args
+	if (!args[0]->IsString())
+		THROW (Type, "Invalid arguments");
+
 	String::Utf8Value value (args[0]);
 	auto keys = *value ? *value : "";
 
@@ -96,6 +113,7 @@ void KeyboardWrap::Compile (const FunctionCallbackInfo<Value>& args)
 void KeyboardWrap::GetState (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
+	// Not arguments were given
 	if (args[0]->IsUndefined())
 	{
 		auto res = NEW_OBJ;
@@ -111,9 +129,15 @@ void KeyboardWrap::GetState (const FunctionCallbackInfo<Value>& args)
 		RETURN (res);
 	}
 
-	RETURN_BOOL (Keyboard::GetState
-		// Get info about a single key
-		((Key) args[0]->Int32Value()));
+	// A keycode was given
+	if (args[0]->IsInt32())
+	{
+		RETURN_BOOL (Keyboard::GetState
+			// Get info about a single key
+			((Key) args[0]->Int32Value()));
+	}
+
+	THROW (Type, "Invalid arguments");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -121,9 +145,22 @@ void KeyboardWrap::GetState (const FunctionCallbackInfo<Value>& args)
 void KeyboardWrap::New (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
-	// Create new class instance and wrap it
-	(new KeyboardWrap())->Wrap (args.This());
-	args.GetReturnValue() .Set (args.This());
+	// Whether called using new
+	if (args.IsConstructCall())
+	{
+		(new KeyboardWrap())->Wrap (args.This());
+		args.This()->Set (NEW_STR ("autoDelay"),
+						  NEW_RANGE ( 40,  90));
+
+		RETURN (args.This());
+	}
+
+	else
+	{
+		auto ctor = NEW_CTOR (Keyboard);
+		// Return as a new instance
+		RETURN (ctor->NewInstance());
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -138,9 +175,9 @@ void KeyboardWrap::Initialize (Handle<Object> exports)
 	tpl->InstanceTemplate()->SetInternalFieldCount (1);
 	tpl->SetClassName (NEW_STR ("Keyboard"));
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "click",   Click  );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "press",   Press  );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "release", Release);
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_click",   Click  );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_press",   Press  );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_release", Release);
 
 	NODE_SET_METHOD (tpl, "compile",  Compile );
 	NODE_SET_METHOD (tpl, "getState", GetState);

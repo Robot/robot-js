@@ -25,61 +25,73 @@ SET_WRAP (Process);
 
 void ProcessWrap::Open (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Process, args.Holder());
+	ISOWRAP (Process, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	// Try and open the process
 	bool status = mProcess->Open
 		(args[0]->Int32Value());
 
-	auto res = NEW_OBJ;
-	res->Set (NEW_STR ("procID" ), NEW_INT  (mProcess->GetPID ()));
-	res->Set (NEW_STR ("is64Bit"), NEW_BOOL (mProcess->Is64Bit()));
-	res->Set (NEW_STR ("name"   ), NEW_STR  (mProcess->GetName().data()));
-	res->Set (NEW_STR ("path"   ), NEW_STR  (mProcess->GetPath().data()));
-	res->Set (NEW_STR ("status" ), NEW_BOOL (status));
-	RETURN (res);
+	args.This()->Set (NEW_STR ("_procID" ), NEW_INT  (mProcess->GetPID ()));
+	args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (mProcess->Is64Bit()));
+	args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (mProcess->GetName().data()));
+	args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (mProcess->GetPath().data()));
+	RETURN_BOOL (status);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::Close (const FunctionCallbackInfo<Value>& args)
 {
-	FAST_VOID (Process, args.Holder(), Close());
+	ISOWRAP (Process, args.Holder()); mProcess->Close();
+
+	args.This()->Set (NEW_STR ("_procID" ), NEW_INT  (0 ));
+	args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (0 ));
+	args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (""));
+	args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (""));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::IsValid (const FunctionCallbackInfo<Value>& args)
 {
-	FAST_BOOL (Process, args.Holder(), IsValid());
+	ISOWRAP (Process, args.Holder());
+	RETURN_BOOL (mProcess->IsValid());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::IsDebugged (const FunctionCallbackInfo<Value>& args)
 {
-	FAST_BOOL (Process, args.Holder(), IsDebugged());
+	ISOWRAP (Process, args.Holder());
+	RETURN_BOOL (mProcess->IsDebugged());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::Exit (const FunctionCallbackInfo<Value>& args)
 {
-	FAST_VOID (Process, args.Holder(), Exit());
+	ISOWRAP (Process, args.Holder());
+	mProcess->Exit();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::Kill (const FunctionCallbackInfo<Value>& args)
 {
-	FAST_VOID (Process, args.Holder(), Kill());
+	ISOWRAP (Process, args.Holder());
+	mProcess->Kill();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::HasExited (const FunctionCallbackInfo<Value>& args)
 {
-	FAST_BOOL (Process, args.Holder(), HasExited());
+	ISOWRAP (Process, args.Holder());
+	RETURN_BOOL (mProcess->HasExited());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -93,9 +105,13 @@ void ProcessWrap::GetModules (const FunctionCallbackInfo<Value>& args)
 
 void ProcessWrap::GetWindows (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE;
-	UNWRAP (Process, args.Holder());
+	ISOWRAP (Process, args.Holder());
 	auto ctor = NEW_CTOR (Window);
+
+	// Check for valid arguments
+	if (!args[0]->IsString() &&
+		!args[0]->IsUndefined())
+		THROW (Type, "Invalid arguments");
 
 	const char* regex = 0;
 	String::Utf8Value value (args[0]);
@@ -118,11 +134,11 @@ void ProcessWrap::GetWindows (const FunctionCallbackInfo<Value>& args)
 		// Make wrapper use new window
 		mWindowWrap->mWindow = list[i];
 
-		auto obj = NEW_OBJ;
-		auto handle = NEW_NUM ((double) list[i].GetHandle());
-		obj->Set (NEW_STR ("handle"), handle  );
-		obj->Set (NEW_STR ("window"), instance);
-		res->Set (i, obj);
+		instance->Set (NEW_STR ("_handle"),
+					   NEW_INT (( uint32 )
+					   list[i].GetHandle()));
+
+		res->Set (i, instance);
 	}
 
 	RETURN (res);
@@ -134,6 +150,11 @@ void ProcessWrap::GetList (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
 	auto ctor = NEW_CTOR (Process);
+
+	// Check for valid arguments
+	if (!args[0]->IsString() &&
+		!args[0]->IsUndefined())
+		THROW (Type, "Invalid arguments");
 
 	const char* regex = 0;
 	String::Utf8Value value (args[0]);
@@ -156,13 +177,11 @@ void ProcessWrap::GetList (const FunctionCallbackInfo<Value>& args)
 		// Make wrapper use new process
 		mProcessWrap->mProcess = list[i];
 
-		auto obj = NEW_OBJ;
-		obj->Set (NEW_STR ("procID" ), NEW_INT  (list[i].GetPID ()));
-		obj->Set (NEW_STR ("is64Bit"), NEW_BOOL (list[i].Is64Bit()));
-		obj->Set (NEW_STR ("name"   ), NEW_STR  (list[i].GetName().data()));
-		obj->Set (NEW_STR ("path"   ), NEW_STR  (list[i].GetPath().data()));
-		obj->Set (NEW_STR ("process"), instance);
-		res->Set (i, obj);
+		instance->Set (NEW_STR ("_procID" ), NEW_INT  (list[i].GetPID ()));
+		instance->Set (NEW_STR ("_is64Bit"), NEW_BOOL (list[i].Is64Bit()));
+		instance->Set (NEW_STR ("_name"   ), NEW_STR  (list[i].GetName().data()));
+		instance->Set (NEW_STR ("_path"   ), NEW_STR  (list[i].GetPath().data()));
+		res->Set (i, instance);
 	}
 
 	RETURN (res);
@@ -183,21 +202,18 @@ void ProcessWrap::GetCurrent (const FunctionCallbackInfo<Value>& args)
 	// Make wrapper use new process
 	mProcessWrap->mProcess = process;
 
-	auto res = NEW_OBJ;
-	res->Set (NEW_STR ("procID" ), NEW_INT  (process.GetPID ()));
-	res->Set (NEW_STR ("is64Bit"), NEW_BOOL (process.Is64Bit()));
-	res->Set (NEW_STR ("name"   ), NEW_STR  (process.GetName().data()));
-	res->Set (NEW_STR ("path"   ), NEW_STR  (process.GetPath().data()));
-	res->Set (NEW_STR ("process"), instance);
-	RETURN (res);
+	instance->Set (NEW_STR ("_procID" ), NEW_INT  (process.GetPID ()));
+	instance->Set (NEW_STR ("_is64Bit"), NEW_BOOL (process.Is64Bit()));
+	instance->Set (NEW_STR ("_name"   ), NEW_STR  (process.GetName().data()));
+	instance->Set (NEW_STR ("_path"   ), NEW_STR  (process.GetPath().data()));
+	RETURN (instance);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::IsSys64Bit (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE;
-	RETURN_BOOL (Process::IsSys64Bit());
+	ISOLATE; RETURN_BOOL (Process::IsSys64Bit());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -205,9 +221,35 @@ void ProcessWrap::IsSys64Bit (const FunctionCallbackInfo<Value>& args)
 void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
-	// Create new class instance and wrap it
-	(new ProcessWrap())->Wrap (args.This());
-	args.GetReturnValue().Set (args.This());
+	// Whether called using new
+	if (args.IsConstructCall())
+	{
+		// Check if args are valid
+		if (!args[0]->IsInt32() &&
+			!args[0]->IsUndefined())
+			THROW (Type, "Invalid arguments");
+
+		auto wrapper = new ProcessWrap( );
+		auto process = &wrapper->mProcess;
+		wrapper->Wrap (args.This());
+
+		if (args[0]->IsInt32())
+			// Open process if argument available
+			process->Open (args[0]->Int32Value());
+
+		args.This()->Set (NEW_STR ("_procID" ), NEW_INT  (process->GetPID ()));
+		args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (process->Is64Bit()));
+		args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (process->GetName().data()));
+		args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (process->GetPath().data()));
+		RETURN (args.This());
+	}
+
+	else
+	{
+		auto ctor = NEW_CTOR (Process);
+		// Return as a new instance, include args
+		RETURN (ctor->NewInstance (1, &args[0]));
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -235,9 +277,9 @@ void ProcessWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl, "getModules", GetModules);
 	NODE_SET_PROTOTYPE_METHOD (tpl, "getWindows", GetWindows);
 
-	NODE_SET_METHOD (tpl, "getList",    GetList   );
-	NODE_SET_METHOD (tpl, "getCurrent", GetCurrent);
-	NODE_SET_METHOD (tpl, "isSys64Bit", IsSys64Bit);
+	NODE_SET_METHOD (tpl,  "getList",    GetList   );
+	NODE_SET_METHOD (tpl,  "getCurrent", GetCurrent);
+	NODE_SET_METHOD (tpl, "_isSys64Bit", IsSys64Bit);
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());

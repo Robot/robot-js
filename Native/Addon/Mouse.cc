@@ -24,7 +24,11 @@ SET_WRAP (Mouse);
 
 void MouseWrap::Click (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Mouse, args.Holder());
+	ISOWRAP (Mouse, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	mMouse->AutoDelay.Min = args[1]->Int32Value();
 	mMouse->AutoDelay.Max = args[2]->Int32Value();
@@ -35,7 +39,11 @@ void MouseWrap::Click (const FunctionCallbackInfo<Value>& args)
 
 void MouseWrap::Press (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Mouse, args.Holder());
+	ISOWRAP (Mouse, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	mMouse->AutoDelay.Min = args[1]->Int32Value();
 	mMouse->AutoDelay.Max = args[2]->Int32Value();
@@ -46,10 +54,14 @@ void MouseWrap::Press (const FunctionCallbackInfo<Value>& args)
 
 void MouseWrap::Release (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Mouse, args.Holder());
+	ISOWRAP (Mouse, args.Holder());
 
-	mMouse->AutoDelay.Min   = args[1]->Int32Value();
-	mMouse->AutoDelay.Max   = args[2]->Int32Value();
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
+
+	mMouse->AutoDelay.Min = args[1]->Int32Value();
+	mMouse->AutoDelay.Max = args[2]->Int32Value();
 	mMouse->Release ((Button) args[0]->Int32Value());
 }
 
@@ -57,7 +69,11 @@ void MouseWrap::Release (const FunctionCallbackInfo<Value>& args)
 
 void MouseWrap::ScrollH (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Mouse, args.Holder());
+	ISOWRAP (Mouse, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	mMouse->AutoDelay.Min = args[1]->Int32Value();
 	mMouse->AutoDelay.Max = args[2]->Int32Value();
@@ -68,7 +84,11 @@ void MouseWrap::ScrollH (const FunctionCallbackInfo<Value>& args)
 
 void MouseWrap::ScrollV (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; UNWRAP (Mouse, args.Holder());
+	ISOWRAP (Mouse, args.Holder());
+
+	// Check for valid args
+	if (!args[0]->IsInt32())
+		THROW (Type, "Invalid arguments");
 
 	mMouse->AutoDelay.Min = args[1]->Int32Value();
 	mMouse->AutoDelay.Max = args[2]->Int32Value();
@@ -82,20 +102,16 @@ void MouseWrap::GetPos (const FunctionCallbackInfo<Value>& args)
 	ISOLATE;
 	// Get the mouse position
 	Point p = Mouse::GetPos();
-
-	auto res = NEW_OBJ;
-	res->Set (NEW_STR ("x"), NEW_INT (p.X));
-	res->Set (NEW_STR ("y"), NEW_INT (p.Y));
-	RETURN (res);
+	RETURN_POINT (p.X, p.Y);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void MouseWrap::SetPos (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE;
-	Mouse::SetPos (args[0]->Int32Value(),
-				   args[1]->Int32Value());
+	ISOLATE; Mouse::SetPos
+		(args[0]->Int32Value(),
+		 args[1]->Int32Value());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +119,7 @@ void MouseWrap::SetPos (const FunctionCallbackInfo<Value>& args)
 void MouseWrap::GetState (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
+	// Not arguments were given
 	if (args[0]->IsUndefined())
 	{
 		auto res = NEW_OBJ;
@@ -118,9 +135,15 @@ void MouseWrap::GetState (const FunctionCallbackInfo<Value>& args)
 		RETURN (res);
 	}
 
-	RETURN_BOOL (Mouse::GetState
-		// Get info about a single button
-		((Button) args[0]->Int32Value()));
+	// A button was given
+	if (args[0]->IsInt32())
+	{
+		RETURN_BOOL (Mouse::GetState
+			// Get info about a single button
+			((Button) args[0]->Int32Value()));
+	}
+
+	THROW (Type, "Invalid arguments");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -128,9 +151,22 @@ void MouseWrap::GetState (const FunctionCallbackInfo<Value>& args)
 void MouseWrap::New (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
-	// Create new class instance and wrap it
-	(new MouseWrap())  ->Wrap (args.This());
-	args.GetReturnValue().Set (args.This());
+	// Whether called using new
+	if (args.IsConstructCall())
+	{
+		(new MouseWrap())->Wrap (args.This());
+		args.This()->Set (NEW_STR ("autoDelay"),
+						  NEW_RANGE ( 40,  90));
+
+		RETURN (args.This());
+	}
+
+	else
+	{
+		auto ctor = NEW_CTOR (Mouse);
+		// Return as a new instance
+		RETURN (ctor->NewInstance());
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -145,15 +181,15 @@ void MouseWrap::Initialize (Handle<Object> exports)
 	tpl->InstanceTemplate()->SetInternalFieldCount (1);
 	tpl->SetClassName (NEW_STR ("Mouse"));
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "click",   Click  );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "press",   Press  );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "release", Release);
-	NODE_SET_PROTOTYPE_METHOD (tpl, "scrollH", ScrollH);
-	NODE_SET_PROTOTYPE_METHOD (tpl, "scrollV", ScrollV);
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_click",   Click  );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_press",   Press  );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_release", Release);
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_scrollH", ScrollH);
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_scrollV", ScrollV);
 
-	NODE_SET_METHOD (tpl, "getPos",   GetPos  );
-	NODE_SET_METHOD (tpl, "setPos",   SetPos  );
-	NODE_SET_METHOD (tpl, "getState", GetState);
+	NODE_SET_METHOD (tpl,  "getPos",   GetPos  );
+	NODE_SET_METHOD (tpl, "_setPos",   SetPos  );
+	NODE_SET_METHOD (tpl,  "getState", GetState);
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());

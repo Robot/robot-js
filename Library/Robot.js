@@ -56,9 +56,7 @@ if (mNative === null)
 var mRobot =
 {
 	ADDON_VERSION		: 0x000000,
-	ROBOT_VERSION		: 0x000000,
-	ADDON_VERSION_STR	: "0.0.0",
-	ROBOT_VERSION_STR	: "0.0.0"
+	ADDON_VERSION_STR	: "0.0.0"
 };
 
 mRobot.Hash				= require ("./Hash"		)(mRobot);
@@ -162,4 +160,7 @@ mRobot.Bounds.prototype.toString = function()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = mRobot;
+mNative.prepare  (mRobot);
+ module.exports = mRobot;
+
+// TODO: Implement cloning

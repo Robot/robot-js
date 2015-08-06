@@ -43,7 +43,7 @@ private:
 public:
 	static void		Initialize		(Handle<Object> exports);
 
-private:
+public:
 	Keyboard mKeyboard;
 
 	// Function which defines class creator

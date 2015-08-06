@@ -398,6 +398,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		assert (r1.contains, r1, [   ]);
 		assert (r1.contains, r1, ["a"]);
+		assert (r1.contains, r1, [ 0, "a"]);
 
 		assert (r1.eq, r1, ["a"]);
 		assert (r1.ne, r1, ["a"]);

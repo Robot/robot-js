@@ -46,7 +46,7 @@ private:
 public:
 	static void		Initialize		(Handle<Object> exports);
 
-private:
+public:
 	Mouse mMouse;
 
 	// Function which defines class creator

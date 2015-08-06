@@ -74,8 +74,9 @@ module.exports = function (robot)
 		if (inclusive === undefined)
 			inclusive = true;
 
-		// Verify that value is valid
-		if (typeof value !== "number")
+		// Verify that parameters are valid
+		if (typeof value     !== "number" ||
+			typeof inclusive !== "boolean")
 			throw new TypeError ("Invalid arguments");
 
 		return inclusive ?

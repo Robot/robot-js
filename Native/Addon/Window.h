@@ -26,8 +26,6 @@
 
 class WindowWrap : public ObjectWrap
 {
-	friend class ProcessWrap;
-
 private:
 	 WindowWrap						(void);
 	~WindowWrap						(void);
@@ -70,7 +68,7 @@ private:
 public:
 	static void		Initialize		(Handle<Object> exports);
 
-private:
+public:
 	Window mWindow;
 
 	// Function which defines class creator

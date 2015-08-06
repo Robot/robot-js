@@ -16,106 +16,72 @@
 module.exports = function (robot, native)
 {
 	//----------------------------------------------------------------------------//
-	// Constants                                                                  //
-	//----------------------------------------------------------------------------//
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	robot.BUTTON_LEFT		= 0;
-	robot.BUTTON_MID		= 1;
-	robot.BUTTON_MIDDLE		= 1;
-	robot.BUTTON_RIGHT		= 2;
-	robot.BUTTON_X1			= 3;
-	robot.BUTTON_X2			= 4;
-
-
-
-	//----------------------------------------------------------------------------//
-	// Constructor                                                          Mouse //
-	//----------------------------------------------------------------------------//
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	function Mouse()
-	{
-		// Auto instantiate the Mouse
-		if (!(this instanceof Mouse))
-			return new Mouse();
-
-		// Setup the initial auto delay range
-		this.autoDelay = robot.Range (40, 90);
-		this._mouse    = new native.Mouse();
-	}
-
-
-
-	//----------------------------------------------------------------------------//
 	// Functions                                                            Mouse //
 	//----------------------------------------------------------------------------//
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.prototype.click = function (button)
+	native.Mouse.prototype.click = function (button)
 	{
-		// Verify that button is valid
-		if (typeof button !== "number")
-			throw new TypeError ("Invalid arguments");
+		// AutoDelay should always be a range object
+		if (!(this.autoDelay instanceof robot.Range))
+			throw new TypeError ("Invalid properties");
 
-		this._mouse.click (button,
-			   this.autoDelay.min,
-			   this.autoDelay.max);
+		this._click (button,
+			this.autoDelay.min,
+			this.autoDelay.max);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.prototype.press = function (button)
+	native.Mouse.prototype.press = function (button)
 	{
-		// Verify that button is valid
-		if (typeof button !== "number")
-			throw new TypeError ("Invalid arguments");
+		// AutoDelay should always be a range object
+		if (!(this.autoDelay instanceof robot.Range))
+			throw new TypeError ("Invalid properties");
 
-		this._mouse.press (button,
-			   this.autoDelay.min,
-			   this.autoDelay.max);
+		this._press (button,
+			this.autoDelay.min,
+			this.autoDelay.max);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.prototype.release = function (button)
+	native.Mouse.prototype.release = function (button)
 	{
-		// Verify that button is valid
-		if (typeof button !== "number")
-			throw new TypeError ("Invalid arguments");
+		// AutoDelay should always be a range object
+		if (!(this.autoDelay instanceof robot.Range))
+			throw new TypeError ("Invalid properties");
 
-		this._mouse.release (button,
-				 this.autoDelay.min,
-				 this.autoDelay.max);
+		this._release (button,
+			this.autoDelay.min,
+			this.autoDelay.max);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.prototype.scrollH = function (amount)
+	native.Mouse.prototype.scrollH = function (amount)
 	{
-		// Verify that amount is valid
-		if (typeof amount !== "number")
-			throw new TypeError ("Invalid arguments");
+		// AutoDelay should always be a range object
+		if (!(this.autoDelay instanceof robot.Range))
+			throw new TypeError ("Invalid properties");
 
-		this._mouse.scrollH (amount,
-				 this.autoDelay.min,
-				 this.autoDelay.max);
+		this._scrollH (amount,
+			this.autoDelay.min,
+			this.autoDelay.max);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.prototype.scrollV = function (amount)
+	native.Mouse.prototype.scrollV = function (amount)
 	{
-		// Verify that amount is valid
-		if (typeof amount !== "number")
-			throw new TypeError ("Invalid arguments");
+		// AutoDelay should always be a range object
+		if (!(this.autoDelay instanceof robot.Range))
+			throw new TypeError ("Invalid properties");
 
-		this._mouse.scrollV (amount,
-				 this.autoDelay.min,
-				 this.autoDelay.max);
+		this._scrollV (amount,
+			this.autoDelay.min,
+			this.autoDelay.max);
 	};
 
 
@@ -126,34 +92,14 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.getPos = function()
+	native.Mouse.setPos = function (ax, ay)
 	{
-		return robot.Point
-			(native.Mouse.getPos());
+		var p = robot.Point.
+			normalize( ax,  ay);
+		this._setPos (p.x, p.y);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Mouse.setPos = function (ax, ay)
-	{
-		var p = robot.
-			Point.normalize ( ax,  ay);
-		native.Mouse.setPos (p.x, p.y);
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	Mouse.getState = function (button)
-	{
-		// Verify that button is valid
-		if (button !== undefined &&
-			typeof button !== "number")
-			throw new TypeError ("Invalid arguments");
-
-		return native.Mouse.getState (button);
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	return Mouse;
+	return native.Mouse;
 };
