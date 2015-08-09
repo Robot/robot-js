@@ -14,7 +14,7 @@
 #ifndef ADDON_COMMON_H
 #define ADDON_COMMON_H
 
-#include <node.h>
+#include <node_buffer.h>
 #include <node_object_wrap.h>
 #include "../Robot/Robot.h"
 
@@ -25,25 +25,85 @@ ROBOT_NS_USE_ALL;
 
 
 //----------------------------------------------------------------------------//
-// Macros                                                                     //
+// Wrappers                                                                   //
 //----------------------------------------------------------------------------//
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Common macro for wrapper creation
 
-#define SET_WRAP( name )									\
-	Persistent<Function> name ## Wrap::constructor;			\
-	name ## Wrap:: name ## Wrap (void) { }					\
-	name ## Wrap::~name ## Wrap (void) { }					\
+enum RobotType
+{
+	TypeImage		= 0x100,
+	TypeKeyboard	= 0x200,
+	TypeMouse		= 0x300,
+	TypeProcess		= 0x400,
+	TypeMemory		= 0x500,
+	TypeWindow		= 0x600,
+	TypeScreen		= 0x700,
+	TypeClipboard	= 0x800,
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+#define DECLARE_ROBOT_TYPE( type )							\
+	public:													\
+		static Persistent<Function> constructor;			\
+		static const int ClassType = Type ## type;			\
+	private:												\
+		 type ## Wrap (void);								\
+		~type ## Wrap (void);
+
+////////////////////////////////////////////////////////////////////////////////
+
+#define DEFINE_ROBOT_TYPE( type )							\
+	Persistent<Function> type ## Wrap::constructor;			\
+	type ## Wrap:: type ## Wrap (void) { }					\
+	type ## Wrap::~type ## Wrap (void) { }					\
 	extern Persistent<Function> JsColor;					\
-	extern Persistent<Function> JsImage;					\
 	extern Persistent<Function> JsRange;					\
 	extern Persistent<Function> JsPoint;					\
 	extern Persistent<Function> JsSize;						\
 	extern Persistent<Function> JsBounds;
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Create scope using current isolation
+
+#define REGISTER_ROBOT_TYPE									\
+	args.This()->SetHiddenValue (NEW_STR					\
+	("_ROBOT_TYPE"), NEW_INT (ClassType));
+
+////////////////////////////////////////////////////////////////////////////////
+
+template <class T>
+inline T* UnwrapRobot (Handle<Value> value)
+{
+	// Get the current isolated V8 instance
+	Isolate* isolate = Isolate::GetCurrent();
+
+	// Value needs to be at least an object
+	if (!value->IsObject()) return nullptr;
+
+	// Convert and get hidden type
+	auto obj  = value->ToObject();
+	auto type = obj->GetHiddenValue
+		  (NEW_STR ("_ROBOT_TYPE"));
+
+	// The value must contain a handle
+	if (type.IsEmpty()) return nullptr;
+
+	// Compare hidden type with class type
+	if (type->Int32Value() != T::ClassType)
+		return nullptr;
+
+	// Return the final unwrapped class
+	return ObjectWrap::Unwrap<T> (obj);
+}
+
+
+
+//----------------------------------------------------------------------------//
+// Macros                                                                     //
+//----------------------------------------------------------------------------//
+
+////////////////////////////////////////////////////////////////////////////////
 
 #define ISOLATE												\
 	Isolate* isolate = Isolate::GetCurrent();				\
@@ -51,7 +111,6 @@ ROBOT_NS_USE_ALL;
 	Local<Value> _jsArgs[4];
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Get the associated class wrapper
 
 #define UNWRAP( type, target )								\
 	auto* m ## type ## Wrap = ObjectWrap::					\
@@ -59,12 +118,10 @@ ROBOT_NS_USE_ALL;
 	auto* m ## type = &m ## type ## Wrap->m ## type;
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Isolate and get the class wrapper
 
 #define ISOWRAP( type, target ) ISOLATE; UNWRAP (type, target);
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Various JavaScript type creators
 
 #define NEW_INT( value ) Integer::New         (isolate, value )
 #define NEW_NUM( value ) Number ::New         (isolate, value )
@@ -72,6 +129,7 @@ ROBOT_NS_USE_ALL;
 #define NEW_STR( value ) String ::NewFromUtf8 (isolate, value )
 #define NEW_OBJ          Object ::New         (isolate        )
 #define NEW_ARR( length) Array  ::New         (isolate, length)
+#define NEW_NULL         Null                 (isolate        )
 
 #define NEW_CTOR( type ) Local<Function>::New				\
 		(isolate, type ## Wrap::constructor)
@@ -84,14 +142,6 @@ ROBOT_NS_USE_ALL;
 		_jsArgs[3] = NEW_INT (a),							\
 		Local<Function>::New								\
 			(isolate, JsColor)->NewInstance (4, _jsArgs)	\
-	)
-
-#define NEW_IMAGE( w, h )									\
-	(														\
-		_jsArgs[0] = NEW_INT (w),							\
-		_jsArgs[1] = NEW_INT (h),							\
-		Local<Function>::New								\
-			(isolate, JsImage)->NewInstance (2, _jsArgs)	\
 	)
 
 #define NEW_RANGE( min, max )								\
@@ -129,7 +179,6 @@ ROBOT_NS_USE_ALL;
 	)
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Simulate simple value returns
 
 #define RETURN( value ) { args.GetReturnValue().Set (value); return; }
 
@@ -139,12 +188,10 @@ ROBOT_NS_USE_ALL;
 #define RETURN_STR( value ) RETURN (NEW_STR  (value));
 #define RETURN_OBJ          RETURN (NEW_OBJ         );
 #define RETURN_ARR          RETURN (NEW_ARR  (0    ));
+#define RETURN_NULL         RETURN (NEW_NULL        );
 
 #define  RETURN_COLOR( r, g, b, a )							\
 	RETURN (NEW_COLOR (r, g, b, a));
-
-#define  RETURN_IMAGE( w, h )								\
-	RETURN (NEW_IMAGE (w, h));
 
 #define  RETURN_RANGE( min, max )							\
 	RETURN (NEW_RANGE (min, max));
@@ -159,7 +206,6 @@ ROBOT_NS_USE_ALL;
 	RETURN (NEW_BOUNDS (x, y, w, h));
 
 ////////////////////////////////////////////////////////////////////////////////
-/// Cleaner way of throwing exceptions
 
 #define THROW( type, error )								\
 	RETURN (isolate->ThrowException (Exception				\

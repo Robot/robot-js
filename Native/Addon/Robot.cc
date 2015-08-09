@@ -11,11 +11,12 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
+#include "Image.h"
+
 #include "Keyboard.h"
 #include "Mouse.h"
 
 #include "Process.h"
-#include "Module.h"
 #include "Memory.h"
 
 #include "Window.h"
@@ -23,7 +24,6 @@
 #include "Clipboard.h"
 
 Persistent<Function> JsColor;
-Persistent<Function> JsImage;
 Persistent<Function> JsRange;
 Persistent<Function> JsPoint;
 Persistent<Function> JsSize;
@@ -43,19 +43,17 @@ static void Prepare (const FunctionCallbackInfo<Value>& args)
 	jsRobot->Set (NEW_STR ("ROBOT_VERSION"    ), NEW_INT (ROBOT_VERSION    ));
 	jsRobot->Set (NEW_STR ("ROBOT_VERSION_STR"), NEW_STR (ROBOT_VERSION_STR));
 
-	auto color  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Color" )));
-	auto image  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Image" )));
-	auto range  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Range" )));
-	auto point  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Point" )));
-	auto size   = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Size"  )));
-	auto bounds = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Bounds")));
+	auto color   = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Color"  )));
+	auto range   = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Range"  )));
+	auto point   = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Point"  )));
+	auto size    = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Size"   )));
+	auto bounds  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Bounds" )));
 
-	JsColor .Reset (isolate, color );
-	JsImage .Reset (isolate, image );
-	JsRange .Reset (isolate, range );
-	JsPoint .Reset (isolate, point );
-	JsSize  .Reset (isolate, size  );
-	JsBounds.Reset (isolate, bounds);
+	JsColor  .Reset (isolate, color  );
+	JsRange  .Reset (isolate, range  );
+	JsPoint  .Reset (isolate, point  );
+	JsSize   .Reset (isolate, size   );
+	JsBounds .Reset (isolate, bounds );
 
 
 
@@ -223,11 +221,12 @@ static void Initialize (Handle<Object> exports)
 	NODE_SET_METHOD (exports, "sleep",   Sleep  );
 	NODE_SET_METHOD (exports, "clock",   Clock  );
 
+//	    ImageWrap::Initialize (exports);
+
 	 KeyboardWrap::Initialize (exports);
 	    MouseWrap::Initialize (exports);
 
 	  ProcessWrap::Initialize (exports);
-//	   ModuleWrap::Initialize (exports);
 //	   MemoryWrap::Initialize (exports);
 
 	   WindowWrap::Initialize (exports);

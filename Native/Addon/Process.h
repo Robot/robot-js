@@ -26,9 +26,7 @@
 
 class ProcessWrap : public ObjectWrap
 {
-private:
-	 ProcessWrap					(void);
-	~ProcessWrap					(void);
+	DECLARE_ROBOT_TYPE (Process);
 
 private:
 	static void		 Open			(const FunctionCallbackInfo<Value>& args);
@@ -55,9 +53,6 @@ public:
 
 public:
 	Process mProcess;
-
-	// Function which defines class creator
-	static Persistent<Function> constructor;
 };
 
 #endif // ADDON_PROCESS_H

@@ -12,7 +12,7 @@
 //----------------------------------------------------------------------------//
 
 #include "Mouse.h"
-SET_WRAP (Mouse);
+DEFINE_ROBOT_TYPE (Mouse);
 
 
 
@@ -158,6 +158,7 @@ void MouseWrap::New (const FunctionCallbackInfo<Value>& args)
 		args.This()->Set (NEW_STR ("autoDelay"),
 						  NEW_RANGE ( 40,  90));
 
+		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
 	}
 

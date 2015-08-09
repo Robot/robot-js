@@ -41,9 +41,9 @@
     <ClInclude Include="..\Robot\Window.h" />
     <ClInclude Include="Clipboard.h" />
     <ClInclude Include="Common.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Memory.h" />
-    <ClInclude Include="Module.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Screen.h" />
@@ -152,6 +152,12 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">$(IntDir)\Addon\</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">$(IntDir)\Addon\</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="Image.cc">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">$(IntDir)\Addon\</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">$(IntDir)\Addon\</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">$(IntDir)\Addon\</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">$(IntDir)\Addon\</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="Keyboard.cc">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">$(IntDir)\Addon\</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">$(IntDir)\Addon\</ObjectFileName>
@@ -159,12 +165,6 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">$(IntDir)\Addon\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="Memory.cc">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">$(IntDir)\Addon\</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">$(IntDir)\Addon\</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">$(IntDir)\Addon\</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">$(IntDir)\Addon\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="Module.cc">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">$(IntDir)\Addon\</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">$(IntDir)\Addon\</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">$(IntDir)\Addon\</ObjectFileName>

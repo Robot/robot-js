@@ -12,7 +12,7 @@
 //----------------------------------------------------------------------------//
 
 #include "Keyboard.h"
-SET_WRAP (Keyboard);
+DEFINE_ROBOT_TYPE (Keyboard);
 
 
 
@@ -152,6 +152,7 @@ void KeyboardWrap::New (const FunctionCallbackInfo<Value>& args)
 		args.This()->Set (NEW_STR ("autoDelay"),
 						  NEW_RANGE ( 40,  90));
 
+		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
 	}
 

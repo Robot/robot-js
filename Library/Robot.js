@@ -61,12 +61,12 @@ var mRobot =
 
 mRobot.Hash				= require ("./Hash"		)(mRobot);
 mRobot.Color			= require ("./Color"	)(mRobot);
-mRobot.Image			= require ("./Image"	)(mRobot);
 mRobot.Range			= require ("./Range"	)(mRobot);
 mRobot.Point			= require ("./Point"	)(mRobot);
 mRobot.Size				= require ("./Size"		)(mRobot);
 mRobot.Bounds			= require ("./Bounds"	)(mRobot);
 
+mRobot.Image			= require ("./Image"	)(mRobot, mNative);
 mRobot.Keyboard			= require ("./Keyboard"	)(mRobot, mNative);
 mRobot.Mouse			= require ("./Mouse"	)(mRobot, mNative);
 mRobot.Process			= require ("./Process"	)(mRobot, mNative);
@@ -80,7 +80,7 @@ mRobot.Clipboard		= require ("./Clipboard")(mRobot, mNative);
 
 
 //----------------------------------------------------------------------------//
-// Helpers                                                                    //
+// ToString                                                                   //
 //----------------------------------------------------------------------------//
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -150,6 +150,21 @@ mRobot.Bounds.prototype.toString = function()
 		+ this.y + ", "
 		+ this.w + ", "
 		+ this.h + "]";
+};
+
+
+
+//----------------------------------------------------------------------------//
+// Compare                                                                    //
+//----------------------------------------------------------------------------//
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Timer.compare = function (a, b)
+{
+	if (a.lt (b)) return -1;
+	if (a.gt (b)) return  1;
+	return 0;
 };
 
 

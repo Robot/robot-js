@@ -13,7 +13,7 @@
 
 #include "Process.h"
 #include "Window.h"
-SET_WRAP (Process);
+DEFINE_ROBOT_TYPE (Process);
 
 
 
@@ -241,6 +241,8 @@ void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 		args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (process->Is64Bit()));
 		args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (process->GetName().data()));
 		args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (process->GetPath().data()));
+
+		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
 	}
 

@@ -26,9 +26,7 @@
 
 class WindowWrap : public ObjectWrap
 {
-private:
-	 WindowWrap						(void);
-	~WindowWrap						(void);
+	DECLARE_ROBOT_TYPE (Window);
 
 private:
 	static void		IsValid			(const FunctionCallbackInfo<Value>& args);
@@ -70,9 +68,6 @@ public:
 
 public:
 	Window mWindow;
-
-	// Function which defines class creator
-	static Persistent<Function> constructor;
 };
 
 #endif // ADDON_WINDOW_H

@@ -26,9 +26,7 @@
 
 class KeyboardWrap : public ObjectWrap
 {
-private:
-	 KeyboardWrap					(void);
-	~KeyboardWrap					(void);
+	DECLARE_ROBOT_TYPE (Keyboard);
 
 private:
 	static void		Click			(const FunctionCallbackInfo<Value>& args);
@@ -45,9 +43,6 @@ public:
 
 public:
 	Keyboard mKeyboard;
-
-	// Function which defines class creator
-	static Persistent<Function> constructor;
 };
 
 #endif // ADDON_KEYBOARD_H

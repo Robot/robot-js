@@ -152,6 +152,7 @@ public:
 	bool				IsCaching		(void) const;
 	uintptr				GetCacheSize	(void) const;
 
+	uintptr				GetPtrSize		(void) const;
 	uintptr				GetMinAddress	(void) const;
 	uintptr				GetMaxAddress	(void) const;
 	uintptr				GetPageSize		(void) const;

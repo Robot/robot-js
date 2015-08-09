@@ -26,9 +26,7 @@
 
 class MouseWrap : public ObjectWrap
 {
-private:
-	 MouseWrap						(void);
-	~MouseWrap						(void);
+	DECLARE_ROBOT_TYPE (Mouse);
 
 private:
 	static void		Click			(const FunctionCallbackInfo<Value>& args);
@@ -48,9 +46,6 @@ public:
 
 public:
 	Mouse mMouse;
-
-	// Function which defines class creator
-	static Persistent<Function> constructor;
 };
 
 #endif // ADDON_MOUSE_H

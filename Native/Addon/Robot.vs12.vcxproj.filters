@@ -39,13 +39,13 @@
     <ClInclude Include="Common.h">
       <Filter>Addon</Filter>
     </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
     <ClInclude Include="Keyboard.h">
       <Filter>Addon</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">
-      <Filter>Addon</Filter>
-    </ClInclude>
-    <ClInclude Include="Module.h">
       <Filter>Addon</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
@@ -125,13 +125,13 @@
     <ClCompile Include="Clipboard.cc">
       <Filter>Addon</Filter>
     </ClCompile>
+    <ClCompile Include="Image.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
     <ClCompile Include="Keyboard.cc">
       <Filter>Addon</Filter>
     </ClCompile>
     <ClCompile Include="Memory.cc">
-      <Filter>Addon</Filter>
-    </ClCompile>
-    <ClCompile Include="Module.cc">
       <Filter>Addon</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cc">

@@ -28,9 +28,9 @@ module.exports = function (robot)
 			return new Color (ar, ag, ab, aa);
 
 		var c = Color.normalize (ar, ag, ab, aa);
-		this.b = c.b;
-		this.g = c.g;
 		this.r = c.r;
+		this.g = c.g;
+		this.b = c.b;
 		this.a = c.a;
 	}
 

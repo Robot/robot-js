@@ -224,6 +224,13 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 	////////////////////////////////////////////////////////////////////////////////
 
+	function testImage3()
+	{
+		return true;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+
 	function testRange()
 	{
 		var r1 = Range ();
@@ -1008,7 +1015,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (b1.containsB,  b1, [{ x: 0 }]);
 		assert (b1.intersects, b1, [{ x: 0 }]);
 		assert (b1.setPoint,   b1, [{ x: 0 }]);
-		assert (b1.setSize,    b1, [{ x: 0 }]);
+		assert (b1.setSize,    b1, [{ w: 0 }]);
 		assert (b1.unite,      b1, [{ x: 0 }]);
 		assert (b1.intersect,  b1, [{ x: 0 }]);
 
@@ -1095,6 +1102,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		if (!testColor ()) { log (">> Color Failed \n\n"); return false; }
 		if (!testImage1()) { log (">> Image1 Failed\n\n"); return false; }
 		if (!testImage2()) { log (">> Image2 Failed\n\n"); return false; }
+		if (!testImage3()) { log (">> Image3 Failed\n\n"); return false; }
 		if (!testRange ()) { log (">> Range Failed \n\n"); return false; }
 		if (!testBounds()) { log (">> Bounds Failed\n\n"); return false; }
 		log (">> Success\n\n"); return true;

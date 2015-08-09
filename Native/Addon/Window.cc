@@ -13,7 +13,7 @@
 
 #include "Window.h"
 #include "Process.h"
-SET_WRAP (Window);
+DEFINE_ROBOT_TYPE (Window);
 
 
 
@@ -392,6 +392,7 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 						  NEW_INT (( uint32 )
 						  window->GetHandle()));
 
+		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
 	}
 
