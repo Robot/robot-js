@@ -21,34 +21,51 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Image.prototype.isValid   = function() {  };
-	native.Image.prototype.getWidth  = function() {  };
-	native.Image.prototype.getHeight = function() {  };
-	native.Image.prototype.getLength = function() {  };
-	native.Image.prototype.getLimit  = function() {  };
+	native.Image.prototype.isValid   = function() { return this._valid;  };
+	native.Image.prototype.getWidth  = function() { return this._width;  };
+	native.Image.prototype.getHeight = function() { return this._height; };
+	native.Image.prototype.getLength = function() { return this._length; };
+	native.Image.prototype.getLimit  = function() { return this._limit;  };
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	native.Image.prototype.create = function (aw, ah)
 	{
+		var s = robot.Size.
+			normalize ( aw,  ah);
+		this._create  (s.w, s.h);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	native.Image.prototype.getPixel = function (ax, ay)
 	{
+		var p = robot
+			 .Point.normalize ( ax,  ay);
+		return this._getPixel (p.x, p.y);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	native.Image.prototype.setPixel = function (ax, ay, color)
 	{
+		var c = arguments[arguments.length - 1];
+
+		// Check if argument is a color
+		if (!(c instanceof robot.Color))
+			throw new TypeError ("Invalid arguments");
+
+		var p = robot.Point.normalize (ax, ay);
+		this._setPixel (p.x, p.y, c.r, c.g, c.b, c.a);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	native.Image.prototype.fill = function (ar, ag, ab, aa)
 	{
+		var c = robot.
+			Color.normalize ( ar,  ag,  ab,  aa);
+		return this._fill   (c.r, c.g, c.b, c.a);
 	};
 
 
@@ -61,12 +78,22 @@ module.exports = function (robot, native)
 
 	native.Image.prototype.eq = function (image)
 	{
+		// Check if image is a native image
+		if (!(image instanceof native.Image))
+			throw new TypeError ("Invalid arguments");
+
+		return  this._equals (image);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
 	native.Image.prototype.ne = function (image)
 	{
+		// Check if image is a native image
+		if (!(image instanceof native.Image))
+			throw new TypeError ("Invalid arguments");
+
+		return !this._equals (image);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
