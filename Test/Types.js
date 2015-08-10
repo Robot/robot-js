@@ -212,6 +212,209 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 	function testImage1()
 	{
+		var i1 = Image ( );
+		var i2 = Image (0);
+		var i3 = Image (6);
+		var i4 = Image (2, 4);
+		var i5 = Image (0, 4);
+		var i6 = Image (2, 0);
+
+		assert (!i1.isValid());
+		assert (!i2.isValid());
+		assert ( i3.isValid());
+		assert ( i4.isValid());
+		assert (!i5.isValid());
+		assert (!i6.isValid());
+
+		assert (i1.getWidth() === 0); assert (i1.getHeight() === 0);
+		assert (i2.getWidth() === 0); assert (i2.getHeight() === 0);
+		assert (i3.getWidth() === 6); assert (i3.getHeight() === 6);
+		assert (i4.getWidth() === 2); assert (i4.getHeight() === 4);
+		assert (i5.getWidth() === 0); assert (i5.getHeight() === 0);
+		assert (i6.getWidth() === 0); assert (i6.getHeight() === 0);
+
+		assert (i1.getLength() ===  0); assert (!i1.getData());
+		assert (i2.getLength() ===  0); assert (!i2.getData());
+		assert (i3.getLength() === 36); assert ( i3.getData());
+		assert (i4.getLength() ===  8); assert ( i4.getData());
+		assert (i5.getLength() ===  0); assert (!i5.getData());
+		assert (i6.getLength() ===  0); assert (!i6.getData());
+
+		i3.create (6, 8);
+		assert (i3.isValid() === true);
+		assert (i3.getWidth () ===  6);
+		assert (i3.getHeight() ===  8);
+		assert (i3.getLength() === 48);
+		assert (i3.getLimit () === 48);
+
+		i3.create (4);
+		i4.create (4);
+		assert (i3.isValid() === true);
+		assert (i3.getWidth () ===  4);
+		assert (i3.getHeight() ===  4);
+		assert (i3.getLength() === 16);
+		assert (i3.getLimit () === 48);
+
+		assert (i4.isValid() === true);
+		assert (i4.getWidth () ===  4);
+		assert (i4.getHeight() ===  4);
+		assert (i4.getLength() === 16);
+		assert (i4.getLimit () === 16);
+
+		i3.getData()[ 0] = 0x00808080;
+		i3.getData()[ 1] = 0x08808080;
+		i3.getData()[ 2] = 0x80808080;
+		i3.getData()[ 3] = 0xFF808080;
+
+		i3.getData()[ 4] = 0x00FF0000;
+		i3.getData()[ 5] = 0x08FF0000;
+		i3.getData()[ 6] = 0x80FF0000;
+		i3.getData()[ 7] = 0xFFFF0000;
+
+		i3.getData()[ 8] = 0x0000FF00;
+		i3.getData()[ 9] = 0x0800FF00;
+		i3.getData()[10] = 0x8000FF00;
+		i3.getData()[11] = 0xFF00FF00;
+
+		i3.getData()[12] = 0x000000FF;
+		i3.getData()[13] = 0x080000FF;
+		i3.getData()[14] = 0x800000FF;
+		i3.getData()[15] = 0xFF0000FF;
+
+		i4.setPixel (0, 0, Color (0x00808080));
+		i4.setPixel (1, 0, Color (0x08808080));
+		i4.setPixel (2, 0, Color (0x80808080));
+		i4.setPixel (3, 0, Color (0xFF808080));
+
+		i4.setPixel (0, 1, Color (0x00FF0000));
+		i4.setPixel (1, 1, Color (0x08FF0000));
+		i4.setPixel (2, 1, Color (0x80FF0000));
+		i4.setPixel (3, 1, Color (0xFFFF0000));
+
+		i4.setPixel (0, 2, Color (0x0000FF00));
+		i4.setPixel (1, 2, Color (0x0800FF00));
+		i4.setPixel (2, 2, Color (0x8000FF00));
+		i4.setPixel (3, 2, Color (0xFF00FF00));
+
+		i4.setPixel (0, 3, Color (0x000000FF));
+		i4.setPixel (1, 3, Color (0x080000FF));
+		i4.setPixel (2, 3, Color (0x800000FF));
+		i4.setPixel (3, 3, Color (0xFF0000FF));
+
+		assert (i3.getPixel (0).eq (0x00808080));
+		assert (i3.getPixel (1).eq (0x08FF0000));
+		assert (i3.getPixel (2).eq (0x8000FF00));
+		assert (i3.getPixel (3).eq (0xFF0000FF));
+
+		assert (i3.getPixel (3, 0).eq (0xFF808080));
+		assert (i3.getPixel (2, 1).eq (0x80FF0000));
+		assert (i3.getPixel (1, 2).eq (0x0800FF00));
+		assert (i3.getPixel (0, 3).eq (0x000000FF));
+
+		assert (i4.getPixel (0).eq (0x00808080));
+		assert (i4.getPixel (1).eq (0x08FF0000));
+		assert (i4.getPixel (2).eq (0x8000FF00));
+		assert (i4.getPixel (3).eq (0xFF0000FF));
+
+		assert (i4.getPixel (3, 0).eq (0xFF808080));
+		assert (i4.getPixel (2, 1).eq (0x80FF0000));
+		assert (i4.getPixel (1, 2).eq (0x0800FF00));
+		assert (i4.getPixel (0, 3).eq (0x000000FF));
+
+		assert ( i3.eq (i4));
+		assert (!i3.ne (i4));
+
+		var testGetImage = function()
+		{
+			var i = Image (2, 2);
+			i.getData()[0] = 0x00808080;
+			i.getData()[1] = 0x08808080;
+			i.getData()[2] = 0x80808080;
+			i.getData()[3] = 0xFF808080;
+			return i;
+		};
+
+		i2 = Image (i3);
+		i4 = Image (i3);
+		i5 = testGetImage();
+		i6 = Image (i3);
+		i3.destroy (  );
+
+		assert (i4.getPixel (0).eq (0x00808080));
+		assert (i4.getPixel (1).eq (0x08FF0000));
+		assert (i4.getPixel (2).eq (0x8000FF00));
+		assert (i4.getPixel (3).eq (0xFF0000FF));
+
+		assert (i4.getPixel (3, 0).eq (0xFF808080));
+		assert (i4.getPixel (2, 1).eq (0x80FF0000));
+		assert (i4.getPixel (1, 2).eq (0x0800FF00));
+		assert (i4.getPixel (0, 3).eq (0x000000FF));
+
+		assert ( i2.isValid());
+		assert (!i3.isValid());
+		assert ( i4.isValid());
+		assert ( i5.isValid());
+		assert ( i6.isValid());
+
+		assert (i2.getWidth() === 4); assert (i2.getHeight() === 4);
+		assert (i3.getWidth() === 0); assert (i3.getHeight() === 0);
+		assert (i4.getWidth() === 4); assert (i4.getHeight() === 4);
+		assert (i5.getWidth() === 2); assert (i5.getHeight() === 2);
+		assert (i6.getWidth() === 4); assert (i6.getHeight() === 4);
+
+		assert (i2.getLength() === 16); assert ( i2.getData());
+		assert (i3.getLength() ===  0); assert (!i3.getData());
+		assert (i4.getLength() === 16); assert ( i4.getData());
+		assert (i5.getLength() ===  4); assert ( i5.getData());
+		assert (i6.getLength() === 16); assert ( i6.getData());
+
+		assert ( i1.eq (i1));
+		assert (!i1.eq (i2));
+		assert (!i1.ne (i1));
+		assert ( i1.ne (i2));
+
+		assert (i2.ne (i3));
+		assert (i3.ne (i2));
+		assert (i2.eq (i4));
+		assert (i4.eq (i2));
+		assert (i4.ne (i5));
+		assert (i5.ne (i4));
+		assert (i4.eq (i6));
+		assert (i6.eq (i4));
+
+		i4.create (2, 2);
+		assert (i4.eq (i5));
+		assert (i5.eq (i4));
+		i5.destroy();
+		assert (i4.ne (i5));
+		assert (i5.ne (i4));
+
+		var i7 = Image (  );
+		var i8 = Image (  );
+		var i9 = Image (i1);
+		i7 = Image (i1);
+		i8 = Image (i1);
+		i1.destroy (  );
+
+		i2 = Image (i7);
+		i4 = Image (i8);
+
+		i2 = Image (i2);
+		i4 = Image (i4);
+		i4.destroy (  );
+
+		assert (!i2.isValid());
+		assert (!i4.isValid());
+		assert (!i7.isValid());
+		assert (!i8.isValid());
+		assert (!i9.isValid());
+
+		assert (i2.getLength() === 0);
+		assert (i4.getLength() === 0);
+		assert (i7.getLength() === 0);
+		assert (i8.getLength() === 0);
+		assert (i9.getLength() === 0);
+
 		return true;
 	}
 
@@ -219,6 +422,129 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 	function testImage2()
 	{
+		var i1 = Image (    );
+		var i2 = Image (2, 3);
+		var data = i2.getData();
+		data[0] = 0x00FF0000;
+		data[1] = 0x0000FF00;
+		data[2] = 0x000000FF;
+		data[3] = 0xFFFF0000;
+		data[4] = 0xFF00FF00;
+		data[5] = 0xFF0000FF;
+
+		assert (!i1.fill (0x00, 0x00, 0x00, 0x00));
+		assert (!i1.swap ("argb"      ));
+		assert (!i1.flip (false, false));
+
+		assert (!i2.swap (""     ));
+		assert (!i2.swap ("gb"   ));
+		assert (!i2.swap ("r"    ));
+		assert (!i2.swap ("agb"  ));
+		assert (!i2.swap ("x"    ));
+		assert (!i2.swap ("airgb"));
+		assert (!i2.swap ("aargb"));
+		assert (!i2.swap ("argbr"));
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.swap ("argb"));
+		assert (data[0] === 0x00FF0000);
+		assert (data[1] === 0x0000FF00);
+		assert (data[2] === 0x000000FF);
+		assert (data[3] === 0xFFFF0000);
+		assert (data[4] === 0xFF00FF00);
+		assert (data[5] === 0xFF0000FF);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.swap ("rgba"));
+		assert (data[0] === 0xFF000000);
+		assert (data[1] === 0x00FF0000);
+		assert (data[2] === 0x0000FF00);
+		assert (data[3] === 0xFF0000FF);
+		assert (data[4] === 0x00FF00FF);
+		assert (data[5] === 0x0000FFFF);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.swap ("abgr"));
+		assert (data[0] === 0x000000FF);
+		assert (data[1] === 0x0000FF00);
+		assert (data[2] === 0x00FF0000);
+		assert (data[3] === 0xFF0000FF);
+		assert (data[4] === 0xFF00FF00);
+		assert (data[5] === 0xFFFF0000);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.swap ("bgra"));
+		assert (data[0] === 0x0000FF00);
+		assert (data[1] === 0x00FF0000);
+		assert (data[2] === 0xFF000000);
+		assert (data[3] === 0x0000FFFF);
+		assert (data[4] === 0x00FF00FF);
+		assert (data[5] === 0xFF0000FF);
+
+		i1.create (2, 2);
+		assert (i1.getLimit() === 6);
+
+		assert (i1.fill (0x00, 0x00, 0x00, 0x00));
+		assert (data[0] === 0x00000000);
+		assert (data[1] === 0x00000000);
+		assert (data[2] === 0x00000000);
+		assert (data[3] === 0x00000000);
+
+		assert (i1.fill (0xFF, 0x00, 0xFF, 0x00));
+		assert (data[0] === 0x00FF00FF);
+		assert (data[1] === 0x00FF00FF);
+		assert (data[2] === 0x00FF00FF);
+		assert (data[3] === 0x00FF00FF);
+
+		assert (i1.fill (0x00, 0xFF, 0x00));
+		assert (data[0] === 0xFF00FF00);
+		assert (data[1] === 0xFF00FF00);
+		assert (data[2] === 0xFF00FF00);
+		assert (data[3] === 0xFF00FF00);
+
+		assert (i1.fill (0x80, 0x08, 0x80, 0x08));
+		assert (data[0] === 0x08800880);
+		assert (data[1] === 0x08800880);
+		assert (data[2] === 0x08800880);
+		assert (data[3] === 0x08800880);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.flip (false, false));
+		assert (data[0] === 0x00FF0000); assert (data[1] === 0x0000FF00);
+		assert (data[2] === 0x000000FF); assert (data[3] === 0xFFFF0000);
+		assert (data[4] === 0xFF00FF00); assert (data[5] === 0xFF0000FF);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.flip (true, false));
+		assert (data[0] === 0x0000FF00); assert (data[1] === 0x00FF0000);
+		assert (data[2] === 0xFFFF0000); assert (data[3] === 0x000000FF);
+		assert (data[4] === 0xFF0000FF); assert (data[5] === 0xFF00FF00);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.flip (false, true));
+		assert (data[0] === 0xFF00FF00); assert (data[1] === 0xFF0000FF);
+		assert (data[2] === 0x000000FF); assert (data[3] === 0xFFFF0000);
+		assert (data[4] === 0x00FF0000); assert (data[5] === 0x0000FF00);
+
+		i1 = Image (i2); data = i1.getData();
+		assert (i1.flip (true, true));
+		assert (data[0] === 0xFF0000FF); assert (data[1] === 0xFF00FF00);
+		assert (data[2] === 0xFFFF0000); assert (data[3] === 0x000000FF);
+		assert (data[4] === 0x0000FF00); assert (data[5] === 0x00FF0000);
+
+		i1.create (1, 5); data = i1.getData();
+		data[0] = 0xFF000000;
+		data[1] = 0x00FF0000;
+		data[2] = 0xFFFFFFFF;
+		data[3] = 0x0000FF00;
+		data[4] = 0x000000FF;
+		assert (i1.flip (true, true));
+		assert (data[0] === 0x000000FF);
+		assert (data[1] === 0x0000FF00);
+		assert (data[2] === 0xFFFFFFFF);
+		assert (data[3] === 0x00FF0000);
+		assert (data[4] === 0xFF000000);
+
 		return true;
 	}
 
@@ -226,6 +552,56 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 	function testImage3()
 	{
+		var i1 = Image (2);
+
+		assert (i1.create,   i1, ["a"     ]);
+		assert (i1.create,   i1, [{ w: 0 }]);
+		assert (i1.getPixel, i1, ["a"     ]);
+		assert (i1.getPixel, i1, [{ x: 0 }]);
+		assert (i1.setPixel, i1, ["a"     ]);
+		assert (i1.setPixel, i1, [{ x: 0 }]);
+		assert (i1.setPixel, i1, [ 0,  0  ]);
+		assert (i1.fill,     i1, ["a"     ]);
+		assert (i1.fill,     i1, [{ r: 0 }]);
+		assert (i1.swap,     i1, [        ]);
+		assert (i1.swap,     i1, [ 0      ]);
+		assert (i1.flip,     i1, ["a"     ]);
+		assert (i1.flip,     i1, [ 0      ]);
+		assert (i1.eq,       i1, [        ]);
+		assert (i1.ne,       i1, [        ]);
+		assert (i1.eq,       i1, ["a"     ]);
+		assert (i1.ne,       i1, ["a"     ]);
+
+		assert (typeof i1.destroy   (  ) === "undefined"  );
+		assert (typeof i1.isValid   (  ) === "boolean"    );
+		assert (typeof i1.getWidth  (  ) === "number"     );
+		assert (typeof i1.getHeight (  ) === "number"     );
+		assert (typeof i1.getLength (  ) === "number"     );
+		assert (typeof i1.getLimit  (  ) === "number"     );
+		assert (       i1.getData   (  ) === null         );
+		assert (       i1.getPixel  (0 ) instanceof Color );
+		assert (typeof i1.setPixel  (0 , Color()) === "undefined");
+		assert (typeof i1.fill      (0 ) === "boolean");
+		assert (typeof i1.swap      ("") === "boolean");
+		assert (typeof i1.flip      (  ) === "boolean");
+		assert (typeof i1.eq        (i1) === "boolean");
+		assert (typeof i1.ne        (i1) === "boolean");
+
+		assert (typeof i1.create    (2 ) === "undefined"  );
+		assert (typeof i1.isValid   (  ) === "boolean"    );
+		assert (typeof i1.getWidth  (  ) === "number"     );
+		assert (typeof i1.getHeight (  ) === "number"     );
+		assert (typeof i1.getLength (  ) === "number"     );
+		assert (typeof i1.getLimit  (  ) === "number"     );
+		assert (       i1.getData   (  ) instanceof Uint32Array  );
+		assert (       i1.getPixel  (0 ) instanceof Color        );
+		assert (typeof i1.setPixel  (0 , Color()) === "undefined");
+		assert (typeof i1.fill      (0 ) === "boolean");
+		assert (typeof i1.swap      ("") === "boolean");
+		assert (typeof i1.flip      (  ) === "boolean");
+		assert (typeof i1.eq        (i1) === "boolean");
+		assert (typeof i1.ne        (i1) === "boolean");
+
 		return true;
 	}
 
