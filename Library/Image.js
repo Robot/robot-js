@@ -16,16 +16,60 @@
 module.exports = function (robot, native)
 {
 	//----------------------------------------------------------------------------//
-	// Constructor                                                          Image //
+	// Functions                                                            Image //
 	//----------------------------------------------------------------------------//
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	function Image()
-	{
-	}
+	native.Image.prototype.isValid   = function() {  };
+	native.Image.prototype.getWidth  = function() {  };
+	native.Image.prototype.getHeight = function() {  };
+	native.Image.prototype.getLength = function() {  };
+	native.Image.prototype.getLimit  = function() {  };
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	return Image;
+	native.Image.prototype.create = function (aw, ah)
+	{
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	native.Image.prototype.getPixel = function (ax, ay)
+	{
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	native.Image.prototype.setPixel = function (ax, ay, color)
+	{
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	native.Image.prototype.fill = function (ar, ag, ab, aa)
+	{
+	};
+
+
+
+	//----------------------------------------------------------------------------//
+	// Operators                                                            Image //
+	//----------------------------------------------------------------------------//
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	native.Image.prototype.eq = function (image)
+	{
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	native.Image.prototype.ne = function (image)
+	{
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	return native.Image;
 };

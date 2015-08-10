@@ -221,7 +221,7 @@ static void Initialize (Handle<Object> exports)
 	NODE_SET_METHOD (exports, "sleep",   Sleep  );
 	NODE_SET_METHOD (exports, "clock",   Clock  );
 
-//	    ImageWrap::Initialize (exports);
+	    ImageWrap::Initialize (exports);
 
 	 KeyboardWrap::Initialize (exports);
 	    MouseWrap::Initialize (exports);

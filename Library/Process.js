@@ -21,31 +21,10 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Process.prototype.is64Bit = function()
-	{
-		return this._is64Bit;
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	native.Process.prototype.getPID = function()
-	{
-		return this._procID;
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	native.Process.prototype.getName = function()
-	{
-		return this._name;
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	native.Process.prototype.getPath = function()
-	{
-		return this._path;
-	};
+	native.Process.prototype.is64Bit = function() { return this._is64Bit; };
+	native.Process.prototype.getPID  = function() { return this._procID;  };
+	native.Process.prototype.getName = function() { return this._name;    };
+	native.Process.prototype.getPath = function() { return this._path;    };
 
 
 

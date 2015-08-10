@@ -25,81 +25,6 @@ ROBOT_NS_USE_ALL;
 
 
 //----------------------------------------------------------------------------//
-// Wrappers                                                                   //
-//----------------------------------------------------------------------------//
-
-////////////////////////////////////////////////////////////////////////////////
-
-enum RobotType
-{
-	TypeImage		= 0x100,
-	TypeKeyboard	= 0x200,
-	TypeMouse		= 0x300,
-	TypeProcess		= 0x400,
-	TypeMemory		= 0x500,
-	TypeWindow		= 0x600,
-	TypeScreen		= 0x700,
-	TypeClipboard	= 0x800,
-};
-
-////////////////////////////////////////////////////////////////////////////////
-
-#define DECLARE_ROBOT_TYPE( type )							\
-	public:													\
-		static Persistent<Function> constructor;			\
-		static const int ClassType = Type ## type;			\
-	private:												\
-		 type ## Wrap (void);								\
-		~type ## Wrap (void);
-
-////////////////////////////////////////////////////////////////////////////////
-
-#define DEFINE_ROBOT_TYPE( type )							\
-	Persistent<Function> type ## Wrap::constructor;			\
-	type ## Wrap:: type ## Wrap (void) { }					\
-	type ## Wrap::~type ## Wrap (void) { }					\
-	extern Persistent<Function> JsColor;					\
-	extern Persistent<Function> JsRange;					\
-	extern Persistent<Function> JsPoint;					\
-	extern Persistent<Function> JsSize;						\
-	extern Persistent<Function> JsBounds;
-
-////////////////////////////////////////////////////////////////////////////////
-
-#define REGISTER_ROBOT_TYPE									\
-	args.This()->SetHiddenValue (NEW_STR					\
-	("_ROBOT_TYPE"), NEW_INT (ClassType));
-
-////////////////////////////////////////////////////////////////////////////////
-
-template <class T>
-inline T* UnwrapRobot (Handle<Value> value)
-{
-	// Get the current isolated V8 instance
-	Isolate* isolate = Isolate::GetCurrent();
-
-	// Value needs to be at least an object
-	if (!value->IsObject()) return nullptr;
-
-	// Convert and get hidden type
-	auto obj  = value->ToObject();
-	auto type = obj->GetHiddenValue
-		  (NEW_STR ("_ROBOT_TYPE"));
-
-	// The value must contain a handle
-	if (type.IsEmpty()) return nullptr;
-
-	// Compare hidden type with class type
-	if (type->Int32Value() != T::ClassType)
-		return nullptr;
-
-	// Return the final unwrapped class
-	return ObjectWrap::Unwrap<T> (obj);
-}
-
-
-
-//----------------------------------------------------------------------------//
 // Macros                                                                     //
 //----------------------------------------------------------------------------//
 
@@ -210,5 +135,80 @@ inline T* UnwrapRobot (Handle<Value> value)
 #define THROW( type, error )								\
 	RETURN (isolate->ThrowException (Exception				\
 			::type ##Error (NEW_STR (error))));
+
+
+
+//----------------------------------------------------------------------------//
+// Wrappers                                                                   //
+//----------------------------------------------------------------------------//
+
+////////////////////////////////////////////////////////////////////////////////
+
+enum RobotType
+{
+	TypeImage		= 0x100,
+	TypeKeyboard	= 0x200,
+	TypeMouse		= 0x300,
+	TypeProcess		= 0x400,
+	TypeMemory		= 0x500,
+	TypeWindow		= 0x600,
+	TypeScreen		= 0x700,
+	TypeClipboard	= 0x800,
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+#define DECLARE_ROBOT_TYPE( type )							\
+	public:													\
+		static Persistent<Function> constructor;			\
+		static const int ClassType = Type ## type;			\
+	private:												\
+		 type ## Wrap (void);								\
+		~type ## Wrap (void);
+
+////////////////////////////////////////////////////////////////////////////////
+
+#define DEFINE_ROBOT_TYPE( type )							\
+	Persistent<Function> type ## Wrap::constructor;			\
+	type ## Wrap:: type ## Wrap (void) { }					\
+	type ## Wrap::~type ## Wrap (void) { }					\
+	extern Persistent<Function> JsColor;					\
+	extern Persistent<Function> JsRange;					\
+	extern Persistent<Function> JsPoint;					\
+	extern Persistent<Function> JsSize;						\
+	extern Persistent<Function> JsBounds;
+
+////////////////////////////////////////////////////////////////////////////////
+
+#define REGISTER_ROBOT_TYPE									\
+	args.This()->SetHiddenValue (NEW_STR					\
+	("_ROBOT_TYPE"), NEW_INT (ClassType));
+
+////////////////////////////////////////////////////////////////////////////////
+
+template <class T>
+inline T* UnwrapRobot (Handle<Value> value)
+{
+	// Get the current isolated V8 instance
+	Isolate* isolate = Isolate::GetCurrent();
+
+	// Value needs to be at least an object
+	if (!value->IsObject()) return nullptr;
+
+	// Convert and get hidden type
+	auto obj  = value->ToObject();
+	auto type = obj->GetHiddenValue
+		  (NEW_STR ("_ROBOT_TYPE"));
+
+	// The value must contain a handle
+	if (type.IsEmpty()) return nullptr;
+
+	// Compare hidden type with class type
+	if (type->Int32Value() != T::ClassType)
+		return nullptr;
+
+	// Return the final unwrapped class
+	return ObjectWrap::Unwrap<T> (obj);
+}
 
 #endif // ADDON_COMMON_H
