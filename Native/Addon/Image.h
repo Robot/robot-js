@@ -29,10 +29,17 @@ class ImageWrap : public ObjectWrap
 	DECLARE_ROBOT_TYPE (Image);
 
 private:
+	static void		IsValid			(const FunctionCallbackInfo<Value>& args);
+
 	static void		Create			(const FunctionCallbackInfo<Value>& args);
 	static void		Destroy			(const FunctionCallbackInfo<Value>& args);
 
+	static void		GetWidth		(const FunctionCallbackInfo<Value>& args);
+	static void		GetHeight		(const FunctionCallbackInfo<Value>& args);
+	static void		GetLength		(const FunctionCallbackInfo<Value>& args);
 	static void		GetData			(const FunctionCallbackInfo<Value>& args);
+	static void		GetLimit		(const FunctionCallbackInfo<Value>& args);
+
 	static void		GetPixel		(const FunctionCallbackInfo<Value>& args);
 	static void		SetPixel		(const FunctionCallbackInfo<Value>& args);
 

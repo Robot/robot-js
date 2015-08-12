@@ -273,16 +273,16 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		log ("Verify window title & arrangement");
 		getchar();
 
-		w1.setBounds (100, 400, 250, 300); w1.setTitle();
-		w2.setBounds (350, 100, 550, 300); w2.setTitle();
+		w1.setBounds (100, 400, 250, 300);
+		w2.setBounds (350, 100, 550, 300);
 		Timer.sleep (500);
 		assert (w1.getBounds().eq (Bounds (100, 400, 250, 300)));
 		assert (w2.getBounds().eq (Bounds (350, 100, 550, 300)));
 
-		if (process.platform === "darwin")
+		if (process.platform !== "darwin")
 		{
-			assert (w1.getTitle().length === 0);
-			assert (w2.getTitle().length === 0);
+			assert (w1.getTitle() === "Hello");
+			assert (w2.getTitle() === "World");
 		}
 
 		log ("Verify window title & arrangement");
@@ -303,11 +303,13 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		if (process.platform === "linux" ||
 			process.platform === "win32")
 		{
-			w1.setClient (100, 100, 250, 300);
-			w2.setBounds (350, 400, 550, 300);
+			w1.setClient (100, 100, 250, 300); w1.setTitle ("");
+			w2.setBounds (350, 400, 550, 300); w2.setTitle ("");
 			Timer.sleep (500);
 			assert (w1.getClient().eq (Bounds (100, 100, 250, 300)));
 			assert (w2.getBounds().eq (Bounds (350, 400, 550, 300)));
+			assert (w1.getTitle().length === 0);
+			assert (w2.getTitle().length === 0);
 			log ("Verify window title & arrangement");
 			getchar();
 		}
@@ -319,7 +321,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (w1.getBounds().eq (b1));
 		assert (w2.getBounds().eq (b2));
 
-		if (process.platform === "darwin")
+		if (process.platform !== "darwin")
 		{
 			assert (w1.getTitle() === t1);
 			assert (w2.getTitle() === t2);
@@ -664,6 +666,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (w.setMaximized,  w, ["a"]);
 		assert (w.setHandle,     w, [   ]);
 		assert (w.setHandle,     w, ["a"]);
+		assert (w.setTitle,      w, [   ]);
 		assert (w.setTitle,      w, [ 0 ]);
 		assert (p.getWindows,    p, [ 0 ]);
 
@@ -701,7 +704,6 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (typeof w.setHandle     (8888) === "boolean"     );
 		assert (typeof w.getTitle      (    ) === "string"      );
 		assert (typeof w.setTitle      ("  ") === "undefined"   );
-		assert (typeof w.setTitle      (    ) === "undefined"   );
 		assert (       w.getBounds     (    ) instanceof Bounds );
 		assert (typeof w.setBounds     (    ) === "undefined"   );
 		assert (       w.getClient     (    ) instanceof Bounds );

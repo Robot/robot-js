@@ -21,13 +21,6 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Window.prototype.getHandle = function()
-	{
-		return this._handle;
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
 	native.Window.prototype.setBounds = function (ax, ay, aw, ah)
 	{
 		var b = robot.Bounds
@@ -89,13 +82,10 @@ module.exports = function (robot, native)
 
 	native.Window.prototype.eq = function (value)
 	{
-		// Check for another native window
-		if (value instanceof native.Window)
-			return this._handle === value._handle;
-
-		// Check win handle comparison
-		if (typeof value === "number")
-			return this._handle === value;
+		// Check if arg is of valid type
+		if (typeof value === "number" ||
+			value instanceof native.Window)
+			return  this._equals (value);
 
 		throw new TypeError ("Invalid arguments");
 	};
@@ -104,13 +94,10 @@ module.exports = function (robot, native)
 
 	native.Window.prototype.ne = function (value)
 	{
-		// Check for another native window
-		if (value instanceof native.Window)
-			return this._handle !== value._handle;
-
-		// Check win handle comparison
-		if (typeof value === "number")
-			return this._handle !== value;
+		// Check if arg is of valid type
+		if (typeof value === "number" ||
+			value instanceof native.Window)
+			return !this._equals (value);
 
 		throw new TypeError ("Invalid arguments");
 	};

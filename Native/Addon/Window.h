@@ -44,6 +44,7 @@ private:
 
 	static void		GetProcess		(const FunctionCallbackInfo<Value>& args);
 	static void		GetPID			(const FunctionCallbackInfo<Value>& args);
+	static void		GetHandle		(const FunctionCallbackInfo<Value>& args);
 	static void		SetHandle		(const FunctionCallbackInfo<Value>& args);
 
 	static void		GetTitle		(const FunctionCallbackInfo<Value>& args);
@@ -55,6 +56,7 @@ private:
 	static void		SetClient		(const FunctionCallbackInfo<Value>& args);
 	static void		MapToClient		(const FunctionCallbackInfo<Value>& args);
 	static void		MapToScreen		(const FunctionCallbackInfo<Value>& args);
+	static void		Equals			(const FunctionCallbackInfo<Value>& args);
 
 	static void		GetList			(const FunctionCallbackInfo<Value>& args);
 	static void		GetActive		(const FunctionCallbackInfo<Value>& args);

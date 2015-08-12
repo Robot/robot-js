@@ -32,26 +32,16 @@ void ProcessWrap::Open (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	// Try and open the process
-	bool status = mProcess->Open
-		(args[0]->Int32Value());
-
-	args.This()->Set (NEW_STR ("_procID" ), NEW_INT  (mProcess->GetPID ()));
-	args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (mProcess->Is64Bit()));
-	args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (mProcess->GetName().data()));
-	args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (mProcess->GetPath().data()));
-	RETURN_BOOL (status);
+	RETURN_BOOL (mProcess->Open
+		(args[0]->Int32Value()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ProcessWrap::Close (const FunctionCallbackInfo<Value>& args)
 {
-	ISOWRAP (Process, args.Holder()); mProcess->Close();
-
-	args.This()->Set (NEW_STR ("_procID" ), NEW_INT  (0 ));
-	args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (0 ));
-	args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (""));
-	args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (""));
+	ISOWRAP (Process, args.Holder());
+	mProcess->Close();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -64,10 +54,42 @@ void ProcessWrap::IsValid (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void ProcessWrap::Is64Bit (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Process, args.Holder());
+	RETURN_BOOL (mProcess->Is64Bit());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void ProcessWrap::IsDebugged (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Process, args.Holder());
 	RETURN_BOOL (mProcess->IsDebugged());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ProcessWrap::GetPID (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Process, args.Holder());
+	RETURN_INT (mProcess->GetPID());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ProcessWrap::GetName (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Process, args.Holder());
+	RETURN_STR (mProcess->GetName().data());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ProcessWrap::GetPath (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Process, args.Holder());
+	RETURN_STR (mProcess->GetPath().data());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -133,15 +155,21 @@ void ProcessWrap::GetWindows (const FunctionCallbackInfo<Value>& args)
 
 		// Make wrapper use new window
 		mWindowWrap->mWindow = list[i];
-
-		instance->Set (NEW_STR ("_handle"),
-					   NEW_INT (( uint32 )
-					   list[i].GetHandle()));
-
 		res->Set (i, instance);
 	}
 
 	RETURN (res);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ProcessWrap::Equals (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Process, args.Holder());
+	ProcessWrap* wrapper = nullptr;
+	if (wrapper = UnwrapRobot<ProcessWrap> (args[0]))
+		RETURN_BOOL (*mProcess == wrapper->mProcess);
+		RETURN_BOOL (*mProcess == args[0]->Int32Value());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -176,11 +204,6 @@ void ProcessWrap::GetList (const FunctionCallbackInfo<Value>& args)
 
 		// Make wrapper use new process
 		mProcessWrap->mProcess = list[i];
-
-		instance->Set (NEW_STR ("_procID" ), NEW_INT  (list[i].GetPID ()));
-		instance->Set (NEW_STR ("_is64Bit"), NEW_BOOL (list[i].Is64Bit()));
-		instance->Set (NEW_STR ("_name"   ), NEW_STR  (list[i].GetName().data()));
-		instance->Set (NEW_STR ("_path"   ), NEW_STR  (list[i].GetPath().data()));
 		res->Set (i, instance);
 	}
 
@@ -199,13 +222,8 @@ void ProcessWrap::GetCurrent (const FunctionCallbackInfo<Value>& args)
 	UNWRAP (Process, instance);
 
 	auto process = Process::GetCurrent();
-	// Make wrapper use new process
+	// Make wrapper use a new process
 	mProcessWrap->mProcess = process;
-
-	instance->Set (NEW_STR ("_procID" ), NEW_INT  (process.GetPID ()));
-	instance->Set (NEW_STR ("_is64Bit"), NEW_BOOL (process.Is64Bit()));
-	instance->Set (NEW_STR ("_name"   ), NEW_STR  (process.GetName().data()));
-	instance->Set (NEW_STR ("_path"   ), NEW_STR  (process.GetPath().data()));
 	RETURN (instance);
 }
 
@@ -237,11 +255,6 @@ void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 			// Open process if argument available
 			process->Open (args[0]->Int32Value());
 
-		args.This()->Set (NEW_STR ("_procID" ), NEW_INT  (process->GetPID ()));
-		args.This()->Set (NEW_STR ("_is64Bit"), NEW_BOOL (process->Is64Bit()));
-		args.This()->Set (NEW_STR ("_name"   ), NEW_STR  (process->GetName().data()));
-		args.This()->Set (NEW_STR ("_path"   ), NEW_STR  (process->GetPath().data()));
-
 		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
 	}
@@ -266,18 +279,24 @@ void ProcessWrap::Initialize (Handle<Object> exports)
 	tpl->InstanceTemplate()->SetInternalFieldCount (1);
 	tpl->SetClassName (NEW_STR ("Process"));
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "open",       Open      );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "close",      Close     );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "open",       Open      );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "close",      Close     );
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "isValid",    IsValid   );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "isDebugged", IsDebugged);
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "isValid",    IsValid   );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "is64Bit",    Is64Bit   );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "isDebugged", IsDebugged);
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "exit",       Exit      );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "kill",       Kill      );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "hasExited",  HasExited );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getPID",     GetPID    );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getName",    GetName   );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getPath",    GetPath   );
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "getModules", GetModules);
-	NODE_SET_PROTOTYPE_METHOD (tpl, "getWindows", GetWindows);
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "exit",       Exit      );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "kill",       Kill      );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "hasExited",  HasExited );
+
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getModules", GetModules);
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getWindows", GetWindows);
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",     Equals    );
 
 	NODE_SET_METHOD (tpl,  "getList",    GetList   );
 	NODE_SET_METHOD (tpl,  "getCurrent", GetCurrent);

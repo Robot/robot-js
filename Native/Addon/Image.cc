@@ -22,6 +22,14 @@ DEFINE_ROBOT_TYPE (Image);
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void ImageWrap::IsValid (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Image, args.Holder());
+	RETURN_BOOL (mImage->IsValid());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void ImageWrap::Create (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Image, args.Holder());
@@ -29,24 +37,38 @@ void ImageWrap::Create (const FunctionCallbackInfo<Value>& args)
 	mImage->Create
 		((uint16) args[0]->Int32Value(),
 		 (uint16) args[1]->Int32Value());
-
-	args.This()->Set (NEW_STR ("_valid" ), NEW_BOOL (mImage->IsValid  ()));
-	args.This()->Set (NEW_STR ("_width" ), NEW_INT  (mImage->GetWidth ()));
-	args.This()->Set (NEW_STR ("_height"), NEW_INT  (mImage->GetHeight()));
-	args.This()->Set (NEW_STR ("_length"), NEW_INT  (mImage->GetLength()));
-	args.This()->Set (NEW_STR ("_limit" ), NEW_INT  (mImage->GetLimit ()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ImageWrap::Destroy (const FunctionCallbackInfo<Value>& args)
 {
-	ISOWRAP (Image, args.Holder()); mImage->Destroy();
-	args.This()->Set (NEW_STR ("_valid" ), NEW_BOOL (0));
-	args.This()->Set (NEW_STR ("_width" ), NEW_INT  (0));
-	args.This()->Set (NEW_STR ("_height"), NEW_INT  (0));
-	args.This()->Set (NEW_STR ("_length"), NEW_INT  (0));
-	args.This()->Set (NEW_STR ("_limit" ), NEW_INT  (0));
+	ISOWRAP (Image, args.Holder());
+	mImage->Destroy();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ImageWrap::GetWidth (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Image, args.Holder());
+	RETURN_INT (mImage->GetWidth());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ImageWrap::GetHeight (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Image, args.Holder());
+	RETURN_INT (mImage->GetHeight());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ImageWrap::GetLength (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Image, args.Holder());
+	RETURN_INT (mImage->GetLength());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +89,14 @@ void ImageWrap::GetData (const FunctionCallbackInfo<Value>& args)
 		 data, size * sizeof (uint32));
 
 	RETURN (Uint32Array::New (b, 0, size));
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ImageWrap::GetLimit (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Image, args.Holder());
+	RETURN_INT (mImage->GetLimit());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -182,13 +212,6 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 				 (uint16) s->Get (NEW_STR ("h"))->Int32Value());
 		}
 
-		auto image = &wrapper->mImage;
-		args.This()->Set (NEW_STR ("_valid" ), NEW_BOOL (image->IsValid  ()));
-		args.This()->Set (NEW_STR ("_width" ), NEW_INT  (image->GetWidth ()));
-		args.This()->Set (NEW_STR ("_height"), NEW_INT  (image->GetHeight()));
-		args.This()->Set (NEW_STR ("_length"), NEW_INT  (image->GetLength()));
-		args.This()->Set (NEW_STR ("_limit" ), NEW_INT  (image->GetLimit ()));
-
 		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
 	}
@@ -215,17 +238,24 @@ void ImageWrap::Initialize (Handle<Object> exports)
 	tpl->InstanceTemplate()->SetInternalFieldCount (1);
 	tpl->SetClassName (NEW_STR ("Image"));
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "_create",   Create  );
-	NODE_SET_PROTOTYPE_METHOD (tpl,  "destroy",  Destroy );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "isValid",   IsValid  );
 
-	NODE_SET_PROTOTYPE_METHOD (tpl,  "getData",  GetData );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "_getPixel", GetPixel);
-	NODE_SET_PROTOTYPE_METHOD (tpl, "_setPixel", SetPixel);
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_create",    Create   );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "destroy",   Destroy  );
 
-	NODE_SET_PROTOTYPE_METHOD (tpl, "_fill",     Fill    );
-	NODE_SET_PROTOTYPE_METHOD (tpl,  "swap",     Swap    );
-	NODE_SET_PROTOTYPE_METHOD (tpl,  "flip",     Flip    );
-	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",   Equals  );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getWidth",  GetWidth );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getHeight", GetHeight);
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getLength", GetLength);
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getData",   GetData  );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getLimit",  GetLimit );
+
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_getPixel",  GetPixel );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_setPixel",  SetPixel );
+
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_fill",      Fill     );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "swap",      Swap     );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "flip",      Flip     );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",    Equals   );
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());

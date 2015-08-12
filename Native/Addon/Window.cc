@@ -133,13 +133,8 @@ void WindowWrap::GetProcess (const FunctionCallbackInfo<Value>& args)
 	UNWRAP (Process, instance);
 
 	auto process = mWindow->GetProcess();
-	// Make wrapper use new process
+	// Make wrapper use a new process
 	mProcessWrap->mProcess = process;
-
-	instance->Set (NEW_STR ("_procID" ), NEW_INT  (process.GetPID ()));
-	instance->Set (NEW_STR ("_is64Bit"), NEW_BOOL (process.Is64Bit()));
-	instance->Set (NEW_STR ("_name"   ), NEW_STR  (process.GetName().data()));
-	instance->Set (NEW_STR ("_path"   ), NEW_STR  (process.GetPath().data()));
 	RETURN (instance);
 }
 
@@ -153,6 +148,14 @@ void WindowWrap::GetPID (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void WindowWrap::GetHandle (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Window, args.Holder());
+	RETURN_INT ((uint32) mWindow->GetHandle());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void WindowWrap::SetHandle (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Window, args.Holder());
@@ -162,14 +165,8 @@ void WindowWrap::SetHandle (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	// Attempt to set new win handle
-	bool status = mWindow->SetHandle
-		((uintptr) args[0]->Int32Value());
-
-	args.This()->Set (NEW_STR ("_handle"),
-					  NEW_INT (( uint32 )
-					  mWindow->GetHandle()));
-
-	RETURN_BOOL (status);
+	RETURN_BOOL (mWindow->SetHandle
+		((uintptr) args[0]->Int32Value()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -186,17 +183,12 @@ void WindowWrap::SetTitle (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Window, args.Holder());
 
-	// Check for valid arguments
-	if (!args[0]->IsString() &&
-		!args[0]->IsUndefined())
+	// Check for valid args
+	if (!args[0]->IsString())
 		THROW (Type, "Invalid arguments");
 
-	const char* title = 0;
 	String::Utf8Value value (args[0]);
-	// Retrieve title value
-	if (args[0]->IsString())
-		title = *value ? *value : "";
-
+	auto title = *value ? *value : "";
 	mWindow->SetTitle (title);
 }
 
@@ -278,6 +270,17 @@ void WindowWrap::MapToScreen (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void WindowWrap::Equals (const FunctionCallbackInfo<Value>& args)
+{
+	ISOWRAP (Window, args.Holder());
+	WindowWrap* wrapper = nullptr;
+	if (wrapper = UnwrapRobot<WindowWrap> (args[0]))
+		RETURN_BOOL (*mWindow == wrapper->mWindow);
+		RETURN_BOOL (*mWindow == args[0]->Int32Value());
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void WindowWrap::GetList (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
@@ -308,11 +311,6 @@ void WindowWrap::GetList (const FunctionCallbackInfo<Value>& args)
 
 		// Make wrapper use new window
 		mWindowWrap->mWindow = list[i];
-
-		instance->Set (NEW_STR ("_handle"),
-					   NEW_INT (( uint32 )
-					   list[i].GetHandle()));
-
 		res->Set (i, instance);
 	}
 
@@ -333,11 +331,6 @@ void WindowWrap::GetActive (const FunctionCallbackInfo<Value>& args)
 	auto window = Window::GetActive();
 	// Make wrapper use new window
 	mWindowWrap->mWindow = window;
-
-	instance->Set (NEW_STR ("_handle"),
-				   NEW_INT (( uint32 )
-				   window.GetHandle()));
-
 	RETURN (instance);
 }
 
@@ -354,7 +347,6 @@ void WindowWrap::SetActive (const FunctionCallbackInfo<Value>& args)
 void WindowWrap::IsAxEnabled (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
-
 	// Check for valid arguments
 	if (!args[0]->IsBoolean() &&
 		!args[0]->IsUndefined())
@@ -387,10 +379,6 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 				// Set the handle if arg available
 				((uintptr) args[0]->Int32Value());
 		}
-
-		args.This()->Set (NEW_STR ("_handle"),
-						  NEW_INT (( uint32 )
-						  window->GetHandle()));
 
 		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
@@ -431,6 +419,7 @@ void WindowWrap::Initialize (Handle<Object> exports)
 
 	NODE_SET_PROTOTYPE_METHOD (tpl,  "getProcess",    GetProcess   );
 	NODE_SET_PROTOTYPE_METHOD (tpl,  "getPID",        GetPID       );
+	NODE_SET_PROTOTYPE_METHOD (tpl,  "getHandle",     GetHandle    );
 	NODE_SET_PROTOTYPE_METHOD (tpl,  "setHandle",     SetHandle    );
 
 	NODE_SET_PROTOTYPE_METHOD (tpl,  "getTitle",      GetTitle     );
@@ -442,6 +431,7 @@ void WindowWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_setClient",     SetClient    );
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_mapToClient",   MapToClient  );
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_mapToScreen",   MapToScreen  );
+	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",        Equals       );
 
 	NODE_SET_METHOD (tpl,  "getList",     GetList    );
 	NODE_SET_METHOD (tpl,  "getActive",   GetActive  );

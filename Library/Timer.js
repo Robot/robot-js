@@ -137,10 +137,7 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Timer.getCpuTime = function()
-	{
-		return native.clock();
-	};
+	Timer.getCpuTime = native.clock;
 
 
 

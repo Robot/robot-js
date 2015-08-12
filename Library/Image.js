@@ -21,14 +21,6 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Image.prototype.isValid   = function() { return this._valid;  };
-	native.Image.prototype.getWidth  = function() { return this._width;  };
-	native.Image.prototype.getHeight = function() { return this._height; };
-	native.Image.prototype.getLength = function() { return this._length; };
-	native.Image.prototype.getLimit  = function() { return this._limit;  };
-
-	////////////////////////////////////////////////////////////////////////////////
-
 	native.Image.prototype.create = function (aw, ah)
 	{
 		var s = robot.Size.
