@@ -650,7 +650,7 @@ Memory::RegionList Memory::GetRegions
 	{
 		size_t begin, end;
 		// Parse current line into single mapping entry
-		if (sscanf (line.c_str(), "%zx-%zx %4s", &begin,
+		if (sscanf (line.data(), "%zx-%zx %4s", &begin,
 			&end, mapping.Access) != 3) return result;
 
 		// Ignore any invalid memory regions
