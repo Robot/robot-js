@@ -231,7 +231,7 @@ static void Initialize (Handle<Object> exports)
 
 	   WindowWrap::Initialize (exports);
 //	   ScreenWrap::Initialize (exports);
-//	ClipboardWrap::Initialize (exports);
+	ClipboardWrap::Initialize (exports);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

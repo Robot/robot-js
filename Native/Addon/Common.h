@@ -153,7 +153,6 @@ enum RobotType
 	TypeMemory		= 0x500,
 	TypeWindow		= 0x600,
 	TypeScreen		= 0x700,
-	TypeClipboard	= 0x800,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
