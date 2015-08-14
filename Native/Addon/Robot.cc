@@ -230,7 +230,7 @@ static void Initialize (Handle<Object> exports)
 //	   MemoryWrap::Initialize (exports);
 
 	   WindowWrap::Initialize (exports);
-//	   ScreenWrap::Initialize (exports);
+	   ScreenWrap::Initialize (exports);
 	ClipboardWrap::Initialize (exports);
 }
 

@@ -12,7 +12,6 @@
 //----------------------------------------------------------------------------//
 
 #include "Screen.h"
-DEFINE_ROBOT_TYPE (Screen);
 
 
 
@@ -22,4 +21,30 @@ DEFINE_ROBOT_TYPE (Screen);
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void ScreenWrap::Synchronize (const FunctionCallbackInfo<Value>& args)
+{
+}
 
+////////////////////////////////////////////////////////////////////////////////
+
+void ScreenWrap::GrabScreen (const FunctionCallbackInfo<Value>& args)
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ScreenWrap::IsCompositing (const FunctionCallbackInfo<Value>& args)
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ScreenWrap::SetCompositing (const FunctionCallbackInfo<Value>& args)
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ScreenWrap::Initialize (Handle<Object> exports)
+{
+}

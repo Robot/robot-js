@@ -152,7 +152,6 @@ enum RobotType
 	TypeProcess		= 0x400,
 	TypeMemory		= 0x500,
 	TypeWindow		= 0x600,
-	TypeScreen		= 0x700,
 };
 
 ////////////////////////////////////////////////////////////////////////////////
