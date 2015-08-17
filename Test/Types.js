@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, assert)
+module.exports = function (robot, log, sprintf, getchar, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -565,6 +565,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (i1.fill,     i1, [{ r: 0 }]);
 		assert (i1.swap,     i1, [        ]);
 		assert (i1.swap,     i1, [ 0      ]);
+		assert (i1.flip,     i1, [        ]);
 		assert (i1.flip,     i1, ["a"     ]);
 		assert (i1.flip,     i1, [ 0      ]);
 		assert (i1.eq,       i1, [        ]);
@@ -583,7 +584,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (typeof i1.setPixel  (0 , Color()) === "undefined");
 		assert (typeof i1.fill      (0 ) === "boolean");
 		assert (typeof i1.swap      ("") === "boolean");
-		assert (typeof i1.flip      (  ) === "boolean");
+		assert (typeof i1.flip      (false, false) === "boolean" );
 		assert (typeof i1.eq        (i1) === "boolean");
 		assert (typeof i1.ne        (i1) === "boolean");
 
@@ -598,7 +599,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		assert (typeof i1.setPixel  (0 , Color()) === "undefined");
 		assert (typeof i1.fill      (0 ) === "boolean");
 		assert (typeof i1.swap      ("") === "boolean");
-		assert (typeof i1.flip      (  ) === "boolean");
+		assert (typeof i1.flip      (false, false) === "boolean" );
 		assert (typeof i1.eq        (i1) === "boolean");
 		assert (typeof i1.ne        (i1) === "boolean");
 

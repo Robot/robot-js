@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, assert)
+module.exports = function (robot, log, sprintf, getchar, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -22,7 +22,6 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 	////////////////////////////////////////////////////////////////////////////////
 
 	var Process = robot.Process;
-	var fs      = require ("fs");
 
 
 
@@ -80,26 +79,20 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 
 		if (process.platform === "linux")
 		{
-			log ("open Leafpad and input PID: ");
-			input1 = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
-			log ("open gedit   and input PID: ");
-			input2 = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
+			log ("open Leafpad and input PID: "); input1 = getline();
+			log ("open gedit   and input PID: "); input2 = getline();
 		}
 
 		if (process.platform === "darwin")
 		{
-			log ("open TextEdit and input PID: ");
-			input1 = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
-			log ("open Notes    and input PID: ");
-			input2 = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
+			log ("open TextEdit and input PID: "); input1 = getline();
+			log ("open Notes    and input PID: "); input2 = getline();
 		}
 
 		if (process.platform === "win32")
 		{
-			log ("open Notepad and input PID: ");
-			input1 = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
-			log ("open Wordpad and input PID: ");
-			input2 = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
+			log ("open Notepad and input PID: "); input1 = getline();
+			log ("open Wordpad and input PID: "); input2 = getline();
 		}
 
 		var pid1 = parseInt (input1); assert (pid1 > 0); assert (p1.open (pid1));
@@ -175,8 +168,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		log ("Warning: The next set of tests cannot be automated\n"  );
 		log ("         Please execute the following instructions\n\n");
 
-		log ("Input this application's PID: ");
-		var input = fs.readSync (process.stdin.fd, 128, 0)[0].trim();
+		log ("Input this application's PID: "); var input = getline();
 		var pid = parseInt (input);
 
 		assert (pid > 0);

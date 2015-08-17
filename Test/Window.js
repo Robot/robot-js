@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, assert)
+module.exports = function (robot, log, sprintf, getchar, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //

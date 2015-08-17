@@ -30,6 +30,13 @@ function getchar()
 	process.stdin.pause();
 }
 
+function getline()
+{
+	return mFS.readSync
+		(process.stdin.fd,
+		128, 0)[0].trim();
+}
+
 function assert (cond, thisArg, args)
 {
 	// Check for argument test
@@ -45,15 +52,15 @@ function assert (cond, thisArg, args)
 		("Assertion Failed\x07\n");
 }
 
-var testTypes     = require ("./Types"    )(mRobot, log, mSprintf, getchar, assert);
-var testTimer     = require ("./Timer"    )(mRobot, log, mSprintf, getchar, assert);
-var testKeyboard  = require ("./Keyboard" )(mRobot, log, mSprintf, getchar, assert);
-var testMouse     = require ("./Mouse"    )(mRobot, log, mSprintf, getchar, assert);
-var testProcess   = require ("./Process"  )(mRobot, log, mSprintf, getchar, assert);
-var testWindow    = require ("./Window"   )(mRobot, log, mSprintf, getchar, assert);
-var testMemory    = require ("./Memory"   )(mRobot, log, mSprintf, getchar, assert);
-var testScreen    = require ("./Screen"   )(mRobot, log, mSprintf, getchar, assert);
-var testClipboard = require ("./Clipboard")(mRobot, log, mSprintf, getchar, assert);
+var testTypes     = require ("./Types"    )(mRobot, log, mSprintf, getchar, getline, assert);
+var testTimer     = require ("./Timer"    )(mRobot, log, mSprintf, getchar, getline, assert);
+var testKeyboard  = require ("./Keyboard" )(mRobot, log, mSprintf, getchar, getline, assert);
+var testMouse     = require ("./Mouse"    )(mRobot, log, mSprintf, getchar, getline, assert);
+var testProcess   = require ("./Process"  )(mRobot, log, mSprintf, getchar, getline, assert);
+var testWindow    = require ("./Window"   )(mRobot, log, mSprintf, getchar, getline, assert);
+var testMemory    = require ("./Memory"   )(mRobot, log, mSprintf, getchar, getline, assert);
+var testScreen    = require ("./Screen"   )(mRobot, log, mSprintf, getchar, getline, assert);
+var testClipboard = require ("./Clipboard")(mRobot, log, mSprintf, getchar, getline, assert);
 
 
 

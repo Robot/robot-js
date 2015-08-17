@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, assert)
+module.exports = function (robot, log, sprintf, getchar, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -30,8 +30,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 	var Mouse    = robot.Mouse;
 	var Keyboard = robot.Keyboard;
 
-	var fs = require ("fs");
-	var k  = Keyboard(    );
+	var k = Keyboard();
 
 
 
@@ -485,7 +484,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		k.click (robot.KEY_8);
 		k.click (robot.KEY_9);
 		k.click (robot.KEY_RETURN);
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "0123456789");
+		assert (getline() === "0123456789");
 
 		log ("Alphabet: ");
 		Timer.sleep (500);
@@ -516,7 +515,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		k.click (robot.KEY_Y);
 		k.click (robot.KEY_Z);
 		k.click (robot.KEY_RETURN);
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "abcdefghijklmnopqrstuvwxyz");
+		assert (getline() === "abcdefghijklmnopqrstuvwxyz");
 
 		log ("Alphabet: ");
 		Timer.sleep (500);
@@ -549,7 +548,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		k.click (robot.KEY_Z);
 		k.release (robot.KEY_SHIFT);
 		k.click (robot.KEY_RETURN);
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		assert (getline() === "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 		log ("Keypad: ");
 		Timer.sleep (500);
@@ -569,7 +568,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		k.click (robot.KEY_NUM8);
 		k.click (robot.KEY_NUM9);
 		k.click (robot.KEY_ENTER);
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "+-*/.0123456789");
+		assert (getline() === "+-*/.0123456789");
 
 		log ("Punctuation: ");
 		Timer.sleep (500);
@@ -590,7 +589,7 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		k.click (robot.KEY_PERIOD);
 		k.click (robot.KEY_SLASH);
 		k.click (robot.KEY_RETURN);
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "`-=[ ]\\;',./");
+		assert (getline() === "`-=[ ]\\;',./");
 
 		log ("Punctuation: ");
 		Timer.sleep (500);
@@ -609,12 +608,12 @@ module.exports = function (robot, log, sprintf, getchar, assert)
 		k.click (robot.KEY_SLASH);
 		k.release (robot.KEY_SHIFT);
 		k.click (robot.KEY_RETURN);
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "~_+{ }|:\"<>?");
+		assert (getline() === "~_+{ }|:\"<>?");
 
 		log ("Hello Robot: ");
 		Timer.sleep (500);
 		k.click ("+Hello +Robo<<<+(obot)+1~");
-		assert (fs.readSync (process.stdin.fd, 128, 0)[0].trim() === "Hello ROBOT!");
+		assert (getline() === "Hello ROBOT!");
 
 		log ("\nWarning: The next set of tests cannot be automated\n");
 		log ("         Please review the following instructions!\n\n");
