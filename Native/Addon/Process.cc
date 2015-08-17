@@ -120,7 +120,45 @@ void ProcessWrap::HasExited (const FunctionCallbackInfo<Value>& args)
 
 void ProcessWrap::GetModules (const FunctionCallbackInfo<Value>& args)
 {
-	// NYI: Not Yet Implemented
+	ISOWRAP (Process, args.Holder());
+	auto ctor = Local<Function>::
+		 New (isolate, JsModule);
+
+	// Check for valid arguments
+	if (!args[0]->IsString() &&
+		!args[0]->IsUndefined())
+		THROW (Type, "Invalid arguments");
+
+	const char* regex = 0;
+	String::Utf8Value value (args[0]);
+	// Retrieve regex value
+	if (args[0]->IsString())
+		regex = *value ? *value : "";
+
+	// Retrieve a list of all process modules
+	auto list = mProcess->GetModules (regex);
+
+	int length = (int) list.size();
+	auto res = NEW_ARR (length);
+	// Loop array and add to result
+	for (int i = 0; i < length; ++i)
+	{
+		// Avoid always getting value
+		const auto& current = list[i];
+
+		// Create a new module instance
+		auto obj = ctor->NewInstance();
+
+		obj->Set (NEW_STR ("_valid"), NEW_BOOL (current.IsValid()));
+		obj->Set (NEW_STR ("_name" ), NEW_STR  (current.GetName().data()));
+		obj->Set (NEW_STR ("_path" ), NEW_STR  (current.GetPath().data()));
+		obj->Set (NEW_STR ("_base" ), NEW_NUM  ((double) current.GetBase()));
+		obj->Set (NEW_STR ("_size" ), NEW_NUM  ((double) current.GetSize()));
+		obj->Set (NEW_STR ("_proc" ), args.Holder());
+		res->Set (i, obj);
+	}
+
+	RETURN (res);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -238,7 +276,37 @@ void ProcessWrap::IsSys64Bit (const FunctionCallbackInfo<Value>& args)
 
 void ProcessWrap::GetSegments (const FunctionCallbackInfo<Value>& args)
 {
-	// NYI: Not Yet Implemented
+	ISOWRAP (Process, args[0]->ToObject());
+	auto ctor = Local<Function>::
+		 New (isolate, JsSegment);
+
+	// Synthesize new module
+	Module module (*mProcess,
+			"", "", (uintptr)
+			args[1]->NumberValue(), 0);
+
+	// Retrieve the list of segments
+	auto list = module.GetSegments();
+
+	int length = (int) list.size();
+	auto res = NEW_ARR (length);
+	// Loop array and add to result
+	for (int i = 0; i < length; ++i)
+	{
+		// Avoid always getting value
+		const auto& current = list[i];
+
+		// Create a new module instance
+		auto obj = ctor->NewInstance();
+
+		obj->Set (NEW_STR ("valid"), NEW_BOOL (         current.Valid));
+		obj->Set (NEW_STR ("base" ), NEW_NUM  ((double) current.Base ));
+		obj->Set (NEW_STR ("size" ), NEW_NUM  ((double) current.Size ));
+		obj->Set (NEW_STR ("name" ), NEW_STR  (         current.Name ));
+		res->Set (i, obj);
+	}
+
+	RETURN (res);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

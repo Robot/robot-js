@@ -171,18 +171,27 @@ mRobot.Timer.compare = function (a, b)
 
 mRobot.Module.compare = function (a, b)
 {
+	if (a.lt (b)) return -1;
+	if (a.gt (b)) return  1;
+	return 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 mRobot.Module.Segment.compare = function (a, b)
 {
+	if (a.lt (b)) return -1;
+	if (a.gt (b)) return  1;
+	return 0;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 
 mRobot.Memory.Region.compare = function (a, b)
 {
+	if (a.lt (b)) return -1;
+	if (a.gt (b)) return  1;
+	return 0;
 };
 
 
