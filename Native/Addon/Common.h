@@ -103,6 +103,11 @@ ROBOT_NS_USE_ALL;
 			(isolate, JsBounds)->NewInstance (4, _jsArgs)	\
 	)
 
+#define NEW_MODULE  Local<Function>::New (isolate, JsModule )->NewInstance()
+#define NEW_SEGMENT Local<Function>::New (isolate, JsSegment)->NewInstance()
+#define NEW_STATS   Local<Function>::New (isolate, JsStats  )->NewInstance()
+#define NEW_REGION  Local<Function>::New (isolate, JsRegion )->NewInstance()
+
 ////////////////////////////////////////////////////////////////////////////////
 
 #define RETURN( value ) { args.GetReturnValue().Set (value); return; }
@@ -114,6 +119,8 @@ ROBOT_NS_USE_ALL;
 #define RETURN_OBJ          RETURN (NEW_OBJ         );
 #define RETURN_ARR          RETURN (NEW_ARR  (0    ));
 #define RETURN_NULL         RETURN (NEW_NULL        );
+#define RETURN_TRUE			RETURN (NEW_BOOL (true ));
+#define RETURN_FALSE		RETURN (NEW_BOOL (false));
 
 #define  RETURN_COLOR( r, g, b, a )							\
 	RETURN (NEW_COLOR (r, g, b, a));
@@ -174,7 +181,12 @@ enum RobotType
 	extern Persistent<Function> JsRange;					\
 	extern Persistent<Function> JsPoint;					\
 	extern Persistent<Function> JsSize;						\
-	extern Persistent<Function> JsBounds;
+	extern Persistent<Function> JsBounds;					\
+															\
+	extern Persistent<Function> JsModule;					\
+	extern Persistent<Function> JsSegment;					\
+	extern Persistent<Function> JsStats;					\
+	extern Persistent<Function> JsRegion;
 
 ////////////////////////////////////////////////////////////////////////////////
 

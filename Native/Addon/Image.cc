@@ -163,10 +163,8 @@ void ImageWrap::Flip (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Image, args.Holder());
 
 	// Check for valid arguments
-	if ((!args[0]->IsBoolean() &&
-		 !args[0]->IsUndefined()) ||
-		(!args[1]->IsBoolean() &&
-		 !args[1]->IsUndefined()))
+	if (!args[0]->IsBoolean() ||
+		!args[1]->IsBoolean())
 		THROW (Type, "Invalid arguments");
 
 	bool h = args[0]->BooleanValue();

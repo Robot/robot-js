@@ -131,7 +131,7 @@ module.exports = function (robot)
 		if (hash instanceof Hash)
 			return this.result === hash.result;
 
-		// For for number comparison
+		// Check for number comparison
 		if (typeof hash === "number")
 			return this.result === hash;
 
@@ -147,7 +147,7 @@ module.exports = function (robot)
 		if (hash instanceof Hash)
 			return this.result !== hash.result;
 
-		// For for number comparison
+		// Check for number comparison
 		if (typeof hash === "number")
 			return this.result !== hash;
 

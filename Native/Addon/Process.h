@@ -51,6 +51,7 @@ private:
 	static void		GetList			(const FunctionCallbackInfo<Value>& args);
 	static void		GetCurrent		(const FunctionCallbackInfo<Value>& args);
 	static void		IsSys64Bit		(const FunctionCallbackInfo<Value>& args);
+	static void		GetSegments		(const FunctionCallbackInfo<Value>& args);
 
 	static void		New				(const FunctionCallbackInfo<Value>& args);
 

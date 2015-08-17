@@ -29,6 +29,11 @@ Persistent<Function> JsPoint;
 Persistent<Function> JsSize;
 Persistent<Function> JsBounds;
 
+Persistent<Function> JsModule;
+Persistent<Function> JsSegment;
+Persistent<Function> JsStats;
+Persistent<Function> JsRegion;
+
 
 
 //----------------------------------------------------------------------------//
@@ -49,11 +54,22 @@ static void Prepare (const FunctionCallbackInfo<Value>& args)
 	auto size    = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Size"   )));
 	auto bounds  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Bounds" )));
 
+	auto module  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Module" )));
+	auto memory  = Local<Function>::Cast (jsRobot->Get (NEW_STR ("Memory" )));
+	auto segment = Local<Function>::Cast ( module->Get (NEW_STR ("Segment")));
+	auto stats   = Local<Function>::Cast ( memory->Get (NEW_STR ("Stats"  )));
+	auto region  = Local<Function>::Cast ( memory->Get (NEW_STR ("Region" )));
+
 	JsColor  .Reset (isolate, color  );
 	JsRange  .Reset (isolate, range  );
 	JsPoint  .Reset (isolate, point  );
 	JsSize   .Reset (isolate, size   );
 	JsBounds .Reset (isolate, bounds );
+
+	JsModule .Reset (isolate, module );
+	JsSegment.Reset (isolate, segment);
+	JsStats  .Reset (isolate, stats  );
+	JsRegion .Reset (isolate, region );
 
 
 
@@ -227,7 +243,7 @@ static void Initialize (Handle<Object> exports)
 	    MouseWrap::Initialize (exports);
 
 	  ProcessWrap::Initialize (exports);
-//	   MemoryWrap::Initialize (exports);
+	   MemoryWrap::Initialize (exports);
 
 	   WindowWrap::Initialize (exports);
 	   ScreenWrap::Initialize (exports);

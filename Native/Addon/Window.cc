@@ -161,12 +161,12 @@ void WindowWrap::SetHandle (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Window, args.Holder());
 
 	// Check for valid args
-	if (!args[0]->IsInt32())
+	if (!args[0]->IsNumber())
 		THROW (Type, "Invalid arguments");
 
 	// Attempt to set new win handle
 	RETURN_BOOL (mWindow->SetHandle
-		((uintptr) args[0]->Int32Value()));
+		((uintptr) args[0]->NumberValue()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -352,8 +352,9 @@ void WindowWrap::IsAxEnabled (const FunctionCallbackInfo<Value>& args)
 		!args[0]->IsUndefined())
 		THROW (Type, "Invalid arguments");
 
-	RETURN_BOOL (Window::IsAxEnabled
-		  (args[0]->BooleanValue()));
+	bool options = args[0]->IsBoolean() ?
+		 args[0]->BooleanValue() : false;
+	RETURN_BOOL (Window::IsAxEnabled (options));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -365,7 +366,7 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 	if (args.IsConstructCall())
 	{
 		// Check if args are valid
-		if (!args[0]->IsInt32() &&
+		if (!args[0]->IsNumber() &&
 			!args[0]->IsUndefined())
 			THROW (Type, "Invalid arguments");
 
@@ -373,11 +374,11 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 		auto window  = &wrapper->mWindow;
 		wrapper->Wrap (args.This());
 
-		if (args[0]->IsInt32())
+		if (args[0]->IsNumber())
 		{
 			window->SetHandle
 				// Set the handle if arg available
-				((uintptr) args[0]->Int32Value());
+				((uintptr) args[0]->NumberValue());
 		}
 
 		REGISTER_ROBOT_TYPE;
