@@ -1,5 +1,5 @@
 {
-	"name"				: "robot",
+	"name"				: "robot-js",
 	"version"			: "0.0.0",
 	"license"			: "Zlib",
 	"main"				: "Library/Robot.js",
@@ -38,7 +38,8 @@
 
 	"devDependencies" :
 	{
-		"sprintf-js"	: "1.x.x"
+		"sprintf-js"	: "1.x.x",
+		"node-png"		: "0.x.x"
 	},
 
 	"engines" :
