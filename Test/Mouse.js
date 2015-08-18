@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -46,7 +46,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		var p, old;
 
 		log ("Press enter to begin live test");
-		getchar();
+		getline();
 
 		old = Mouse.getPos();
 		Mouse.setPos ( 50, 200); Timer.sleep (1000); p = Mouse.getPos(); assert (p.x ===  50 && p.y === 200);
@@ -63,14 +63,14 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		log ("- Verify results before testing next set\n\n");
 
 		log ("Scroll");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		m.scrollV (1); m.scrollV (-1); m.scrollV (-1); m.scrollV (1);
 		m.scrollV (3); m.scrollV (-2); m.scrollV (-2); m.scrollV (1);
 		m.scrollH (2); m.scrollH (-1); m.scrollH (-2); m.scrollH (1);
 
 		log ("Click");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		m.click (robot.BUTTON_LEFT );
 		m.click (robot.BUTTON_MID  );
@@ -83,20 +83,20 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		m.autoDelay.max = 90;
 
 		log ("Fast Double Click");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		m.click (robot.BUTTON_LEFT);
 		m.click (robot.BUTTON_LEFT);
 
 		log ("Slow Double Click");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		m.click (robot.BUTTON_LEFT);
 		Timer.sleep (1500);
 		m.click (robot.BUTTON_LEFT);
 
 		log ("Click and Drag L");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		m.press (robot.BUTTON_LEFT);
 		Timer.sleep (1000);
@@ -109,7 +109,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		m.release (robot.BUTTON_LEFT);
 
 		log ("Click and Drag R");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		m.press (robot.BUTTON_RIGHT);
 		Timer.sleep (1000);
@@ -135,7 +135,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		log ("- Press enter to begin testing\n"   );
 		log ("- Press escape to stop testing\n"   );
 
-		getchar();
+		getline();
 
 		m.press (robot.BUTTON_LEFT);
 		m.press (robot.BUTTON_MID );

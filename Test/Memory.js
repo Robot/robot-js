@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -808,14 +808,14 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		else
 			log ("Attach a debugger to the selected app");
 
-		getchar(); assert ( p.isDebugged());
+		getline(); assert ( p.isDebugged());
 
 		if (local)
 			log ("Detach debugger from the current app\n" );
 		else
 			log ("Detach debugger from the selected app\n");
 
-		getchar(); assert (!p.isDebugged());
+		getline(); assert (!p.isDebugged());
 
 		return true;
 	}
@@ -945,7 +945,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		// If we matched all values
 		assert (j === list2.length);
 		log ("Press enter to continue\n");
-		getchar();
+		getline();
 		return true;
 	}
 
@@ -1028,7 +1028,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		}
 
 		log ("Press enter to continue\n");
-		getchar();
+		getline();
 
 		list1 = p.getModules (".*a.*");
 		list2 = p.getModules (".*A.*");
@@ -1038,8 +1038,8 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		for (var i = 0; i < list1.length; ++i)
 		{
 			var name = list1[i].getName();
-			assert (name.indexOf ('a') >= 0 ||
-					name.indexOf ('A') >= 0);
+			assert (name.indexOf ("a") >= 0 ||
+					name.indexOf ("A") >= 0);
 		}
 
 		log ("Verified\n\n");
@@ -1113,7 +1113,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 					for (var s = 0; s < sList.length; ++s)
 					{
 						assert (sList[s].valid);
-						assert (sList[s].name[0] !== '\0');
+						assert (sList[s].name[0] !== "\0");
 
 						if (sList[s].size === 0)
 						{
@@ -1291,7 +1291,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		assert (mem.writeInt32  (module + PFINITE +  8, vArray[2]));
 		assert (mem.writeInt32  (module + PFINITE + 12, vArray[3]));
 
-		log ("Verify Peon values and press enter"); getchar();
+		log ("Verify Peon values and press enter"); getline();
 
 		//----------------------------------------------------------------------------//
 
@@ -1314,7 +1314,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		assert (vArray[0] === 123); assert (vArray[1] === 456);
 		assert (vArray[2] === 789); assert (vArray[3] ===   0);
 
-		log ("Reset  Peon values and press enter"); getchar();
+		log ("Reset  Peon values and press enter"); getline();
 
 		//----------------------------------------------------------------------------//
 

@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -116,7 +116,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		if (process.platform === "win32")
 			log ("Open Notepad and Wordpad");
 
-		getchar();
+		getline();
 		var w1, w2, wx = Window.getActive();
 
 		log ("Focus 1st app...\n");
@@ -211,7 +211,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			assert (!w2.isTopMost()); assert ( w2.isBorderless());
 
 			log ("1st app is topmost, 2nd app is borderless");
-			getchar();
+			getline();
 
 			w1.setTopMost    (false);
 			w2.setTopMost    (true );
@@ -223,7 +223,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			assert ( w2.isTopMost()); assert (!w2.isBorderless());
 
 			log ("2nd app is topmost, 1st app is borderless");
-			getchar();
+			getline();
 
 			w1.setBorderless (false);
 			w2.setTopMost    (false);
@@ -233,15 +233,15 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			assert (!w2.isTopMost()); assert (!w2.isBorderless());
 
 			log ("Both applications are now back to normal\n");
-			getchar();
+			getline();
 		}
 
 		//----------------------------------------------------------------------------//
 
-		log ("Press enter to activate 1st app"); getchar();
+		log ("Press enter to activate 1st app"); getline();
 		Window.setActive (w1); Timer.sleep (500); assert (Window.getActive().eq (w1));
 
-		log ("Press enter to activate 2nd app\n"); getchar();
+		log ("Press enter to activate 2nd app\n"); getline();
 		Window.setActive (w2); Timer.sleep (500); assert (Window.getActive().eq (w2));
 
 		//----------------------------------------------------------------------------//
@@ -271,7 +271,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		}
 
 		log ("Verify window title & arrangement");
-		getchar();
+		getline();
 
 		w1.setBounds (100, 400, 250, 300);
 		w2.setBounds (350, 100, 550, 300);
@@ -286,7 +286,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		}
 
 		log ("Verify window title & arrangement");
-		getchar();
+		getline();
 
 		if (process.platform === "darwin" ||
 			process.platform === "win32")
@@ -297,7 +297,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			assert (w1.getBounds().eq (Bounds (-50, 400, 250, 300)));
 			assert (w2.getBounds().eq (Bounds (200, 100, 550, 600)));
 			log ("Verify window title & arrangement");
-			getchar();
+			getline();
 		}
 
 		if (process.platform === "linux" ||
@@ -311,7 +311,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			assert (w1.getTitle().length === 0);
 			assert (w2.getTitle().length === 0);
 			log ("Verify window title & arrangement");
-			getchar();
+			getline();
 		}
 
 		log ("\n");
@@ -356,7 +356,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		if (process.platform === "win32")
 			log ("Open Notepad");
 
-		getchar();
+		getline();
 		var w, wx = Window.getActive();
 
 		log ("Focus the application to begin mapping test...\n");
@@ -401,85 +401,85 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		assert (!w.isMinimized());
 		assert (!w.isMaximized());
 
-		log ("\nKeep window !min !max"); getchar();
+		log ("\nKeep window !min !max"); getline();
 		w.setMinimized (false); Timer.sleep (500);
 		log (" - !Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMinimized (true ); Timer.sleep (500);
 		log (" -  Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (false); Timer.sleep (500);
 		log (" - !Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (true ); Timer.sleep (500);
 		log (" -  Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 
-		log ("\nKeep window  min !max"); getchar();
+		log ("\nKeep window  min !max"); getline();
 		w.setMinimized (false); Timer.sleep (500);
 		log (" - !Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMinimized (true ); Timer.sleep (500);
 		log (" -  Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (false); Timer.sleep (500);
 		log (" - !Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (true ); Timer.sleep (500);
 		log (" -  Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 
-		log ("\nKeep window !min  max"); getchar();
+		log ("\nKeep window !min  max"); getline();
 		w.setMinimized (false); Timer.sleep (500);
 		log (" - !Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMinimized (true ); Timer.sleep (500);
 		log (" -  Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (false); Timer.sleep (500);
 		log (" - !Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (true ); Timer.sleep (500);
 		log (" -  Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 
-		log ("\nKeep window  min  max"); getchar();
+		log ("\nKeep window  min  max"); getline();
 		w.setMinimized (false); Timer.sleep (500);
 		log (" - !Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMinimized (true ); Timer.sleep (500);
 		log (" -  Min = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (false); Timer.sleep (500);
 		log (" - !Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 		w.setMaximized (true ); Timer.sleep (500);
 		log (" -  Max = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 
-		log ("\nKeep window  min !max"); getchar();
+		log ("\nKeep window  min !max"); getline();
 		Window.setActive (w); Timer.sleep (500);
 		log (" - Active = ");
 		log (w.isMinimized() ? " Min " : "!Min ");
-		log (w.isMaximized() ? " Max " : "!Max "); getchar();
+		log (w.isMaximized() ? " Max " : "!Max "); getline();
 
-		log ("\nPress enter to continue\n"); getchar();
+		log ("\nPress enter to continue\n"); getline();
 		assert (!w.isMinimized());
 		assert (!w.isMaximized());
 
@@ -506,7 +506,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		if (process.platform === "win32")
 			log ("Open a couple Notepads & Wordpads and press enter\n");
 
-		getchar();
+		getline();
 
 		if (process.platform === "linux" ||
 			process.platform === "win32")
@@ -562,8 +562,8 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		for (var i = 0; i < list1.length; ++i)
 		{
 			var title = list1[i].getTitle();
-			assert (title.indexOf ('a') >= 0 ||
-					title.indexOf ('A') >= 0);
+			assert (title.indexOf ("a") >= 0 ||
+					title.indexOf ("A") >= 0);
 		}
 
 		log ("Verified\n\n");
@@ -615,7 +615,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		log ("         Please verify the following window lists\n\n");
 
 		log ("Open a multi-window testing application");
-		getchar();
+		getline();
 		var w, wx = Window.getActive();
 
 		log ("Focus the application to begin find test...\n");

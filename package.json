@@ -39,7 +39,8 @@
 	"devDependencies" :
 	{
 		"sprintf-js"	: "1.x.x",
-		"node-png"		: "0.x.x"
+		"node-png"		: "0.x.x",
+		"readline-sync"	: "1.x.x"
 	},
 
 	"engines" :

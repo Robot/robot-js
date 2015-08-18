@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -98,16 +98,16 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			//----------------------------------------------------------------------------//
 
 			assert (test ("",      true));
-			assert (test ("Hello", true)); log ("Try pasting the text"); getchar();
-			assert (test ("World", true)); log ("Try pasting the text"); getchar();
+			assert (test ("Hello", true)); log ("Try pasting the text"); getline();
+			assert (test ("World", true)); log ("Try pasting the text"); getline();
 			assert (test (big,     true));
 
 			//----------------------------------------------------------------------------//
 
 			assert (Clipboard.clear());
-			log ("Copy Hello and press enter  "); getchar(); assert (test ("Hello", false));
+			log ("Copy Hello and press enter  "); getline(); assert (test ("Hello", false));
 			assert (Clipboard.clear());
-			log ("Copy World and press enter\n"); getchar(); assert (test ("World", false));
+			log ("Copy World and press enter\n"); getline(); assert (test ("World", false));
 
 			//----------------------------------------------------------------------------//
 
@@ -244,17 +244,17 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 
 			saveImage ("pattern_orig.png", image  );
 			saveImage ("pattern_copy.png", pattern);
-			log ("Try pasting the image"); getchar();
+			log ("Try pasting the image"); getline();
 
 			assert (Clipboard.clear());
-			log ("Copy JPG image and press enter"); getchar(); assert (test (Image()));
+			log ("Copy JPG image and press enter"); getline(); assert (test (Image()));
 			saveImage ("JPG.png", image);
 
 			assert (Clipboard.clear());
-			log ("Copy PNG image and press enter"); getchar(); assert (test (Image()));
+			log ("Copy PNG image and press enter"); getline(); assert (test (Image()));
 			saveImage ("PNG.png", image);
 
-			log ("Please verify saved images\n"); getchar();
+			log ("Please verify saved images\n"); getline();
 
 			//----------------------------------------------------------------------------//
 

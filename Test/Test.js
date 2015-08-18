@@ -16,25 +16,16 @@
 var mRobot   = require ("..");
 var mFS      = require ("fs");
 var mSprintf = require ("sprintf-js").sprintf;
+var mReadLn  = require ("readline-sync");
 
 function log (msg)
 {
 	process.stdout.write (msg);
 }
 
-function getchar()
-{
-	process.stdin.resume();
-	mFS.readSync (process.
-		stdin.fd, 128, 0);
-	process.stdin.pause();
-}
-
 function getline()
 {
-	return mFS.readSync
-		(process.stdin.fd,
-		128, 0)[0].trim();
+	return mReadLn.question ("").trim();
 }
 
 function assert (cond, thisArg, args)
@@ -52,15 +43,15 @@ function assert (cond, thisArg, args)
 		("Assertion Failed\x07\n");
 }
 
-var testTypes     = require ("./Types"    )(mRobot, log, mSprintf, getchar, getline, assert);
-var testTimer     = require ("./Timer"    )(mRobot, log, mSprintf, getchar, getline, assert);
-var testKeyboard  = require ("./Keyboard" )(mRobot, log, mSprintf, getchar, getline, assert);
-var testMouse     = require ("./Mouse"    )(mRobot, log, mSprintf, getchar, getline, assert);
-var testProcess   = require ("./Process"  )(mRobot, log, mSprintf, getchar, getline, assert);
-var testWindow    = require ("./Window"   )(mRobot, log, mSprintf, getchar, getline, assert);
-var testMemory    = require ("./Memory"   )(mRobot, log, mSprintf, getchar, getline, assert);
-var testScreen    = require ("./Screen"   )(mRobot, log, mSprintf, getchar, getline, assert);
-var testClipboard = require ("./Clipboard")(mRobot, log, mSprintf, getchar, getline, assert);
+var testTypes     = require ("./Types"    )(mRobot, log, mSprintf, getline, assert);
+var testTimer     = require ("./Timer"    )(mRobot, log, mSprintf, getline, assert);
+var testKeyboard  = require ("./Keyboard" )(mRobot, log, mSprintf, getline, assert);
+var testMouse     = require ("./Mouse"    )(mRobot, log, mSprintf, getline, assert);
+var testProcess   = require ("./Process"  )(mRobot, log, mSprintf, getline, assert);
+var testWindow    = require ("./Window"   )(mRobot, log, mSprintf, getline, assert);
+var testMemory    = require ("./Memory"   )(mRobot, log, mSprintf, getline, assert);
+var testScreen    = require ("./Screen"   )(mRobot, log, mSprintf, getline, assert);
+var testClipboard = require ("./Clipboard")(mRobot, log, mSprintf, getline, assert);
 
 
 
@@ -124,7 +115,7 @@ function main (argc, argv)
 
 		// All tests have concluded
 		log ("Press enter to exit\n");
-		getchar();
+		getline();
 		return 1;
 	}
 
@@ -184,7 +175,7 @@ function main (argc, argv)
 
 	// All the tests have concluded
 	log ("Press enter to exit\n");
-	getchar();
+	getline();
 	return res;
 }
 

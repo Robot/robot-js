@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -122,21 +122,21 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			log ("Composition status: " +
 				(Screen.isCompositing() ?
 				 "enabled" : "disabled"));
-			getchar();
+			getline();
 
 			Screen.setCompositing (false);
 
 			log ("Composition status: " +
 				(Screen.isCompositing() ?
 				 "enabled" : "disabled"));
-			getchar();
+			getline();
 
 			Screen.setCompositing (true );
 
 			log ("Composition status: " +
 				(Screen.isCompositing() ?
 				 "enabled" : "disabled"));
-			getchar();
+			getline();
 
 			log ("\n");
 		}
@@ -183,13 +183,13 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 			log ("  Main: " + sMain + "\n\n");
 		}
 
-		log ("Please verify these results\n"); getchar();
+		log ("Please verify these results\n"); getline();
 
 		//----------------------------------------------------------------------------//
 
 		log ("Press enter  to begin mouse tracking\n");
 		log ("Press escape to continue other tests"  );
-		getchar();
+		getline();
 
 		var last = -1; var usePoint = false;
 		// Iterate until the escape key is pressed
@@ -227,7 +227,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		if (process.platform === "win32")
 			log ("Open Notepad");
 
-		getchar();
+		getline();
 		var w, wx = Window.getActive();
 
 		log ("Focus the application to begin mouse tracking\n");
@@ -307,7 +307,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		test ("0-11.png",   50,  150, 4000, 2000);
 		test ("0-12.png", 4000, 2000, 4000, 2000);
 
-		log ("Please verify saved images\n"); getchar();
+		log ("Please verify saved images\n"); getline();
 
 		//----------------------------------------------------------------------------//
 
@@ -320,7 +320,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		if (process.platform === "win32")
 			log ("Open Notepad");
 
-		getchar();
+		getline();
 		var w, wx = Window.getActive();
 
 		log ("Focus the application to begin screen tests\n");
@@ -345,7 +345,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		test ("1-11.png",   50,  150, 4000, 2000);
 		test ("1-12.png", 4000, 2000, 4000, 2000);
 
-		log ("Please verify saved images\n"); getchar();
+		log ("Please verify saved images\n"); getline();
 		return true;
 	}
 

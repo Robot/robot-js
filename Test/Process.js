@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -142,11 +142,11 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		assert (!p2.ne (pid2)); assert (!p2.eq (8888));
 
 		log ("Type something in both apps then press enter");
-		getchar();
+		getline();
 		p1.exit();
 		p2.kill();
 		log ("close both applications and then press enter");
-		getchar();
+		getline();
 
 		if (process.platform === "win32")
 		{
@@ -224,7 +224,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		if (process.platform === "win32")
 			log ("open a couple Notepads & Wordpads and press enter\n");
 
-		getchar();
+		getline();
 
 		if (process.platform === "linux" ||
 			process.platform === "win32")
@@ -264,8 +264,8 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		for (var i = 0; i < list1.length; ++i)
 		{
 			var name = list1[i].getName();
-			assert (name.indexOf ('a') >= 0 ||
-					name.indexOf ('A') >= 0);
+			assert (name.indexOf ("a") >= 0 ||
+					name.indexOf ("A") >= 0);
 		}
 
 		log ("Verified\n\n");

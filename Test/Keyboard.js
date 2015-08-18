@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, log, sprintf, getchar, getline, assert)
+module.exports = function (robot, log, sprintf, getline, assert)
 {
 	//----------------------------------------------------------------------------//
 	// Locals                                                                     //
@@ -469,7 +469,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 	function testLive()
 	{
 		log ("Press enter to begin live test");
-		getchar();
+		getline();
 
 		log ("Numbers: ");
 		Timer.sleep (500);
@@ -624,7 +624,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		log ("- Verify results before testing next set\n\n");
 
 		log ("Function Keys");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		k.click (robot.KEY_F1);
 		k.click (robot.KEY_F2);
@@ -640,7 +640,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		k.click (robot.KEY_F12);
 
 		log ("Miscellaneous");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		k.click (robot.KEY_PAUSE);
 		k.click (robot.KEY_INSERT);
@@ -653,7 +653,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		k.click (robot.KEY_PRINT);
 
 		log ("Modifiers");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		k.click (robot.KEY_TAB);
 		k.click (robot.KEY_ALT);
@@ -673,7 +673,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		k.click (robot.KEY_RSYSTEM);
 
 		log ("Arrow Keys");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		k.click (robot.KEY_LEFT);
 		k.click (robot.KEY_UP);
@@ -681,7 +681,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		k.click (robot.KEY_DOWN);
 
 		log ("Light Show");
-		getchar();
+		getline();
 		Timer.sleep (2500);
 		k.click (robot.KEY_CAPS_LOCK);
 		k.click (robot.KEY_CAPS_LOCK);
@@ -705,7 +705,7 @@ module.exports = function (robot, log, sprintf, getchar, getline, assert)
 		log ("- Press enter to begin testing\n");
 		log ("- Press escape to stop testing\n");
 
-		getchar();
+		getline();
 
 		// Check if the platform is Mac
 		if (process.platform !== "darwin")
