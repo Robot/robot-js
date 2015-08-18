@@ -460,6 +460,7 @@ void MemoryWrap::ReadType (const FunctionCallbackInfo<Value>& args)
 				case TypeReal32: RETURN_NUM  ((double) *(real32*) &data);
 				case TypeReal64: RETURN_NUM  ((double) *(real64*) &data);
 				case TypeBool  : RETURN_BOOL ((bool  ) *(bool  *) &data);
+				default: assert (false);
 			}
 		}
 	}
@@ -491,6 +492,7 @@ void MemoryWrap::ReadType (const FunctionCallbackInfo<Value>& args)
 			case TypeReal32: res->Set (i, NEW_NUM  ((double) *(real32*) offset)); continue;
 			case TypeReal64: res->Set (i, NEW_NUM  ((double) *(real64*) offset)); continue;
 			case TypeBool  : res->Set (i, NEW_BOOL ((bool  ) *(bool  *) offset)); continue;
+			default: assert (false);
 		}
 
 		res->Set (i, NEW_STR (std::string (offset, length).data()));
@@ -557,6 +559,7 @@ void MemoryWrap::WriteType (const FunctionCallbackInfo<Value>& args)
 			case TypeReal32: *(real32*) &data = (real32) args[1]-> NumberValue(); break;
 			case TypeReal64: *(real64*) &data = (real64) args[1]-> NumberValue(); break;
 			case TypeBool  : *(bool  *) &data = (bool  ) args[1]->BooleanValue(); break;
+			default: assert (false);
 		}
 
 		RETURN_BOOL (mMemory->WriteData (address, &data, length) == length);
@@ -597,8 +600,9 @@ void MemoryWrap::New (const FunctionCallbackInfo<Value>& args)
 	else
 	{
 		auto ctor = NEW_CTOR (Memory);
-		// Return as a new instance, include args
-		RETURN (ctor->NewInstance (1, &args[0]));
+		// Return as a new instance
+		RETURN (ctor->NewInstance (1,
+			   (_jsArgs[0] = args[0], _jsArgs)));
 	}
 }
 

@@ -1,0 +1,60 @@
+################################################################################
+## -------------------------------------------------------------------------- ##
+##                                                                            ##
+##                       (C) 2010-2015 Robot Developers                       ##
+##                       See LICENSE for licensing info                       ##
+##                                                                            ##
+## -------------------------------------------------------------------------- ##
+################################################################################
+
+makepp_no_builtin = 1
+
+##----------------------------------------------------------------------------##
+## Help                                                                       ##
+##----------------------------------------------------------------------------##
+
+.PHONY: help
+
+help:
+	@echo
+	@echo "WELCOME TO ROBOT-JS"
+	@echo "-------------------"
+	@echo
+	@echo "MAKE"
+	@echo "  $$ make help  - Prints out these help instructions"
+	@echo "  $$ make build - Builds robot-js as a node addon"
+	@echo "  $$ make clean - Cleans and removes generated files"
+	@echo
+	@echo "MODES"
+	@echo "  This project can be built using debug or release settings"
+	@echo "  By default, this project is built using release settings"
+	@echo "  $$ make mode=debug <cmd>  -or-  $$ make mode=release <cmd>"
+	@echo
+	@echo "DOCS"
+	@echo "  Go to http://robot.github.io/ for product documentation"
+	@echo
+
+
+
+##----------------------------------------------------------------------------##
+## Build                                                                      ##
+##----------------------------------------------------------------------------##
+
+.PHONY: all _init build clean
+
+all: build
+
+_init:
+ifeq ($(mode), debug)
+	@echo "Building with debug settings"
+else
+	@echo "Building with release settings"
+endif
+
+build: _init
+	cd Robot; make _build=robot --no-print-directory build
+	cd Addon; make _build=robot --no-print-directory build
+
+clean:
+	cd Robot; make _build=robot --no-print-directory clean
+	cd Addon; make _build=robot --no-print-directory clean

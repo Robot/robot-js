@@ -274,7 +274,7 @@ void WindowWrap::Equals (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Window, args.Holder());
 	WindowWrap* wrapper = nullptr;
-	if (wrapper = UnwrapRobot<WindowWrap> (args[0]))
+	if ((wrapper = UnwrapRobot<WindowWrap> (args[0])))
 		RETURN_BOOL (*mWindow == wrapper->mWindow);
 		RETURN_BOOL (*mWindow == args[0]->Int32Value());
 }
@@ -388,8 +388,9 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 	else
 	{
 		auto ctor = NEW_CTOR (Window);
-		// Return as a new instance, include args
-		RETURN (ctor->NewInstance (1, &args[0]));
+		// Return as a new instance
+		RETURN (ctor->NewInstance (1,
+			   (_jsArgs[0] = args[0], _jsArgs)));
 	}
 }
 

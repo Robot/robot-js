@@ -205,7 +205,7 @@ void ProcessWrap::Equals (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Process, args.Holder());
 	ProcessWrap* wrapper = nullptr;
-	if (wrapper = UnwrapRobot<ProcessWrap> (args[0]))
+	if ((wrapper = UnwrapRobot<ProcessWrap> (args[0])))
 		RETURN_BOOL (*mProcess == wrapper->mProcess);
 		RETURN_BOOL (*mProcess == args[0]->Int32Value());
 }
@@ -337,8 +337,9 @@ void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 	else
 	{
 		auto ctor = NEW_CTOR (Process);
-		// Return as a new instance, include args
-		RETURN (ctor->NewInstance (1, &args[0]));
+		// Return as a new instance
+		RETURN (ctor->NewInstance (1,
+			   (_jsArgs[0] = args[0], _jsArgs)));
 	}
 }
 
