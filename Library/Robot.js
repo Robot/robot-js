@@ -204,5 +204,3 @@ mRobot.Memory.Region.compare = function (a, b)
 
 mNative.prepare  (mRobot);
  module.exports = mRobot;
-
-// TODO: Implement cloning
