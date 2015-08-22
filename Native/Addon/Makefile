@@ -27,9 +27,9 @@ ifeq ($(UNAME), Darwin)
 	endif
 
 	INCLUDES = \
-		-I/Users/dave/.node-gyp/0.12.7/src             \
-		-I/Users/dave/.node-gyp/0.12.7/deps/uv/include \
-		-I/Users/dave/.node-gyp/0.12.7/deps/v8/include
+		-I/Users/$(USER)/.node-gyp/0.12.7/src             \
+		-I/Users/$(USER)/.node-gyp/0.12.7/deps/uv/include \
+		-I/Users/$(USER)/.node-gyp/0.12.7/deps/v8/include
 
 else
 	CXX    = g++
@@ -51,9 +51,9 @@ else
 	endif
 
 	INCLUDES = \
-		-I/home/dave/.node-gyp/0.12.7/src             \
-		-I/home/dave/.node-gyp/0.12.7/deps/uv/include \
-		-I/home/dave/.node-gyp/0.12.7/deps/v8/include
+		-I/home/$(USER)/.node-gyp/0.12.7/src             \
+		-I/home/$(USER)/.node-gyp/0.12.7/deps/uv/include \
+		-I/home/$(USER)/.node-gyp/0.12.7/deps/v8/include
 
 endif
 
@@ -68,7 +68,7 @@ ifeq ($(mode), debug)
 					-bundle -undefined dynamic_lookup -Wl,-search_paths_first
 	else
 		CXXFLAGS += -pthread -fPIC
-		 LDFLAGS += -lX11 -lXtst -lXinerama -shared
+		 LDFLAGS += -lrt -lX11 -lXtst -lXinerama -shared
 	endif
 
 else
@@ -82,7 +82,7 @@ else
 					-bundle -undefined dynamic_lookup -Wl,-search_paths_first
 	else
 		CXXFLAGS += -pthread -fPIC -s
-		 LDFLAGS += -lX11 -lXtst -lXinerama -shared
+		 LDFLAGS += -lrt -lX11 -lXtst -lXinerama -shared
 	endif
 
 endif

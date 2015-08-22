@@ -882,9 +882,6 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			}
 
 			if (process.platform === "linux")
-				assert (list1[i] === m.getRegion (list1[i].start));
-
-			if (process.platform === "linux")
 			{
 				assert (!m.setAccess (list1[i], false, false, false));
 				assert (!m.setAccess (list1[i], false, false, true ));
@@ -1167,21 +1164,21 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		if (process.platform === "linux")
 		{
-			 PINT16 = is64Bit ? 0x604222 : 0x804D112;
-			 PINT32 = is64Bit ? 0x604224 : 0x804D114;
-			 PINT64 = is64Bit ? 0x604228 : 0x804D118;
+			 PINT16 = is64Bit ? 0x604202 : 0x804D112;
+			 PINT32 = is64Bit ? 0x604204 : 0x804D114;
+			 PINT64 = is64Bit ? 0x604208 : 0x804D118;
 
-			PREAL32 = is64Bit ? 0x604230 : 0x804D120;
-			PREAL64 = is64Bit ? 0x604238 : 0x804D128;
+			PREAL32 = is64Bit ? 0x604210 : 0x804D120;
+			PREAL64 = is64Bit ? 0x604218 : 0x804D128;
 
-			 PPTR16 = is64Bit ? 0x604240 : 0x804D130;
-			 PPTR32 = is64Bit ? 0x604248 : 0x804D134;
-			 PPTR64 = is64Bit ? 0x604250 : 0x804D138;
+			 PPTR16 = is64Bit ? 0x604220 : 0x804D130;
+			 PPTR32 = is64Bit ? 0x604228 : 0x804D134;
+			 PPTR64 = is64Bit ? 0x604230 : 0x804D138;
 
-			 PARRAY = is64Bit ? 0x604258 : 0x804D13C;
+			 PARRAY = is64Bit ? 0x604238 : 0x804D13C;
 
-			PFINITE = is64Bit ? 0x604260 : 0x804D140;
-			PVECTOR = is64Bit ? 0x604270 : 0x804D150;
+			PFINITE = is64Bit ? 0x604240 : 0x804D140;
+			PVECTOR = is64Bit ? 0x604250 : 0x804D150;
 		}
 
 		if (process.platform === "darwin")
@@ -1321,28 +1318,28 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		if (!mem.isCaching())
 		{
 			var stats1 = mem.getStats();
-			assert (stats1.systemReads  === 19);
-			assert (stats1.cachedReads  ===  0);
-			assert (stats1.systemWrites ===  7);
-			assert (stats1.accessWrites ===  0);
-			assert (stats1.readErrors   ===  0);
-			assert (stats1.writeErrors  ===  0);
+			assert (stats1.systemReads  !== 0);
+			assert (stats1.cachedReads  === 0);
+			assert (stats1.systemWrites !== 0);
+			assert (stats1.accessWrites === 0);
+			assert (stats1.readErrors   === 0);
+			assert (stats1.writeErrors  === 0);
 
 			var stats2 = mem.getStats (true);
-			assert (stats2.systemReads  === 19);
-			assert (stats2.cachedReads  ===  0);
-			assert (stats2.systemWrites ===  7);
-			assert (stats2.accessWrites ===  0);
-			assert (stats2.readErrors   ===  0);
-			assert (stats2.writeErrors  ===  0);
+			assert (stats2.systemReads  !== 0);
+			assert (stats2.cachedReads  === 0);
+			assert (stats2.systemWrites !== 0);
+			assert (stats2.accessWrites === 0);
+			assert (stats2.readErrors   === 0);
+			assert (stats2.writeErrors  === 0);
 
 			var stats3 = mem.getStats();
-			assert (stats3.systemReads  ===  0);
-			assert (stats3.cachedReads  ===  0);
-			assert (stats3.systemWrites ===  0);
-			assert (stats3.accessWrites ===  0);
-			assert (stats3.readErrors   ===  0);
-			assert (stats3.writeErrors  ===  0);
+			assert (stats3.systemReads  === 0);
+			assert (stats3.cachedReads  === 0);
+			assert (stats3.systemWrites === 0);
+			assert (stats3.accessWrites === 0);
+			assert (stats3.readErrors   === 0);
+			assert (stats3.writeErrors  === 0);
 			assert (!m.getCacheSize());
 		}
 
@@ -1363,13 +1360,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		if (!testRW (p, m)) return false;
 
 		var stats1 = m.getStats (true);
-		assert (stats1.systemReads  ===  3 ||
-				stats1.systemReads  ===  5);
-		assert (stats1.cachedReads  === 19);
-		assert (stats1.systemWrites ===  7);
-		assert (stats1.accessWrites ===  0);
-		assert (stats1.readErrors   ===  0);
-		assert (stats1.writeErrors  ===  0);
+		assert (stats1.systemReads  !== 0);
+		assert (stats1.cachedReads  !== 0);
+		assert (stats1.systemWrites !== 0);
+		assert (stats1.accessWrites === 0);
+		assert (stats1.readErrors   === 0);
+		assert (stats1.writeErrors  === 0);
 		assert (m.getCacheSize() === 24576);
 
 		// No more cache
@@ -1638,12 +1634,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		if (process.platform === "linux")
 		{
-			PPAT1 = is64Bit ? 0x402D60 : 0x804AFE0;
-			PPAT2 = is64Bit ? 0x402D80 : 0x804B000;
-			PPAT3 = is64Bit ? 0x604280 : 0x804D160;
-			PPAT4 = is64Bit ? 0x604288 : 0x804D164;
-			PPAT5 = is64Bit ? 0x402DA0 : 0x804B020;
-			PPAT6 = is64Bit ? 0x402DC0 : 0x804B040;
+			PPAT1 = is64Bit ? 0x402E40 : 0x804B0A0;
+			PPAT2 = is64Bit ? 0x402E60 : 0x804B0C0;
+			PPAT3 = is64Bit ? 0x604260 : 0x804D160;
+			PPAT4 = is64Bit ? 0x604268 : 0x804D164;
+			PPAT5 = is64Bit ? 0x402E80 : 0x804B0E0;
+			PPAT6 = is64Bit ? 0x402EA0 : 0x804B100;
 		}
 
 		if (process.platform === "darwin")

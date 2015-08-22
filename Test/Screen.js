@@ -272,8 +272,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		var test = function (name, x, y, w, h)
 		{
 			var bounds = Bounds (x, y, w, h);
-			assert (Screen.grabScreen (image1, x,y,w,h, window)); assert (image1.isValid());
-			assert (Screen.grabScreen (image2,  bounds, window)); assert (image2.isValid());
+			Screen.grabScreen (image1, x,y,w,h, window); assert (image1.isValid());
+			Screen.grabScreen (image2,  bounds, window); assert (image2.isValid());
 
 			var result = new png ({
 				 width: image1.getWidth (),
