@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_MOUSE_H
-#define ADDON_MOUSE_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -47,5 +45,3 @@ public:
 public:
 	Mouse mMouse;
 };
-
-#endif // ADDON_MOUSE_H

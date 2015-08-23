@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_PROCESS_H
-#define ADDON_PROCESS_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -61,5 +59,3 @@ public:
 public:
 	Process mProcess;
 };
-
-#endif // ADDON_PROCESS_H

@@ -11,8 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_COMMON_H
-#define ADDON_COMMON_H
+#pragma once
 
 #include <node_buffer.h>
 #include <node_object_wrap.h>
@@ -220,5 +219,3 @@ inline T* UnwrapRobot (Handle<Value> value)
 	// Return the final unwrapped class
 	return ObjectWrap::Unwrap<T> (obj);
 }
-
-#endif // ADDON_COMMON_H

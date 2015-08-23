@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_SCREEN_H
-#define ADDON_SCREEN_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -36,5 +34,3 @@ private:
 public:
 	static void		Initialize		(Handle<Object> exports);
 };
-
-#endif // ADDON_SCREEN_H

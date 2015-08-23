@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_WINDOW_H
-#define ADDON_WINDOW_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -71,5 +69,3 @@ public:
 public:
 	Window mWindow;
 };
-
-#endif // ADDON_WINDOW_H

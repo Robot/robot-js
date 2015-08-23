@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_CLIPBOARD_H
-#define ADDON_CLIPBOARD_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -42,5 +40,3 @@ private:
 public:
 	static void		Initialize		(Handle<Object> exports);
 };
-
-#endif // ADDON_CLIPBOARD_H

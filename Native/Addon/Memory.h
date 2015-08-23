@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_MEMORY_H
-#define ADDON_MEMORY_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -58,5 +56,3 @@ public:
 public:
 	Memory mMemory;
 };
-
-#endif // ADDON_MEMORY_H

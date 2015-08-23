@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_IMAGE_H
-#define ADDON_IMAGE_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -56,5 +54,3 @@ public:
 public:
 	Image mImage;
 };
-
-#endif // ADDON_IMAGE_H

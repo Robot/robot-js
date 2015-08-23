@@ -11,9 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#ifndef ADDON_KEYBOARD_H
-#define ADDON_KEYBOARD_H
-
+#pragma once
 #include "Common.h"
 
 
@@ -44,5 +42,3 @@ public:
 public:
 	Keyboard mKeyboard;
 };
-
-#endif // ADDON_KEYBOARD_H
