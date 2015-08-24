@@ -1009,7 +1009,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 					assert (segs1[j].valid );
 					assert (segs2[j].valid );
 					assert (segs1[j].size  );
-					assert (segs1[j].length);
+					assert (segs1[j].name.length);
 
 					assert ( segs1[j].eq (segs2[j]));
 					assert (!segs1[j].ne (segs2[j]));
