@@ -31,7 +31,7 @@ help:
 	@echo "  $$ make mode=debug <cmd>  -or-  $$ make mode=release <cmd>"
 	@echo
 	@echo "DOCS"
-	@echo "  Go to http://robot.github.io/ for product documentation"
+	@echo "  Visit http://getrobot.net for product documentation"
 	@echo
 
 

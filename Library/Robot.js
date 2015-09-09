@@ -55,8 +55,8 @@ if (mNative === null)
 
 var mRobot =
 {
-	ADDON_VERSION		: 0x000000,
-	ADDON_VERSION_STR	: "0.0.0"
+	ADDON_VERSION		: 0x020000,
+	ADDON_VERSION_STR	: "2.0.0"
 };
 
 mRobot.Hash				= require ("./Hash"		)(mRobot);
