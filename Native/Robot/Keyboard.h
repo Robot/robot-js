@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -395,7 +395,8 @@ enum Key
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#if defined (BUILDING_ROBOT_SHARED) || defined (USING_ROBOT_SHARED)
+#if defined (BUILDING_ROBOT_SHARED) || \
+	defined (   USING_ROBOT_SHARED)
 	template class ROBOT_EXPORT Enum<Key>;
 #endif
 

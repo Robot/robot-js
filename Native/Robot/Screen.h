@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -48,8 +48,8 @@ class ROBOT_EXPORT Screen
 {
 public:
 	Screen								(void);
-	Screen								(Bounds bounds,
-										 Bounds usable);
+	Screen								(const Bounds& bounds,
+										 const Bounds& usable);
 
 public:
 	Bounds				GetBounds		(void) const;

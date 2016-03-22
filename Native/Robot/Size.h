@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -32,6 +32,7 @@ public:
 	Size						(int32 w, int32 h);
 
 public:
+	bool		IsZero			(void) const;
 	bool		IsEmpty			(void) const;
 	Point		ToPoint			(void) const;
 

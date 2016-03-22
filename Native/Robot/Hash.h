@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -28,12 +28,12 @@ class ROBOT_EXPORT Hash
 {
 public:
 	explicit	Hash			(void);
-	explicit	Hash			(const char* file);
+	explicit	Hash			(const  char* file);
 	explicit	Hash			(const uint8* data,
 								 uintptr dataLength);
 
 public:
-	bool		Append			(const char* file);
+	bool		Append			(const  char* file);
 	void		Append			(const uint8* data,
 								 uintptr dataLength);
 

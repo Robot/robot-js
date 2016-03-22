@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -87,11 +87,11 @@ public:
 	Point		GetCenter		(void) const;
 
 public:
-	Bounds		operator &		(const Bounds& bounds) const;
-	Bounds		operator |		(const Bounds& bounds) const;
-
-	Bounds&		operator &=		(const Bounds& bounds);
 	Bounds&		operator |=		(const Bounds& bounds);
+	Bounds&		operator &=		(const Bounds& bounds);
+
+	Bounds		operator |		(const Bounds& bounds) const;
+	Bounds		operator &		(const Bounds& bounds) const;
 
 	bool		operator ==		(const Bounds& bounds) const;
 	bool		operator !=		(const Bounds& bounds) const;

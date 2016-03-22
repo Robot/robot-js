@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -221,6 +221,19 @@ bool Memory::Stats::operator != (const Stats& stats) const
 
 		    ReadErrors  != stats. ReadErrors  ||
 		   WriteErrors  != stats.WriteErrors;
+}
+
+
+
+//----------------------------------------------------------------------------//
+// Functions                                                   Memory::Region //
+//----------------------------------------------------------------------------//
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool Memory::Region::Contains (uintptr address) const
+{
+	return Start <= address && address < Stop;
 }
 
 
@@ -531,9 +544,8 @@ Memory::Region Memory::GetRegion (uintptr address) const
 		region.Readable   = (info.protection & VM_PROT_READ   ) != 0;
 		region.Writable   = (info.protection & VM_PROT_WRITE  ) != 0;
 
-		// Is the region private or guarded
-		region.Private = info.shared   == 0;
-		region.Guarded = info.reserved != 0;
+		// Is the region private or shared
+		region.Private = info.shared == 0;
 	}
 
 	else
@@ -1057,6 +1069,10 @@ bool Memory::CreateCache (uintptr blockLength,
 		initialSize % pageSize != 0 ||
 		enlargeSize % pageSize != 0 ||
 		maximumSize % pageSize != 0)
+		return false;
+
+	// Avoid any unoptimized alignment
+	if (blockLength & (blockLength-1))
 		return false;
 
 	// Ensure block can store data

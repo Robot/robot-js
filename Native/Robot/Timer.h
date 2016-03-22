@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
 //                                                                            //
-//                       (C) 2010-2015 Robot Developers                       //
+//                       (C) 2010-2016 Robot Developers                       //
 //                       See LICENSE for licensing info                       //
 //                                                                            //
 // -------------------------------------------------------------------------- //
@@ -31,7 +31,7 @@ public:
 
 public:
 	void			Start			(void);
-	void			Reset			(void);
+	uint64			Reset			(void);
 	uint64			Restart			(void);
 
 	uint64			GetElapsed		(void) const;

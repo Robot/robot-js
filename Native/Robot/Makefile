@@ -1,7 +1,7 @@
 ################################################################################
 ## -------------------------------------------------------------------------- ##
 ##                                                                            ##
-##                       (C) 2010-2015 Robot Developers                       ##
+##                       (C) 2010-2016 Robot Developers                       ##
 ##                       See LICENSE for licensing info                       ##
 ##                                                                            ##
 ## -------------------------------------------------------------------------- ##
@@ -24,25 +24,23 @@ else
 endif
 
 ifeq ($(mode), debug)
-	LIBRARY  = $(OUTPUT)libRobotd.a
+	LIBRARY  = libRobotd.a
 	OBJECT   = $(OUTPUT)Robotd/
 	CXXFLAGS = -std=c++11 -Wall -pedantic-errors -fno-rtti -O0 -g -DDEBUG
 
 	ifeq ($(UNAME), Darwin)
 		CXXFLAGS += -stdlib=libc++ -x objective-c++
-	else
-		CXXFLAGS += -fPIC
 	endif
 
 else
-	LIBRARY  = $(OUTPUT)libRobot.a
+	LIBRARY  = libRobot.a
 	OBJECT   = $(OUTPUT)Robot/
 	CXXFLAGS = -std=c++11 -Wall -pedantic-errors -fno-rtti -O3 -DNDEBUG
 
 	ifeq ($(UNAME), Darwin)
 		CXXFLAGS += -stdlib=libc++ -x objective-c++
 	else
-		CXXFLAGS += -fPIC -s
+		CXXFLAGS += -s
 	endif
 
 endif
@@ -50,6 +48,9 @@ endif
 SOURCES = $(shell find ./ -name "*.cc")
 HEADERS = $(shell find ./ -name "*.h" )
 OBJECTS = $(patsubst %.cc, $(OBJECT)%.o, $(SOURCES))
+
+INSTALL_LIB = /usr/local/lib/
+INSTALL_INC = /usr/local/include/Robot/
 
 
 
@@ -74,7 +75,24 @@ $(OBJECT)%.o: $(SRC)%.cc
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 build: _init $(OBJECTS)
-	ar rcs $(LIBRARY) $(OBJECTS)
+	ar rcs $(OUTPUT)$(LIBRARY) $(OBJECTS)
 
 clean:
 	rm -rf $(OUTPUT)
+
+
+
+##----------------------------------------------------------------------------##
+## Install                                                                    ##
+##----------------------------------------------------------------------------##
+
+.PHONY: install remove
+
+install: build $(HEADERS) $(OUTPUT)$(LIBRARY)
+	mkdir -p $(INSTALL_INC) $(INSTALL_LIB)
+	install -p -m 0644 $(HEADERS) $(INSTALL_INC)
+	install -p -m 0644 $(OUTPUT)$(LIBRARY) $(INSTALL_LIB)
+
+remove:
+	rm -rf $(INSTALL_INC)
+	rm -f $(INSTALL_LIB)$(LIBRARY)
