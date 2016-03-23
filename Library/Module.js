@@ -35,6 +35,24 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
+	Segment.prototype.contains = function (value)
+	{
+		// Check for number comparison
+		if (typeof value === "number")
+		{
+			var base = this.base;
+			var stop = this.base +
+					   this.size;
+
+			return base <= value &&
+				   stop >  value;
+		}
+
+		throw new TypeError ("Invalid arguments");
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
 	Segment.prototype.lt = function (value)
 	{
 		// Check for another segment
@@ -203,6 +221,24 @@ module.exports = function (robot, native)
 
 		// Return the segments
 		return this._segments;
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	Module.prototype.contains = function (value)
+	{
+		// Check for number comparison
+		if (typeof value === "number")
+		{
+			var base = this._base;
+			var stop = this._base +
+					   this._size;
+
+			return base <= value &&
+				   stop >  value;
+		}
+
+		throw new TypeError ("Invalid arguments");
 	};
 
 

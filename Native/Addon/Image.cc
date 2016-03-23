@@ -34,9 +34,9 @@ void ImageWrap::Create (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Image, args.Holder());
 
-	mImage->Create
+	RETURN_BOOL (mImage->Create
 		((uint16) args[0]->Int32Value(),
-		 (uint16) args[1]->Int32Value());
+		 (uint16) args[1]->Int32Value()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

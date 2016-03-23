@@ -64,8 +64,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (t1.ge (t2) === (t1.getElapsed() >= t2.getElapsed()));
 		assert (t2.le (t1) === (t2.getElapsed() <= t1.getElapsed()));
 
-		assert (t1.getElapsed() === t1.restart()); t1.reset();
-		assert (t2.getElapsed() === t2.restart()); t2.reset();
+		assert (t1.getElapsed() === t1.reset  ()); assert (t1.getElapsed() === t1.restart());
+		assert (t2.getElapsed() === t2.restart()); assert (t2.getElapsed() === t2.reset  ());
 
 		//----------------------------------------------------------------------------//
 
@@ -153,6 +153,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert ( t1.hasExpired (100));
 		assert ( t2.hasExpired (100));
 
+		assert (200 <= t1.getElapsed() && t1.getElapsed() <= 400);
+		assert (200 <= t2.getElapsed() && t2.getElapsed() <= 400);
 		log (sprintf ("%03d", t1.getElapsed()) + " = (200 - 400) : ");
 		log (sprintf ("%03d", t2.getElapsed()) + " = (200 - 400)\n" );
 
@@ -168,6 +170,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert ( t1.hasExpired (100));
 		assert ( t2.hasExpired (100));
 
+		assert (200 <= t1.getElapsed() && t1.getElapsed() <= 400);
+		assert (400 <= t2.getElapsed() && t2.getElapsed() <= 800);
 		log (sprintf ("%03d", t1.getElapsed()) + " = (200 - 400) : " );
 		log (sprintf ("%03d", t2.getElapsed()) + " = (400 - 800)\n\n");
 
@@ -209,7 +213,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (Timer.sleep, Timer, [{ min: 0 }]);
 
 		assert (typeof t1.start      ( ) === "undefined");
-		assert (typeof t1.reset      ( ) === "undefined");
+		assert (typeof t1.reset      ( ) === "number"   );
 		assert (typeof t1.restart    ( ) === "number"   );
 		assert (typeof t1.getElapsed ( ) === "number"   );
 		assert (typeof t1.hasStarted ( ) === "boolean"  );

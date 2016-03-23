@@ -102,6 +102,20 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
+	Region.prototype.contains = function (value)
+	{
+		// Check for number comparison
+		if (typeof value === "number")
+		{
+			return this.start <= value &&
+				   this.stop  >  value;
+		}
+
+		throw new TypeError ("Invalid arguments");
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
 	Region.prototype.lt = function (value)
 	{
 		// Check for another region

@@ -23,9 +23,9 @@ module.exports = function (robot, native)
 
 	native.Image.prototype.create = function (aw, ah)
 	{
-		var s = robot.Size.
-			normalize ( aw,  ah);
-		this._create  (s.w, s.h);
+		var s = robot
+			.Size.normalize ( aw,  ah);
+		return this._create (s.w, s.h);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

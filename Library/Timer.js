@@ -57,7 +57,16 @@ module.exports = function (robot, native)
 
 	Timer.prototype.reset = function()
 	{
-		this._started = mInvalid;
+		// Check if timer has started
+		if (this._started === mInvalid)
+			return 0;
+
+		else
+		{
+			var old = this._started;
+			this._started = mInvalid;
+			return Timer.getCpuTime() - old;
+		}
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -132,7 +141,7 @@ module.exports = function (robot, native)
 		else d = (Math.random() *
 			(r.max - r.min) | 0) + r.min;
 
-		if (d > 5) native.sleep (d);
+		native.sleep (d);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

@@ -213,7 +213,7 @@ static void Prepare (const FunctionCallbackInfo<Value>& args)
 
 static void Sleep (const FunctionCallbackInfo<Value>& args)
 {
-	ISOLATE; Timer::Sleep ((int) args[0]->Int32Value());
+	ISOLATE; Timer::Sleep (args[0]->Uint32Value());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

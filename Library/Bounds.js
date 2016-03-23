@@ -55,7 +55,7 @@ module.exports = function (robot)
 	Bounds.prototype.isEmpty = function()
 	{
 		return this.w === 0
-			&& this.h === 0;
+			|| this.h === 0;
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -311,6 +311,35 @@ module.exports = function (robot)
 	{
 		var bnds = Bounds.normalize (ax, ay, aw, ah);
 
+		// Normalize negative rectangles
+		var l1 = this.x; var r1 = this.x;
+		var t1 = this.y; var b1 = this.y;
+		if (this.w < 0) l1 += this.w; else r1 += this.w;
+		if (this.h < 0) t1 += this.h; else b1 += this.h;
+
+		var l2 = bnds.x; var r2 = bnds.x;
+		var t2 = bnds.y; var b2 = bnds.y;
+		if (bnds.w < 0) l2 += bnds.w; else r2 += bnds.w;
+		if (bnds.h < 0) t2 += bnds.h; else b2 += bnds.h;
+
+		if (this.w === 0 && this.h === 0)
+			return Bounds ({ l: l2, t: t2, r: r2, b: b2 });
+
+		if (bnds.w === 0 && bnds.h === 0)
+			return Bounds ({ l: l1, t: t1, r: r1, b: b1 });
+
+		return Bounds ({
+			l: Math.min (l1, l2), r: Math.max (r1, r2),
+			t: Math.min (t1, t2), b: Math.max (b1, b2)
+		});
+	};
+
+	////////////////////////////////////////////////////////////////////////////////
+
+	Bounds.prototype.intersect = function (ax, ay, aw, ah)
+	{
+		var bnds = Bounds.normalize (ax, ay, aw, ah);
+
 		if ((this.w === 0 && this.h === 0) ||
 			(bnds.w === 0 && bnds.h === 0))
 			return Bounds();
@@ -333,35 +362,6 @@ module.exports = function (robot)
 		return Bounds ({
 			l: Math.max (l1, l2), r: Math.min (r1, r2),
 			t: Math.max (t1, t2), b: Math.min (b1, b2)
-		});
-	};
-
-	////////////////////////////////////////////////////////////////////////////////
-
-	Bounds.prototype.intersect = function (ax, ay, aw, ah)
-	{
-		var bnds = Bounds.normalize (ax, ay, aw, ah);
-
-		// Normalize negative rectangles
-		var l1 = this.x; var r1 = this.x;
-		var t1 = this.y; var b1 = this.y;
-		if (this.w < 0) l1 += this.w; else r1 += this.w;
-		if (this.h < 0) t1 += this.h; else b1 += this.h;
-
-		var l2 = bnds.x; var r2 = bnds.x;
-		var t2 = bnds.y; var b2 = bnds.y;
-		if (bnds.w < 0) l2 += bnds.w; else r2 += bnds.w;
-		if (bnds.h < 0) t2 += bnds.h; else b2 += bnds.h;
-
-		if (this.w === 0 && this.h === 0)
-			return Bounds ({ l: l2, t: t2, r: r2, b: b2 });
-
-		if (bnds.w === 0 && bnds.h === 0)
-			return Bounds ({ l: l1, t: t1, r: r1, b: b1 });
-
-		return Bounds ({
-			l: Math.min (l1, l2), r: Math.max (r1, r2),
-			t: Math.min (t1, t2), b: Math.max (b1, b2)
 		});
 	};
 

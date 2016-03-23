@@ -166,6 +166,14 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert ( module1.gt (module2)); assert ( module1.gt (module2.getBase()));
 			assert (!module1.le (module2)); assert (!module1.le (module2.getBase()));
 			assert ( module1.ge (module2)); assert ( module1.ge (module2.getBase()));
+
+			module1 = Module (Process(), "", "", 1000, 1000);
+			assert (!module1.contains ( 999));
+			assert ( module1.contains (1000));
+			assert ( module1.contains (1001));
+			assert ( module1.contains (1999));
+			assert (!module1.contains (2000));
+			assert (!module1.contains (2001));
 		}
 
 		//----------------------------------------------------------------------------//
@@ -214,6 +222,15 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert ( segment1.gt (segment2)); assert ( segment1.gt (segment2.base));
 			assert (!segment1.le (segment2)); assert (!segment1.le (segment2.base));
 			assert ( segment1.ge (segment2)); assert ( segment1.ge (segment2.base));
+
+			segment1.Base = 1000;
+			segment1.Size = 1000;
+			assert (!segment1.contains ( 999));
+			assert ( segment1.contains (1000));
+			assert ( segment1.contains (1001));
+			assert ( segment1.contains (1999));
+			assert (!segment1.contains (2000));
+			assert (!segment1.contains (2001));
 		}
 
 		//----------------------------------------------------------------------------//
@@ -316,6 +333,15 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert ( region1.gt (region2)); assert ( region1.gt (region2.start));
 			assert (!region1.le (region2)); assert (!region1.le (region2.start));
 			assert ( region1.ge (region2)); assert ( region1.ge (region2.start));
+
+			region1.Start = 1000;
+			region1.Stop  = 2000;
+			assert (!region1.contains ( 999));
+			assert ( region1.contains (1000));
+			assert ( region1.contains (1001));
+			assert ( region1.contains (1999));
+			assert (!region1.contains (2000));
+			assert (!region1.contains (2001));
 		}
 
 		return true;
@@ -441,7 +467,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (!m.createCache (12288,    0, 65536));
 		assert (!m.createCache (12287,    0, 65536));
 		assert (!m.createCache (    0, 4096, 65536));
-		assert ( m.createCache (12288, 4096, 65536));
+		assert ( m.createCache (16384, 4096, 65536));
+		assert (!m.createCache (12288, 4096, 65536));
 		assert (!m.createCache (12287, 4096, 65536));
 		assert (!m.createCache (    0, 4095, 65536));
 		assert (!m.createCache (12288, 4095, 65536));
@@ -467,19 +494,24 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (!m.createCache (12288, 4095, 12288));
 		assert (!m.createCache (12287, 4095, 12288));
 
-		assert ( m.createCache (12288, 4096, 65536, 65536, 524288));
+		assert ( m.createCache (16384, 4096, 65536, 65536, 524288));
+		assert (!m.createCache (12288, 4096, 65536, 65536, 524288));
 		assert (!m.createCache (12288, 4096, 65536, 65536, 524287));
 		assert (!m.createCache (12288, 4096, 65536, 65535, 524288));
 		assert (!m.createCache (12288, 4096, 65536, 65535, 524287));
 
 		assert (!m.createCache (4096, 12288, 65536, 0, 0));
 
-		assert ( m.createCache (12288, 4096, 65536, 65536));
-		assert ( m.createCache (12288, 4096, 65536, 16384));
+		assert ( m.createCache (16384, 4096, 65536, 65536));
+		assert ( m.createCache (16384, 4096, 65536, 20480));
+		assert (!m.createCache (12288, 4096, 65536, 65536));
+		assert (!m.createCache (12288, 4096, 65536, 16384));
 		assert (!m.createCache (12288, 4096, 65536, 12288));
 
-		assert ( m.createCache (12288, 4096, 65536, 65536, 524288));
-		assert ( m.createCache (12288, 4096, 65536, 65536,  65536));
+		assert ( m.createCache (16384, 4096, 65536, 65536, 524288));
+		assert ( m.createCache (16384, 4096, 65536, 65536,  65536));
+		assert (!m.createCache (12288, 4096, 65536, 65536, 524288));
+		assert (!m.createCache (12288, 4096, 65536, 65536,  65536));
 		assert (!m.createCache (12288, 4096, 65536, 65536,  12288));
 
 		assert ( m.isCaching()); assert (m.getCacheSize() === 65536);
@@ -517,13 +549,14 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (m1.eq, m1, ["a"]);
 			assert (m1.ne, m1, ["a"]);
 
-			assert (typeof m1.isValid    () === "boolean"     );
-			assert (typeof m1.getName    () === "string"      );
-			assert (typeof m1.getPath    () === "string"      );
-			assert (typeof m1.getBase    () === "number"      );
-			assert (typeof m1.getSize    () === "number"      );
-			assert (       m1.getProcess () instanceof Process);
-			assert (       m1.getSegments() instanceof Array  );
+			assert (typeof m1.isValid    ( ) === "boolean"     );
+			assert (typeof m1.getName    ( ) === "string"      );
+			assert (typeof m1.getPath    ( ) === "string"      );
+			assert (typeof m1.getBase    ( ) === "number"      );
+			assert (typeof m1.getSize    ( ) === "number"      );
+			assert (       m1.getProcess ( ) instanceof Process);
+			assert (       m1.getSegments( ) instanceof Array  );
+			assert (typeof m1.contains   (0) === "boolean"     );
 
 			assert (typeof m1.lt (m2) === "boolean");
 			assert (typeof m1.gt (m2) === "boolean");
@@ -555,6 +588,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (s1.ne, s1, [   ]);
 			assert (s1.eq, s1, ["a"]);
 			assert (s1.ne, s1, ["a"]);
+
+			assert (typeof s1.contains (0) === "boolean");
 
 			assert (typeof s1.lt (s2) === "boolean");
 			assert (typeof s1.gt (s2) === "boolean");
@@ -779,6 +814,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (r1.eq, r1, ["a"]);
 			assert (r1.ne, r1, ["a"]);
 
+			assert (typeof r1.contains (0) === "boolean");
+
 			assert (typeof r1.lt (r2) === "boolean");
 			assert (typeof r1.gt (r2) === "boolean");
 			assert (typeof r1.le (r2) === "boolean");
@@ -893,6 +930,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 				assert (!m.setAccess (list1[i], true , true , true ));
 
 				// This is unused on Linux
+				assert (!list1[i].guarded);
+			}
+
+			if (process.platform === "darwin")
+			{
+				// This is unused on Mac
 				assert (!list1[i].guarded);
 			}
 
