@@ -7,26 +7,30 @@
 	"description"		: "Native system automation for node.js",
 	"homepage"			: "http://getrobot.net",
 
-	"author" :
+	"author":
 	{
 		"name"			: "David Krutsko",
 		"email"			: "dave@krutsko.net",
 		"url"			: "http://krutsko.net"
 	},
 
-	"repository" :
+	"repository":
 	{
 		"type"			: "git",
 		"url"			: "https://github.com/Robot/robot-js.git"
 	},
 
-	"bugs" :
+	"bugs":
 	{
-		"url"			: "https://github.com/Robot/issues/issues"
+		"url"			: "https://github.com/Robot/robot-js/issues"
 	},
 
-	"keywords" :
+	"keywords":
 	[
+		"autoit",
+		"native",
+		"system",
+		"automation",
 		"hash",
 		"keyboard",
 		"mouse",
@@ -39,25 +43,24 @@
 		"timer",
 		"clock",
 		"clipboard",
-		"keylogging",
-		"automation"
+		"keylogging"
 	],
 
-	"os" :
+	"os":
 	[
 		"linux",
 		"darwin",
 		"win32"
 	],
 
-	"devDependencies" :
+	"devDependencies":
 	{
-		"sprintf-js"	: "1.x.x",
-		"node-png"		: "0.x.x",
-		"readline-sync"	: "1.x.x"
+		"sprintf-js"	: "^1",
+		"node-png"		: "^0",
+		"readline-sync"	: "^1"
 	},
 
-	"engines" :
+	"engines":
 	{
 		"node"			: ">= 0.12.0"
 	}
