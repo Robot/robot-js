@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Addon">
+      <UniqueIdentifier>{6e58b11f-356e-4300-96b3-1a999a25d00d}</UniqueIdentifier>
+      <Extensions>h;cc</Extensions>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{08b4d710-381b-4dec-8ee6-668a1a9545cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Library\Native">
+      <UniqueIdentifier>{ad4c12c6-b0d4-43bd-aa67-f632c0f9f0e5}</UniqueIdentifier>
+      <Extensions>js</Extensions>
+    </Filter>
+    <Filter Include="Library\Types">
+      <UniqueIdentifier>{e1343d03-efc7-47ea-9321-6df38b0b7047}</UniqueIdentifier>
+      <Extensions>js</Extensions>
+    </Filter>
+    <Filter Include="Robot">
+      <UniqueIdentifier>{d6529960-08bd-470e-b430-04696da9cc75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Robot\Native">
+      <UniqueIdentifier>{c210c422-6392-4a51-af6d-a5e4c39bba1e}</UniqueIdentifier>
+      <Extensions>h;cc</Extensions>
+    </Filter>
+    <Filter Include="Robot\Types">
+      <UniqueIdentifier>{abb6b26a-2ec0-4183-bc3f-3d8460651030}</UniqueIdentifier>
+      <Extensions>h;cc</Extensions>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{8691179c-902c-44de-8ba0-059c062fb1c4}</UniqueIdentifier>
+      <Extensions>js</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Clipboard.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Addon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Clipboard.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Keyboard.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Memory.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Module.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Mouse.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Process.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Screen.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Timer.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Window.h">
+      <Filter>Robot\Native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Bounds.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Color.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Enum.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Global.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Hash.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Image.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Point.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Range.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Robot.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Size.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Robot\Types.h">
+      <Filter>Robot\Types</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Clipboard.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Memory.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Process.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cc">
+      <Filter>Addon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Clipboard.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Keyboard.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Memory.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Module.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Mouse.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Process.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Screen.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Timer.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Window.cc">
+      <Filter>Robot\Native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Bounds.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Color.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Hash.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Image.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Point.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Range.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Robot\Size.cc">
+      <Filter>Robot\Types</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Library\Clipboard.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Keyboard.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Memory.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Module.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Mouse.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Process.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Screen.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Timer.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Window.js">
+      <Filter>Library\Native</Filter>
+    </None>
+    <None Include="..\..\Library\Bounds.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Color.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Hash.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Image.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Point.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Range.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Robot.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Library\Size.js">
+      <Filter>Library\Types</Filter>
+    </None>
+    <None Include="..\..\Test\Clipboard.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Keyboard.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Memory.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Mouse.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Process.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Screen.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Test.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Timer.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Types.js">
+      <Filter>Test</Filter>
+    </None>
+    <None Include="..\..\Test\Window.js">
+      <Filter>Test</Filter>
+    </None>
+  </ItemGroup>
+</Project>

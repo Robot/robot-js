@@ -310,7 +310,7 @@
       <PreprocessorDefinitions>UNICODE;WIN32;NDEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.7\src\;$(UserProfile)\.node-gyp\0.12.7\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.7\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -321,7 +321,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.7\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W32$(TargetExt)</Command>
@@ -336,7 +336,7 @@
       <PreprocessorDefinitions>UNICODE;WIN32;NDEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.7\src\;$(UserProfile)\.node-gyp\0.12.7\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.7\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -347,7 +347,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.7\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W64$(TargetExt)</Command>
@@ -358,7 +358,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNICODE;WIN32;DEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.7\src\;$(UserProfile)\.node-gyp\0.12.7\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.7\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -367,7 +367,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.7\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W32$(TargetExt)</Command>
@@ -378,7 +378,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNICODE;WIN32;DEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.7\src\;$(UserProfile)\.node-gyp\0.12.7\deps\uv\include\;$(UserProfile)\.node-gyp\0.12.7\deps\v8\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -387,7 +387,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.7\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W64$(TargetExt)</Command>
