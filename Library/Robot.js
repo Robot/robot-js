@@ -13,37 +13,10 @@
 // Modules                                                                    //
 //----------------------------------------------------------------------------//
 
-var mNative = null;
-// Check if the platform is Linux
-if (process.platform === "linux")
-{
-	if (process.arch === "ia32")
-		mNative = require ("./Robot-L32");
-
-	if (process.arch === "x64")
-		mNative = require ("./Robot-L64");
-}
-
-// Check if the platform is Mac
-if (process.platform === "darwin")
-{
-	if (process.arch === "x64")
-		mNative = require ("./Robot-M64");
-}
-
-// Check if the platform is Win
-if (process.platform === "win32")
-{
-	if (process.arch === "ia32")
-		mNative = require ("./Robot-W32");
-
-	if (process.arch === "x64")
-		mNative = require ("./Robot-W64");
-}
-
-if (mNative === null)
-	// No compatible platform binary was found
-	throw new Error ("Platform not supported");
+var mNative = require ("./Robot-" +
+	process.platform   + "-" +
+	process.arch       + "-" +
+	process.versions.modules);
 
 
 

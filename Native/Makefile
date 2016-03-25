@@ -30,6 +30,14 @@ help:
 	@echo "  By default, this project is built using release settings"
 	@echo "  $$ make mode=debug <cmd>  -or-  $$ make mode=release <cmd>"
 	@echo
+	@echo "NODE"
+	@echo "  This project can be built for multiple versions of Node"
+	@echo "  By default, this project is built using Node 0.12.12"
+	@echo "  nodeVersion: represents the node version to compile with"
+	@echo "  nodeModules: represents the NODE_MODULE_VERSION constant"
+	@echo "  $$ make nodeVersion=4.4.0 nodeModules=46 <cmd>"
+	@echo "  $$ make nodeVersion=5.9.0 nodeModules=47 <cmd>"
+	@echo
 	@echo "DOCS"
 	@echo "  Visit http://getrobot.net for product documentation"
 	@echo

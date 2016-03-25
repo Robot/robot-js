@@ -16,44 +16,37 @@ makepp_no_builtin = 1
 UNAME = $(shell uname -s)
 LBITS = $(shell getconf LONG_BIT)
 
+ifdef nodeVersion
+	NODE_VERSION = $(nodeVersion)
+else
+	NODE_VERSION = 0.12.12
+endif
+ifdef nodeModules
+	NODE_MODULES = $(nodeModules)
+else
+	NODE_MODULES = 14
+endif
+
 ifeq ($(UNAME), Darwin)
 	CXX    = clang++
 	OUTPUT = ../Binaries/Mac/
-
-	ifeq ($(mode), debug)
-		BINARY = $(OUTPUT)Robot-M64d.node
-	else
-		BINARY = $(OUTPUT)Robot-M64.node
-	endif
+	BINARY = $(OUTPUT)Robot-darwin-x64-$(NODE_MODULES).node
 
 	INCLUDES = \
-		-I/Users/$(USER)/.node-gyp/0.12.7/src             \
-		-I/Users/$(USER)/.node-gyp/0.12.7/deps/uv/include \
-		-I/Users/$(USER)/.node-gyp/0.12.7/deps/v8/include
+		-I/Users/$(USER)/.node-gyp/$(NODE_VERSION)/include/node
 
 else
 	CXX    = g++
 	OUTPUT = ../Binaries/Linux/
 
-	ifeq ($(mode), debug)
-		ifeq ($(LBITS), 64)
-			BINARY = $(OUTPUT)Robot-L64d.node
-		else
-			BINARY = $(OUTPUT)Robot-L32d.node
-		endif
-
+	ifeq ($(LBITS), 64)
+		BINARY = $(OUTPUT)Robot-linux-x64-$(NODE_MODULES).node
 	else
-		ifeq ($(LBITS), 64)
-			BINARY = $(OUTPUT)Robot-L64.node
-		else
-			BINARY = $(OUTPUT)Robot-L32.node
-		endif
+		BINARY = $(OUTPUT)Robot-linux-ia32-$(NODE_MODULES).node
 	endif
 
 	INCLUDES = \
-		-I/home/$(USER)/.node-gyp/0.12.7/src             \
-		-I/home/$(USER)/.node-gyp/0.12.7/deps/uv/include \
-		-I/home/$(USER)/.node-gyp/0.12.7/deps/v8/include
+		-I/home/$(USER)/.node-gyp/$(NODE_VERSION)/include/node
 
 endif
 

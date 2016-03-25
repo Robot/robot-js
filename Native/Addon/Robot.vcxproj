@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="DLL|Win32">
       <Configuration>DLL</Configuration>
@@ -240,24 +240,24 @@
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110_xp</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -274,7 +274,10 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <NodeVersion>0.12.12</NodeVersion>
+    <NodeModules>14</NodeModules>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL|Win32'">
     <OutDir>$(SolutionDir)\Binaries\Win32\</OutDir>
     <IntDir>$(OutDir)\$(ProjectName)\</IntDir>
@@ -310,7 +313,7 @@
       <PreprocessorDefinitions>UNICODE;WIN32;NDEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -321,10 +324,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W32$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-ia32-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">
@@ -336,7 +339,7 @@
       <PreprocessorDefinitions>UNICODE;WIN32;NDEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -347,10 +350,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W64$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-x64-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">
@@ -358,7 +361,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNICODE;WIN32;DEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -367,10 +370,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W32$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-ia32-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">
@@ -378,7 +381,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNICODE;WIN32;DEBUG;BUILDING_V8_SHARED;BUILDING_UV_SHARED;BUILDING_NODE_EXTENSION;BUILDING_ROBOT_SHARED</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\0.12.12\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\include\node\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4661</DisableSpecificWarnings>
     </ClCompile>
@@ -387,10 +390,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>Psapi.lib;node.lib;DelayImp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\0.12.12\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-W64$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-x64-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
