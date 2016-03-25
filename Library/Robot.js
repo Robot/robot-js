@@ -28,8 +28,8 @@ var mNative = require ("./Robot-" +
 
 var mRobot =
 {
-	ADDON_VERSION		: 0x020000,
-	ADDON_VERSION_STR	: "2.0.0"
+	ADDON_VERSION		: 0x010000,
+	ADDON_VERSION_STR	: "1.0.0"
 };
 
 mRobot.Hash				= require ("./Hash"		)(mRobot);
