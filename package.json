@@ -60,6 +60,11 @@
 		"readline-sync"	: "^1"
 	},
 
+	"scripts":
+	{
+		"install"		: "node Native/Install.js"
+	},
+
 	"engines":
 	{
 		"node"			: "~0.12 || ^4 || ^5"
