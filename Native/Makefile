@@ -32,7 +32,7 @@ help:
 	@echo
 	@echo "NODE"
 	@echo "  This project can be built for multiple versions of Node"
-	@echo "  By default, this project is built using Node 0.12.12"
+	@echo "  By default, this project is built using Node 0.12.13"
 	@echo "  nodeVersion: represents the node version to compile with"
 	@echo "  nodeModules: represents the NODE_MODULE_VERSION constant"
 	@echo "  $$ make nodeVersion=4.4.0 nodeModules=46 <cmd>"

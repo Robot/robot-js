@@ -19,7 +19,7 @@ LBITS = $(shell getconf LONG_BIT)
 ifdef nodeVersion
 	NODE_VERSION = $(nodeVersion)
 else
-	NODE_VERSION = 0.12.12
+	NODE_VERSION = 0.12.13
 endif
 ifdef nodeModules
 	NODE_MODULES = $(nodeModules)
