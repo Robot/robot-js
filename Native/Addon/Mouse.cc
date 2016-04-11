@@ -119,7 +119,7 @@ void MouseWrap::SetPos (const FunctionCallbackInfo<Value>& args)
 void MouseWrap::GetState (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
-	// Not arguments were given
+	// No arguments were given
 	if (args[0]->IsUndefined())
 	{
 		auto res = NEW_OBJ;

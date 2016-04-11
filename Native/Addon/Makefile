@@ -30,7 +30,7 @@ endif
 ifeq ($(UNAME), Darwin)
 	CXX    = clang++
 	OUTPUT = ../Binaries/Mac/
-	BINARY = $(OUTPUT)Robot-darwin-x64-$(NODE_MODULES).node
+	BINARY = $(OUTPUT)darwin-x64-$(NODE_MODULES).node
 
 	INCLUDES = \
 		-I/Users/$(USER)/.node-gyp/$(NODE_VERSION)/include/node
@@ -40,9 +40,9 @@ else
 	OUTPUT = ../Binaries/Linux/
 
 	ifeq ($(LBITS), 64)
-		BINARY = $(OUTPUT)Robot-linux-x64-$(NODE_MODULES).node
+		BINARY = $(OUTPUT)linux-x64-$(NODE_MODULES).node
 	else
-		BINARY = $(OUTPUT)Robot-linux-ia32-$(NODE_MODULES).node
+		BINARY = $(OUTPUT)linux-ia32-$(NODE_MODULES).node
 	endif
 
 	INCLUDES = \

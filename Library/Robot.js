@@ -13,7 +13,7 @@
 // Modules                                                                    //
 //----------------------------------------------------------------------------//
 
-var mNative = require ("./Robot-" +
+var mNative = require  ("./" +
 	process.platform   + "-" +
 	process.arch       + "-" +
 	process.versions.modules);
@@ -123,6 +123,199 @@ mRobot.Bounds.prototype.toString = function()
 		+ this.y + ", "
 		+ this.w + ", "
 		+ this.h + "]";
+};
+
+
+
+//----------------------------------------------------------------------------//
+// Clone                                                                      //
+//----------------------------------------------------------------------------//
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Hash.prototype.clone = function()
+{
+	var copy = new mRobot.Hash();
+	copy.result = this.result;
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Color.prototype.clone = function()
+{
+	return new mRobot.Color (this);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Image.prototype.clone = function()
+{
+	return new mRobot.Image (this);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Range.prototype.clone = function()
+{
+	return new mRobot.Range (this);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Point.prototype.clone = function()
+{
+	return new mRobot.Point (this);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Size.prototype.clone = function()
+{
+	return new mRobot.Size (this);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Bounds.prototype.clone = function()
+{
+	return new mRobot.Bounds (this);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Keyboard.prototype.clone = function()
+{
+	var copy = new mRobot.Keyboard();
+	copy.autoDelay.min = this.autoDelay.min;
+	copy.autoDelay.max = this.autoDelay.max;
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Mouse.prototype.clone = function()
+{
+	var copy = new mRobot.Mouse();
+	copy.autoDelay.min = this.autoDelay.min;
+	copy.autoDelay.max = this.autoDelay.max;
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Process.prototype.clone = function()
+{
+	return new mRobot.Process (this.getPID());
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Module.prototype.clone = function()
+{
+	var copy = new mRobot.Module
+		(this._proc, this._name,
+		 this._path, this._base,
+		 this._size);
+
+	// Check if segments present
+	if (this._segments !== null)
+	{
+		copy._segments = [ ];
+		this._segments.map (function (s)
+		{
+			// Clone every segment in array
+			copy._segments.push (s.clone());
+		});
+	}
+
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Module.Segment.prototype.clone = function()
+{
+	var copy = new mRobot.Module.Segment();
+	copy.valid = this.valid;
+	copy.base  = this.base;
+	copy.size  = this.size;
+	copy.name  = this.name;
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Memory.prototype.clone = function()
+{
+	return new mRobot.Memory (this.getProcess());
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Memory.Stats.prototype.clone = function()
+{
+	var copy = new mRobot.Memory.Stats();
+
+	copy.systemReads  = this.systemReads;
+	copy.cachedReads  = this.cachedReads;
+	copy.systemWrites = this.systemWrites;
+	copy.accessWrites = this.accessWrites;
+
+	copy. readErrors  = this. readErrors;
+	copy.writeErrors  = this.writeErrors;
+
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Memory.Region.prototype.clone = function()
+{
+	var copy = new mRobot.Memory.Region();
+
+	copy.valid      = this.valid;
+	copy.bound      = this.bound;
+
+	copy.start      = this.start;
+	copy.stop       = this.stop;
+	copy.size       = this.size;
+
+	copy.readable   = this.readable;
+	copy.writable   = this.writable;
+	copy.executable = this.executable;
+	copy.access     = this.access;
+
+	copy.private    = this.private;
+	copy.guarded    = this.guarded;
+
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Window.prototype.clone = function()
+{
+	return new mRobot.Window (this.getHandle());
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Screen.prototype.clone = function()
+{
+	var copy = new mRobot.Screen();
+	copy._bounds = this._bounds.clone();
+	copy._usable = this._usable.clone();
+	return copy;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
+mRobot.Timer.prototype.clone = function()
+{
+	var copy = new mRobot.Timer();
+	copy._started = this._started;
+	return copy;
 };
 
 

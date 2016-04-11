@@ -684,11 +684,11 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (m.readInt8,    m, ["a"                 ]);
 			assert (m.readInt8,    m, [ 0, "a"             ]);
 			assert (m.readInt8,    m, [ 0,  0, "a"         ]);
-			assert (m.readStr,     m, [                    ]);
-			assert (m.readStr,     m, ["a"                 ]);
-			assert (m.readStr,     m, [ 0, "a"             ]);
-			assert (m.readStr,     m, [ 0,  0, "a"         ]);
-			assert (m.readStr,     m, [ 0,  0,  0, "a"     ]);
+			assert (m.readString,  m, [                    ]);
+			assert (m.readString,  m, ["a"                 ]);
+			assert (m.readString,  m, [ 0, "a"             ]);
+			assert (m.readString,  m, [ 0,  0, "a"         ]);
+			assert (m.readString,  m, [ 0,  0,  0, "a"     ]);
 			assert (m.writeInt8,   m, [                    ]);
 			assert (m.writeInt8,   m, ["a"                 ]);
 			assert (m.writeInt8,   m, [ 0, "a"             ]);
@@ -713,10 +713,10 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (m.writeBool,   m, [                    ]);
 			assert (m.writeBool,   m, ["a"                 ]);
 			assert (m.writeBool,   m, [ 0, "a"             ]);
-			assert (m.writeStr,    m, [                    ]);
-			assert (m.writeStr,    m, ["a"                 ]);
-			assert (m.writeStr,    m, ["a", 0              ]);
-			assert (m.writeStr,    m, [ 0,  0, "a"         ]);
+			assert (m.writeString, m, [                    ]);
+			assert (m.writeString, m, ["a"                 ]);
+			assert (m.writeString, m, ["a", 0              ]);
+			assert (m.writeString, m, [ 0,  0, "a"         ]);
 
 			assert (typeof m.isValid      (           ) === "boolean"           );
 			assert (       m.getProcess   (           ) instanceof Process      );
@@ -767,7 +767,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (m.readReal64 (0  ) === null);
 			assert (m.readPtr    (0  ) === null);
 			assert (m.readBool   (0  ) === null);
-			assert (m.readStr    (0,0) === null);
+			assert (m.readString (0,0) === null);
 
 			assert (typeof m.writeInt8   (0, 0) === "boolean");
 			assert (typeof m.writeInt16  (0, 0) === "boolean");
@@ -777,7 +777,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (typeof m.writeReal64 (0, 0) === "boolean");
 			assert (typeof m.writePtr    (0, 0) === "boolean");
 			assert (typeof m.writeBool   (0, b) === "boolean");
-			assert (typeof m.writeStr    (0,"") === "boolean");
+			assert (typeof m.writeString (0,"") === "boolean");
 		}
 
 		//----------------------------------------------------------------------------//

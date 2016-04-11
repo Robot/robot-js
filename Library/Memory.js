@@ -317,7 +317,7 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Memory.prototype.readStr = function (address, length, count, stride)
+	native.Memory.prototype.readString = function (address, length, count, stride)
 	{
 		return this._readType (address, native.Memory._TYPE_STR, length, count, stride);
 	};
@@ -383,7 +383,7 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Memory.prototype.writeStr = function (address, data, length)
+	native.Memory.prototype.writeString = function (address, data, length)
 	{
 		return this._writeType (address, data, native.Memory._TYPE_STR, length);
 	};

@@ -37,6 +37,186 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 	////////////////////////////////////////////////////////////////////////////////
 
+	function testClone()
+	{
+		assert (robot.Screen.synchronize());
+
+		var hash     = robot.Hash   ("Hello ");
+		var color    = robot.Color  (20, 40, 60, 80);
+		var image    = robot.Image  (20, 40);
+		var range    = robot.Range  (20, 40);
+		var point    = robot.Point  (20, 40);
+		var size     = robot.Size   (20, 40);
+		var bounds   = robot.Bounds (20, 40, 60, 80);
+
+		var keyboard = robot.Keyboard();
+		var mouse    = robot.Mouse();
+		var proc     = robot.Process.getList()[0];
+		var module   = proc  .getModules ()[0];
+		var segment  = module.getSegments()[0];
+		var memory   = robot.Memory (proc);
+		var stats    = memory.getStats();
+		var region   = memory.getRegions()[0];
+		var window   = robot.Window.getActive();
+		var screen   = robot.Screen.getMain();
+		var timer    = robot.Timer(); timer.start();
+
+		segment = segment || robot.Module.Segment();
+
+		//----------------------------------------------------------------------------//
+
+		var eHash     = hash;     var cHash     = hash    .clone();
+		var eColor    = color;    var cColor    = color   .clone();
+		var eImage    = image;    var cImage    = image   .clone();
+		var eRange    = range;    var cRange    = range   .clone();
+		var ePoint    = point;    var cPoint    = point   .clone();
+		var eSize     = size;     var cSize     = size    .clone();
+		var eBounds   = bounds;   var cBounds   = bounds  .clone();
+		var eKeyboard = keyboard; var cKeyboard = keyboard.clone();
+		var eMouse    = mouse;    var cMouse    = mouse   .clone();
+		var eProc     = proc;     var cProc     = proc    .clone();
+		var eModule   = module;   var cModule   = module  .clone();
+		var eSegment  = segment;  var cSegment  = segment .clone();
+		var eMemory   = memory;   var cMemory   = memory  .clone();
+		var eStats    = stats;    var cStats    = stats   .clone();
+		var eRegion   = region;   var cRegion   = region  .clone();
+		var eWindow   = window;   var cWindow   = window  .clone();
+		var eScreen   = screen;   var cScreen   = screen  .clone();
+		var eTimer    = timer;    var cTimer    = timer   .clone();
+
+		assert (cHash     instanceof robot.Hash          );
+		assert (cColor    instanceof robot.Color         );
+		assert (cImage    instanceof robot.Image         );
+		assert (cRange    instanceof robot.Range         );
+		assert (cPoint    instanceof robot.Point         );
+		assert (cSize     instanceof robot.Size          );
+		assert (cBounds   instanceof robot.Bounds        );
+		assert (cKeyboard instanceof robot.Keyboard      );
+		assert (cMouse    instanceof robot.Mouse         );
+		assert (cProc     instanceof robot.Process       );
+		assert (cModule   instanceof robot.Module        );
+		assert (cSegment  instanceof robot.Module.Segment);
+		assert (cMemory   instanceof robot.Memory        );
+		assert (cStats    instanceof robot.Memory.Stats  );
+		assert (cRegion   instanceof robot.Memory.Region );
+		assert (cWindow   instanceof robot.Window        );
+		assert (cScreen   instanceof robot.Screen        );
+		assert (cTimer    instanceof robot.Timer         );
+
+		//----------------------------------------------------------------------------//
+
+		assert (eHash     === hash    ); assert (cHash     !== hash    );
+		assert (eColor    === color   ); assert (cColor    !== color   );
+		assert (eImage    === image   ); assert (cImage    !== image   );
+		assert (eRange    === range   ); assert (cRange    !== range   );
+		assert (ePoint    === point   ); assert (cPoint    !== point   );
+		assert (eSize     === size    ); assert (cSize     !== size    );
+		assert (eBounds   === bounds  ); assert (cBounds   !== bounds  );
+		assert (eKeyboard === keyboard); assert (cKeyboard !== keyboard);
+		assert (eMouse    === mouse   ); assert (cMouse    !== mouse   );
+		assert (eProc     === proc    ); assert (cProc     !== proc    );
+		assert (eModule   === module  ); assert (cModule   !== module  );
+		assert (eSegment  === segment ); assert (cSegment  !== segment );
+		assert (eMemory   === memory  ); assert (cMemory   !== memory  );
+		assert (eStats    === stats   ); assert (cStats    !== stats   );
+		assert (eRegion   === region  ); assert (cRegion   !== region  );
+		assert (eWindow   === window  ); assert (cWindow   !== window  );
+		assert (eScreen   === screen  ); assert (cScreen   !== screen  );
+		assert (eTimer    === timer   ); assert (cTimer    !== timer   );
+
+		assert (eHash    .eq (hash    )); assert (cHash    .eq (hash    ));
+		assert (eColor   .eq (color   )); assert (cColor   .eq (color   ));
+		assert (eImage   .eq (image   )); assert (cImage   .eq (image   ));
+		assert (eRange   .eq (range   )); assert (cRange   .eq (range   ));
+		assert (ePoint   .eq (point   )); assert (cPoint   .eq (point   ));
+		assert (eSize    .eq (size    )); assert (cSize    .eq (size    ));
+		assert (eBounds  .eq (bounds  )); assert (cBounds  .eq (bounds  ));
+		assert (eProc    .eq (proc    )); assert (cProc    .eq (proc    ));
+		assert (eModule  .eq (module  )); assert (cModule  .eq (module  ));
+		assert (eSegment .eq (segment )); assert (cSegment .eq (segment ));
+		assert (eStats   .eq (stats   )); assert (cStats   .eq (stats   ));
+		assert (eRegion  .eq (region  )); assert (cRegion  .eq (region  ));
+		assert (eWindow  .eq (window  )); assert (cWindow  .eq (window  ));
+		assert (eTimer   .eq (timer   )); assert (cTimer   .eq (timer   ));
+
+		assert (eKeyboard.autoDelay  .eq (keyboard.autoDelay  ));
+		assert (cKeyboard.autoDelay  .eq (keyboard.autoDelay  ));
+		assert (eMouse   .autoDelay  .eq (mouse   .autoDelay  ));
+		assert (cMouse   .autoDelay  .eq (mouse   .autoDelay  ));
+		assert (eScreen  .getBounds().eq (screen  .getBounds()));
+		assert (cScreen  .getBounds().eq (screen  .getBounds()));
+
+		//----------------------------------------------------------------------------//
+
+		robot.Timer.sleep (40);
+
+		hash  .append ("Robot!");
+		image .create ( 60,  80);
+		color .r   = 30;
+		range .min = 30;
+		point .x   = 30;
+		size  .w   = 30;
+		bounds.x   = 30;
+
+		keyboard.autoDelay.min = 0;
+		mouse   .autoDelay.min = 0;
+		proc.open (process.pid);
+		module._base = 0x4815;
+		segment.base = 0x4815;
+		stats .systemReads = 10;
+		region.start = 0x4815;
+		window.setHandle (0x4815);
+		screen._bounds = bounds;
+		timer.start();
+
+		//----------------------------------------------------------------------------//
+
+		assert (eHash     === hash    ); assert (cHash     !== hash    );
+		assert (eColor    === color   ); assert (cColor    !== color   );
+		assert (eImage    === image   ); assert (cImage    !== image   );
+		assert (eRange    === range   ); assert (cRange    !== range   );
+		assert (ePoint    === point   ); assert (cPoint    !== point   );
+		assert (eSize     === size    ); assert (cSize     !== size    );
+		assert (eBounds   === bounds  ); assert (cBounds   !== bounds  );
+		assert (eKeyboard === keyboard); assert (cKeyboard !== keyboard);
+		assert (eMouse    === mouse   ); assert (cMouse    !== mouse   );
+		assert (eProc     === proc    ); assert (cProc     !== proc    );
+		assert (eModule   === module  ); assert (cModule   !== module  );
+		assert (eSegment  === segment ); assert (cSegment  !== segment );
+		assert (eMemory   === memory  ); assert (cMemory   !== memory  );
+		assert (eStats    === stats   ); assert (cStats    !== stats   );
+		assert (eRegion   === region  ); assert (cRegion   !== region  );
+		assert (eWindow   === window  ); assert (cWindow   !== window  );
+		assert (eScreen   === screen  ); assert (cScreen   !== screen  );
+		assert (eTimer    === timer   ); assert (cTimer    !== timer   );
+
+		assert (eHash    .eq (hash    )); assert (cHash    .ne (hash    ));
+		assert (eColor   .eq (color   )); assert (cColor   .ne (color   ));
+		assert (eImage   .eq (image   )); assert (cImage   .ne (image   ));
+		assert (eRange   .eq (range   )); assert (cRange   .ne (range   ));
+		assert (ePoint   .eq (point   )); assert (cPoint   .ne (point   ));
+		assert (eSize    .eq (size    )); assert (cSize    .ne (size    ));
+		assert (eBounds  .eq (bounds  )); assert (cBounds  .ne (bounds  ));
+		assert (eProc    .eq (proc    )); assert (cProc    .ne (proc    ));
+		assert (eModule  .eq (module  )); assert (cModule  .ne (module  ));
+		assert (eSegment .eq (segment )); assert (cSegment .ne (segment ));
+		assert (eStats   .eq (stats   )); assert (cStats   .ne (stats   ));
+		assert (eRegion  .eq (region  )); assert (cRegion  .ne (region  ));
+		assert (eWindow  .eq (window  )); assert (cWindow  .ne (window  ));
+		assert (eTimer   .eq (timer   )); assert (cTimer   .ne (timer   ));
+
+		assert (eKeyboard.autoDelay  .eq (keyboard.autoDelay  ));
+		assert (cKeyboard.autoDelay  .ne (keyboard.autoDelay  ));
+		assert (eMouse   .autoDelay  .eq (mouse   .autoDelay  ));
+		assert (cMouse   .autoDelay  .ne (mouse   .autoDelay  ));
+		assert (eScreen  .getBounds().eq (screen  .getBounds()));
+		assert (cScreen  .getBounds().ne (screen  .getBounds()));
+
+		return true;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+
 	function testHash()
 	{
 		var h1 = Hash ("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -1493,6 +1673,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 	return function()
 	{
 		log ("BEGIN TYPES TESTING\n------------------------------\n");
+		if (!testClone ()) { log (">> Clone Failed \n\n"); return false; }
 		if (!testHash  ()) { log (">> Hash Failed  \n\n"); return false; }
 		if (!testColor ()) { log (">> Color Failed \n\n"); return false; }
 		if (!testImage1()) { log (">> Image1 Failed\n\n"); return false; }

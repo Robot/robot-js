@@ -327,7 +327,7 @@
       <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-ia32-$(NodeModules)$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\win32-ia32-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL|x64'">
@@ -353,7 +353,7 @@
       <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-x64-$(NodeModules)$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\win32-x64-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLLd|Win32'">
@@ -373,7 +373,7 @@
       <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\ia32\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-ia32-$(NodeModules)$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\win32-ia32-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLLd|x64'">
@@ -393,7 +393,7 @@
       <AdditionalLibraryDirectories>$(UserProfile)\.node-gyp\$(NodeVersion)\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\$(TargetName)-win-x64-$(NodeModules)$(TargetExt)</Command>
+      <Command>copy /Y $(TargetPath) $(SolutionDir)\..\Library\win32-x64-$(NodeModules)$(TargetExt)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

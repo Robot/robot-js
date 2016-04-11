@@ -18,15 +18,21 @@ var mFS      = require ("fs");
 var mSprintf = require ("sprintf-js").sprintf;
 var mReadLn  = require ("readline-sync");
 
+////////////////////////////////////////////////////////////////////////////////
+
 function log (msg)
 {
 	process.stdout.write (msg);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
 function getline()
 {
 	return mReadLn.question ("").trim();
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 function assert (cond, thisArg, args)
 {
@@ -42,6 +48,8 @@ function assert (cond, thisArg, args)
 	if (!cond) throw new Error
 		("Assertion Failed\x07\n");
 }
+
+////////////////////////////////////////////////////////////////////////////////
 
 var testTypes     = require ("./Types"    )(mRobot, log, mSprintf, getline, assert);
 var testTimer     = require ("./Timer"    )(mRobot, log, mSprintf, getline, assert);
