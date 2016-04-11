@@ -1,5 +1,6 @@
 ipch/
 .vs/
+*.db
 *.node
 *.user
 *.sdf
