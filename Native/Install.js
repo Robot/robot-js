@@ -40,7 +40,7 @@ function failure (reason)
 		("ERROR: robot-js binaries failed to install. " +
 		 "You will need to install them manually, see " +
 		 "http://getrobot.net/docs/node.html for more " +
-		 "info. Reason: " + reason);
+		 "info. Reason: " + reason + "\n");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
