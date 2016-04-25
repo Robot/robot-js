@@ -32,7 +32,7 @@ enum DataType
 	TypeReal32	= 5,
 	TypeReal64	= 6,
 	TypeBool	= 7,
-	TypeStr		= 8,
+	TypeString	= 8,
 };
 
 
@@ -435,7 +435,7 @@ void MemoryWrap::ReadType (const FunctionCallbackInfo<Value>& args)
 
 	if (count == 1)
 	{
-		if (type == TypeStr)
+		if (type == TypeString)
 		{
 			auto data = new char[length];
 			if (mMemory->ReadData (address, data, length) != length)
@@ -472,7 +472,8 @@ void MemoryWrap::ReadType (const FunctionCallbackInfo<Value>& args)
 	if (stride < length)
 		THROW (Range, "Stride is too small");
 
-	auto size   = count * stride;
+	auto size   = count  * stride
+				+ length - stride;
 	auto data   = new char[size];
 	auto offset = data;
 
@@ -518,7 +519,7 @@ void MemoryWrap::WriteType (const FunctionCallbackInfo<Value>& args)
 	auto type    = (DataType) args[2]->Uint32Value();
 	auto length  = (uint32  ) args[3]->Uint32Value();
 
-	if (type == TypeStr)
+	if (type == TypeString)
 	{
 		// Check for valid args
 		if (!args[1]->IsString())
@@ -646,7 +647,7 @@ void MemoryWrap::Initialize (Handle<Object> exports)
 	tpl->Set (NEW_STR ("_TYPE_REAL32"), NEW_INT (TypeReal32));
 	tpl->Set (NEW_STR ("_TYPE_REAL64"), NEW_INT (TypeReal64));
 	tpl->Set (NEW_STR ("_TYPE_BOOL"  ), NEW_INT (TypeBool  ));
-	tpl->Set (NEW_STR ("_TYPE_STR"   ), NEW_INT (TypeStr   ));
+	tpl->Set (NEW_STR ("_TYPE_STRING"), NEW_INT (TypeString));
 
 	tpl->Set (NEW_STR ("DEFAULT"     ), NEW_INT (Memory::Default   ));
 	tpl->Set (NEW_STR ("SKIP_ERRORS" ), NEW_INT (Memory::SkipErrors));
