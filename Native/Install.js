@@ -20,7 +20,7 @@ var mHTTP = require ("http");
 
 ////////////////////////////////////////////////////////////////////////////////
 
-var SOURCE = "http://node.getrobot.net/addon/1.0.0/" +
+var SOURCE = "http://node.getrobot.net/addon/1.0.1/" +
 	process.platform   + "-" +
 	process.arch       + "-" +
 	process.versions.modules +
