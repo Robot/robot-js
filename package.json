@@ -17,12 +17,12 @@
 	"repository":
 	{
 		"type"			: "git",
-		"url"			: "https://github.com/Robot/robot-js.git"
+		"url"			: "https://github.com/robot/robot-js.git"
 	},
 
 	"bugs":
 	{
-		"url"			: "https://github.com/Robot/robot-js/issues"
+		"url"			: "https://github.com/robot/robot-js/issues"
 	},
 
 	"keywords":
