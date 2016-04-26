@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">
-	<strong>Native System Automation for Node</strong>
+	Native System Automation for Node
 </h1>
 
 <p align="center">
@@ -38,24 +38,24 @@
 
 <h5 align="center">
 	<a target="_blank" href="http://getrobot.net/docs/node.html">
-		<strong>GET STARTED</strong>
+		GET STARTED
 	</a>
 	&nbsp;|&nbsp;
 	<a target="_blank" href="http://getrobot.net/docs/about.html">
-		<strong>DOCUMENTATION</strong>
+		DOCUMENTATION
 	</a>
 	&nbsp;|&nbsp;
 	<a target="_blank" href="http://getrobot.net/api/global.html">
-		<strong>API</strong>
+		API
 	</a>
 	&nbsp;|&nbsp;
 	<a target="_blank" href="http://getrobot.net/docs/philosophy.html">
-		<strong>COMMUNITY</strong>
+		COMMUNITY
 	</a>
 </h5>
 
 <p align="justify">
-	Introducing Robot for Node, a library aimed at facilitating the development of system automation software for the purposes of test automation, self-running demos, and other applications. The library works by abstracting away all platform-specific differences into a single, robust API compatible with most desktop operating systems. Functionality ranges from basic keyboard and mouse automation to advanced process manipulation capabilities. It has everything you need to take full control of your system. Visit the <a target="_blank" href="http://getrobot.net"><strong>Homepage</strong></a> for more information.
+	Introducing Robot for Node, a library aimed at facilitating the development of system automation software for the purposes of test automation, self-running demos, and other applications. The library works by abstracting away all platform-specific differences into a single, robust API compatible with most desktop operating systems. Functionality ranges from basic keyboard and mouse automation to advanced process manipulation capabilities. It has everything you need to take full control of your system. Visit the <a target="_blank" href="http://getrobot.net">Homepage</a> for more information.
 </p>
 
 <pre align="center">npm install robot-js</pre>
