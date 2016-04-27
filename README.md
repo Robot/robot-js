@@ -18,7 +18,7 @@
 	</a>
 
 	<a target="_blank" href="https://npmjs.com/package/robot-js">
-		<img src="https://img.shields.io/badge/npm-1.0.1-C86414.svg?style=flat-square" alt="NPM 1.0.1" />
+		<img src="https://img.shields.io/badge/npm-1.0.2-C86414.svg?style=flat-square" alt="NPM 1.0.2" />
 	</a>
 
 	<img src="https://img.shields.io/badge/node->=_0.12-C86414.svg?style=flat-square" alt="Node >= 0.12" />
