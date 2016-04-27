@@ -435,10 +435,10 @@ void WindowWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_mapToScreen",   MapToScreen  );
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",        Equals       );
 
-	NODE_SET_METHOD (tpl,  "getList",     GetList    );
-	NODE_SET_METHOD (tpl,  "getActive",   GetActive  );
-	NODE_SET_METHOD (tpl, "_setActive",   SetActive  );
-	NODE_SET_METHOD (tpl,  "isAxEnabled", IsAxEnabled);
+	NODE_SET_METHOD ((Local<Template>) tpl,  "getList",     GetList    );
+	NODE_SET_METHOD ((Local<Template>) tpl,  "getActive",   GetActive  );
+	NODE_SET_METHOD ((Local<Template>) tpl, "_setActive",   SetActive  );
+	NODE_SET_METHOD ((Local<Template>) tpl,  "isAxEnabled", IsAxEnabled);
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());

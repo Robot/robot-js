@@ -180,8 +180,8 @@ void KeyboardWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_press",   Press  );
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_release", Release);
 
-	NODE_SET_METHOD (tpl, "compile",  Compile );
-	NODE_SET_METHOD (tpl, "getState", GetState);
+	NODE_SET_METHOD ((Local<Template>) tpl, "compile",  Compile );
+	NODE_SET_METHOD ((Local<Template>) tpl, "getState", GetState);
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());

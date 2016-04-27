@@ -188,9 +188,9 @@ void MouseWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_scrollH", ScrollH);
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_scrollV", ScrollV);
 
-	NODE_SET_METHOD (tpl,  "getPos",   GetPos  );
-	NODE_SET_METHOD (tpl, "_setPos",   SetPos  );
-	NODE_SET_METHOD (tpl,  "getState", GetState);
+	NODE_SET_METHOD ((Local<Template>) tpl,  "getPos",   GetPos  );
+	NODE_SET_METHOD ((Local<Template>) tpl, "_setPos",   SetPos  );
+	NODE_SET_METHOD ((Local<Template>) tpl,  "getState", GetState);
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());

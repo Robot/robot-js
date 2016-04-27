@@ -374,10 +374,10 @@ void ProcessWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl,  "getWindows", GetWindows);
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",     Equals    );
 
-	NODE_SET_METHOD (tpl,  "getList",     GetList    );
-	NODE_SET_METHOD (tpl,  "getCurrent",  GetCurrent );
-	NODE_SET_METHOD (tpl, "_isSys64Bit",  IsSys64Bit );
-	NODE_SET_METHOD (tpl, "_getSegments", GetSegments);
+	NODE_SET_METHOD ((Local<Template>) tpl,  "getList",     GetList    );
+	NODE_SET_METHOD ((Local<Template>) tpl,  "getCurrent",  GetCurrent );
+	NODE_SET_METHOD ((Local<Template>) tpl, "_isSys64Bit",  IsSys64Bit );
+	NODE_SET_METHOD ((Local<Template>) tpl, "_getSegments", GetSegments);
 
 	// Assign function template to our class creator
 	constructor.Reset (isolate, tpl->GetFunction());
