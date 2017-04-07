@@ -6,6 +6,7 @@ ipch/
 *.sdf
 *.suo
 *.opensdf
+*.opendb
 .DS_STORE
 Binaries/
 node_modules/
