@@ -189,9 +189,25 @@ enum RobotType
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define REGISTER_ROBOT_TYPE									\
-	args.This()->SetHiddenValue (NEW_STR					\
-	("_ROBOT_TYPE"), NEW_INT (ClassType));
+#if NODE_MODULE_VERSION >= 48
+
+	#define REGISTER_ROBOT_TYPE								\
+	{														\
+		auto context = isolate->GetCurrentContext();		\
+		auto privateKeyValue = Private::ForApi				\
+			(isolate, NEW_STR ("_ROBOT_TYPE"));				\
+															\
+		args.This()->SetPrivate (context,					\
+			privateKeyValue, NEW_INT (ClassType));			\
+	}
+
+#else
+
+	#define REGISTER_ROBOT_TYPE								\
+		args.This()->SetHiddenValue (NEW_STR				\
+		("_ROBOT_TYPE"), NEW_INT (ClassType));
+
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -204,10 +220,25 @@ inline T* UnwrapRobot (Handle<Value> value)
 	// Value needs to be at least an object
 	if (!value->IsObject()) return nullptr;
 
+	// Retrieve the local object
+	auto obj = value->ToObject();
+
+#if NODE_MODULE_VERSION >= 48
+
+	auto context = isolate->GetCurrentContext();
+	auto privateKeyValue = Private::ForApi
+		(isolate, NEW_STR ("_ROBOT_TYPE"));
+
+	auto type = obj->GetPrivate (context,
+		privateKeyValue).ToLocalChecked();
+
+#else
+
 	// Convert and get hidden type
-	auto obj  = value->ToObject();
 	auto type = obj->GetHiddenValue
 		  (NEW_STR ("_ROBOT_TYPE"));
+
+#endif
 
 	// The value must contain a handle
 	if (type.IsEmpty()) return nullptr;

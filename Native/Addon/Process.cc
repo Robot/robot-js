@@ -280,10 +280,10 @@ void ProcessWrap::GetSegments (const FunctionCallbackInfo<Value>& args)
 	auto ctor = Local<Function>::
 		 New (isolate, JsSegment);
 
-	// Synthesize new module
-	Module module (*mProcess,
-			"", "", (uintptr)
-			args[1]->NumberValue(), 0);
+	// Create new module
+	Robot::Module module
+		(*mProcess, "", "", (uintptr)
+		 args[1]->NumberValue(), 0);
 
 	// Retrieve the list of segments
 	auto list = module.GetSegments();
