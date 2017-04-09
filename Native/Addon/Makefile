@@ -19,12 +19,12 @@ LBITS = $(shell getconf LONG_BIT)
 ifdef nodeVersion
 	NODE_VERSION = $(nodeVersion)
 else
-	NODE_VERSION = 0.12.13
+	NODE_VERSION = 7.8.0
 endif
 ifdef nodeModules
 	NODE_MODULES = $(nodeModules)
 else
-	NODE_MODULES = 14
+	NODE_MODULES = 51
 endif
 
 ifeq ($(UNAME), Darwin)
