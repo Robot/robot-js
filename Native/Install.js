@@ -15,12 +15,12 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-var mFS   = require ("fs"  );
-var mHTTP = require ("http");
+var mFS    = require ("fs"  );
+var mHTTPS = require ("https");
 
 ////////////////////////////////////////////////////////////////////////////////
 
-var SOURCE = "http://node.getrobot.net/addon/1.0.2/" +
+var SOURCE = "https://github.com/Robot/robot-js-binaries/blob/gh-pages/addon/1.0.2/" +
 	process.platform   + "-" +
 	process.arch       + "-" +
 	process.versions.modules +
@@ -46,7 +46,7 @@ function failure (reason)
 ////////////////////////////////////////////////////////////////////////////////
 
 // Attempt to download binary
-var req = mHTTP.get (SOURCE);
+var req = mHTTPS.get (SOURCE);
 
 // Whenever a response is received
 req.on ("response", function (res)
