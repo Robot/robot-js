@@ -14,6 +14,11 @@
 		"url"			: "http://krutsko.net"
 	},
 
+	"config":
+	{
+		"verify"		: true
+	},
+
 	"repository":
 	{
 		"type"			: "git",
