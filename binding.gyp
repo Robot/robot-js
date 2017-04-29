@@ -2,36 +2,33 @@
   "conditions": [
     ["OS=='linux'", {"variables": {"target_platform": "linux"}}],
     ["OS=='win'", {"variables": {"target_platform": "win32"}}],
-    ["OS=='mac'", {"variables": {"target_platform": "darwin"}}]
+    ["OS=='mac'", {"variables": {"target_platform": "darwin"}}],
   ],
   "variables": {
-    # is there a better way do find the target ABI from node-gyp?
-    "target_module_version": "<!(node -e 'console.log(fs.readFileSync(\"<(node_root_dir)/src/node_version.h\",\"utf-8\").match(/\s+NODE_MODULE_VERSION\s+(\d+)/)[1])')",
+    "target_module_version": "<!(node <(module_root_dir)/abi.js <(node_root_dir))",
+  },
+  "target_defaults": {
+    "configurations": {
+      "Debug": {
+        "defines": [
+          "DEBUG",
+        ],
+      },
+      "Release": {
+        "defines": [
+          "NDEBUG",
+        ],
+      },
+    },
   },
   "targets": [
     {
-      "target_name": "<(target_platform)-<(target_arch)-<(target_module_version)",
-      "conditions": [
-        ["OS=='linux'", {
-          "libraries": [
-            "-lrt",
-            "-lX11",
-            "-lXtst",
-            "-lXinerama"
-          ],
-        }],
-      ],
-      "configurations": {
-        "Debug": {
-          "defines": [
-            "DEBUG"
-          ]
+      "target_name": "robot",
+      "type": "static_library",
+      "msvs_settings": {
+        "VCCLCompilerTool": {
+          "ExceptionHandling": 1,
         },
-        "Release": {
-          "defines": [
-            "NDEBUG"
-          ]
-        }
       },
       "xcode_settings": {
         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
@@ -39,14 +36,9 @@
           "-x objective-c++",
           "-Wno-sign-compare",
           "-Wno-unused-variable",
-          "-Wno-deprecated-declarations",
-          "-Wno-missing-field-initializers"
-        ]
+          "-Wno-missing-field-initializers",
+        ],
       },
-      "include_dirs": [
-        "Native/Robot",
-        "Native/Addon"
-      ],
       "sources": [
         "Native/Robot/Bounds.cc",
         "Native/Robot/Clipboard.cc",
@@ -64,6 +56,47 @@
         "Native/Robot/Size.cc",
         "Native/Robot/Timer.cc",
         "Native/Robot/Window.cc",
+      ],
+    },
+    {
+      "target_name": "<(target_platform)-<(target_arch)-<(target_module_version)",
+      "dependencies": ["robot"],
+      "conditions": [
+        ["OS=='linux'", {
+          "libraries": [
+            "-lrt",
+            "-lX11",
+            "-lXtst",
+            "-lXinerama",
+          ],
+        }],
+        ["OS=='win'", {
+          "libraries": [
+            "-lPsapi",
+          ],
+        }],
+      ],
+      "msvs_settings": {
+        "VCCLCompilerTool": {
+          "ExceptionHandling": 1,
+        },
+      },
+      "xcode_settings": {
+        "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+        "OTHER_CPLUSPLUSFLAGS": [
+          "-x objective-c++",
+          "-Wno-sign-compare",
+          "-Wno-unused-variable",
+          "-Wno-missing-field-initializers",
+        ],
+      },
+      "defines!": [
+        "V8_DEPRECATION_WARNINGS=1",
+      ],
+      "include_dirs": [
+        "Native/Robot",
+      ],
+      "sources": [
         "Native/Addon/Clipboard.cc",
         "Native/Addon/Image.cc",
         "Native/Addon/Keyboard.cc",
@@ -72,7 +105,7 @@
         "Native/Addon/Process.cc",
         "Native/Addon/Robot.cc",
         "Native/Addon/Screen.cc",
-        "Native/Addon/Window.cc"
+        "Native/Addon/Window.cc",
       ],
     },
     {
@@ -82,9 +115,9 @@
       "copies": [
         {
           "files": ["<(PRODUCT_DIR)/<@(_dependencies).node"],
-          "destination": "<(module_root_dir)/Library"
-        }
-      ]
-    }
+          "destination": "<(module_root_dir)/Library",
+        },
+      ],
+    },
   ]
 }
