@@ -39,6 +39,15 @@
           "-Wno-missing-field-initializers",
         ],
       },
+      "cflags_cc!": [
+        "-fno-exceptions",
+      ],
+      "cflags_cc": [
+        "-fexceptions",
+        "-Wno-strict-aliasing",
+        "-Wno-unused-variable",
+        "-Wno-missing-field-initializers",
+      ],
       "sources": [
         "Native/Robot/Bounds.cc",
         "Native/Robot/Clipboard.cc",
@@ -90,6 +99,15 @@
           "-Wno-missing-field-initializers",
         ],
       },
+      "cflags_cc!": [
+        "-fno-exceptions",
+      ],
+      "cflags_cc": [
+        "-fexceptions",
+        "-Wno-strict-aliasing",
+        "-Wno-unused-variable",
+        "-Wno-missing-field-initializers",
+      ],
       "defines!": [
         "V8_DEPRECATION_WARNINGS=1",
       ],
