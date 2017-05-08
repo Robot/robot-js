@@ -67,7 +67,7 @@
 
 	"scripts":
 	{
-		"install"		: "node Native/Install.js"
+		"install"		: "node Native/Install.js || node-gyp rebuild"
 	},
 
 	"engines":
