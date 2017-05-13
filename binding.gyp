@@ -84,6 +84,12 @@
             "-lPsapi",
           ],
         }],
+        ["OS=='mac'", {
+          "libraries": [
+            "-framework ApplicationServices",
+            "-framework AppKit",
+          ],
+        }],
       ],
       "msvs_settings": {
         "VCCLCompilerTool": {
