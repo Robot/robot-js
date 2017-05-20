@@ -25,13 +25,28 @@
     {
       "target_name": "robot",
       "type": "static_library",
-      "msvs_settings": {
-        "VCCLCompilerTool": {
-          "ExceptionHandling": 1,
+      "configurations": {
+        "Debug": {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "ExceptionHandling": 1,
+            },
+          },
+        },
+        "Release": {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "ExceptionHandling": 1,
+            },
+          },
         },
       },
       "xcode_settings": {
+        "MACOSX_DEPLOYMENT_TARGET": "10.7",
         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+        "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+        "CLANG_CXX_LIBRARY": "libc++",
+        "CLANG_CXX_LANGUAGE_STANDARD": "c++11",
         "OTHER_CPLUSPLUSFLAGS": [
           "-x objective-c++",
           "-Wno-sign-compare",
@@ -43,10 +58,15 @@
         "-fno-exceptions",
       ],
       "cflags_cc": [
+        "-std=c++11",
         "-fexceptions",
         "-Wno-strict-aliasing",
         "-Wno-unused-variable",
         "-Wno-missing-field-initializers",
+      ],
+      "defines!": [
+        "_HAS_EXCEPTIONS=0",
+        "V8_DEPRECATION_WARNINGS=1",
       ],
       "sources": [
         "Native/Robot/Bounds.cc",
@@ -91,13 +111,28 @@
           ],
         }],
       ],
-      "msvs_settings": {
-        "VCCLCompilerTool": {
-          "ExceptionHandling": 1,
+      "configurations": {
+        "Debug": {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "ExceptionHandling": 1,
+            },
+          },
+        },
+        "Release": {
+          "msvs_settings": {
+            "VCCLCompilerTool": {
+              "ExceptionHandling": 1,
+            },
+          },
         },
       },
       "xcode_settings": {
+        "MACOSX_DEPLOYMENT_TARGET": "10.7",
         "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+        "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+        "CLANG_CXX_LIBRARY": "libc++",
+        "CLANG_CXX_LANGUAGE_STANDARD": "c++11",
         "OTHER_CPLUSPLUSFLAGS": [
           "-x objective-c++",
           "-Wno-sign-compare",
@@ -109,12 +144,14 @@
         "-fno-exceptions",
       ],
       "cflags_cc": [
+        "-std=c++11",
         "-fexceptions",
         "-Wno-strict-aliasing",
         "-Wno-unused-variable",
         "-Wno-missing-field-initializers",
       ],
       "defines!": [
+        "_HAS_EXCEPTIONS=0",
         "V8_DEPRECATION_WARNINGS=1",
       ],
       "include_dirs": [
