@@ -60,9 +60,9 @@
 
 	"devDependencies":
 	{
-		"sprintf-js"	: "^1",
-		"node-png"		: "^0",
-		"readline-sync"	: "^1"
+		"sprintf-js"	: "~1.1",
+		"node-png"		: "~0.4",
+		"readline-sync"	: "~1.4"
 	},
 
 	"scripts":
