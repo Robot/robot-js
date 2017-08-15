@@ -62,14 +62,12 @@
 	{
 		"sprintf-js"	: "~1.1",
 		"node-png"		: "~0.4",
-		"readline-sync"	: "~1.4",
-		"eslint"	: "~4.4.1"
+		"readline-sync"	: "~1.4"
 	},
 
 	"scripts":
 	{
-		"install" : "node Native/Install.js",
-		"eslint" : "./node_modules/.bin/eslint Library/ Test/"
+		"install"		: "node Native/Install.js"
 	},
 
 	"engines":
