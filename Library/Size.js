@@ -58,8 +58,7 @@ module.exports = function (robot)
 
 	Size.prototype.toPoint = function()
 	{
-		return robot.Point
-			(this.w, this.h);
+		return robot.Point(this.w, this.h);
 	};
 
 
@@ -105,8 +104,7 @@ module.exports = function (robot)
 	Size.prototype.add = function (aw, ah)
 	{
 		var s = Size.normalize (aw, ah);
-		return Size
-			(this.w + s.w, this.h + s.h);
+		return Size(this.w + s.w, this.h + s.h);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
@@ -114,8 +112,7 @@ module.exports = function (robot)
 	Size.prototype.sub = function (aw, ah)
 	{
 		var s = Size.normalize (aw, ah);
-		return Size
-			(this.w - s.w, this.h - s.h);
+		return Size(this.w - s.w, this.h - s.h);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

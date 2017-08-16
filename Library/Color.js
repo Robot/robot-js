@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot)
+module.exports = function ()
 {
 	//----------------------------------------------------------------------------//
 	// Constructor                                                          Color //
@@ -88,7 +88,7 @@ module.exports = function (robot)
 				return ar;
 
 			return { r: ar.r, g: ar.g,
-					 b: ar.b, a: 255 };
+				b: ar.b, a: 255 };
 		}
 
 		if (typeof ar === "number")

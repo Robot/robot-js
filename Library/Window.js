@@ -23,8 +23,7 @@ module.exports = function (robot, native)
 
 	native.Window.prototype.setBounds = function (ax, ay, aw, ah)
 	{
-		var b = robot.Bounds
-			 .normalize ( ax,  ay,  aw,  ah);
+		var b = robot.Bounds.normalize ( ax,  ay,  aw,  ah);
 		this._setBounds (b.x, b.y, b.w, b.h);
 	};
 
@@ -32,8 +31,7 @@ module.exports = function (robot, native)
 
 	native.Window.prototype.setClient = function (ax, ay, aw, ah)
 	{
-		var b = robot.Bounds
-			 .normalize ( ax,  ay,  aw,  ah);
+		var b = robot.Bounds.normalize ( ax,  ay,  aw,  ah);
 		this._setClient (b.x, b.y, b.w, b.h);
 	};
 

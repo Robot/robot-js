@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot, native)
+module.exports = function (robot)
 {
 	//----------------------------------------------------------------------------//
 	// Segment                                                             Module //
@@ -42,10 +42,10 @@ module.exports = function (robot, native)
 		{
 			var base = this.base;
 			var stop = this.base +
-					   this.size;
+				this.size;
 
 			return base <= value &&
-				   stop >  value;
+				stop >  value;
 		}
 
 		throw new TypeError ("Invalid arguments");
@@ -215,8 +215,7 @@ module.exports = function (robot, native)
 		if (this._segments === null)
 		{
 			this._segments = robot.
-				Process._getSegments
-				(this._proc, this._base);
+				Process._getSegments(this._proc, this._base);
 		}
 
 		// Return the segments
@@ -231,11 +230,9 @@ module.exports = function (robot, native)
 		if (typeof value === "number")
 		{
 			var base = this._base;
-			var stop = this._base +
-					   this._size;
+			var stop = this._base + this._size;
 
-			return base <= value &&
-				   stop >  value;
+			return base <= value && stop >  value;
 		}
 
 		throw new TypeError ("Invalid arguments");

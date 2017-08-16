@@ -32,14 +32,13 @@ module.exports = function (robot, native)
 
 	native.Image.prototype.getPixel = function (ax, ay)
 	{
-		var p = robot
-			 .Point.normalize ( ax,  ay);
+		var p = robot.Point.normalize ( ax,  ay);
 		return this._getPixel (p.x, p.y);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	native.Image.prototype.setPixel = function (ax, ay, color)
+	native.Image.prototype.setPixel = function (ax, ay)
 	{
 		var c = arguments[arguments.length - 1];
 
