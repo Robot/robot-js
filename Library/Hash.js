@@ -13,7 +13,7 @@
 // Exports                                                                    //
 //----------------------------------------------------------------------------//
 
-module.exports = function (robot)
+module.exports = function ()
 {
 	//----------------------------------------------------------------------------//
 	// Constants                                                                  //
@@ -98,7 +98,7 @@ module.exports = function (robot)
 	Hash.prototype.append = function (data)
 	{
 		if (!(data instanceof Buffer))
-			  data = new Buffer (data);
+			data = new Buffer (data);
 
 		// Check if length is valid
 		var dataLength = data.length;
@@ -109,8 +109,7 @@ module.exports = function (robot)
 		for (var i = 0; i < dataLength; ++i)
 		{
 			// Perform the CRC32 hash function
-			result = (result >>> 8) ^ CRC32Table
-					[(result ^ data[i]) & 0xFF];
+			result = (result >>> 8) ^ CRC32Table[(result ^ data[i]) & 0xFF];
 		}
 
 		// Write the resulting value

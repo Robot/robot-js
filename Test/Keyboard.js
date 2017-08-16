@@ -21,13 +21,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	var Range    = robot.Range;
-	var Point    = robot.Point;
-	var Size     = robot.Size;
-	var Bounds   = robot.Bounds;
-
 	var Timer    = robot.Timer;
-	var Mouse    = robot.Mouse;
 	var Keyboard = robot.Keyboard;
 
 	var k = Keyboard();
@@ -722,8 +716,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			// Get the state of all keycodes
 			var state = Keyboard.getState();
 			assert (!state[robot.KEY_A] &&
-					 state[robot.KEY_B] &&
-					 state[robot.KEY_C]);
+				state[robot.KEY_B] &&
+				state[robot.KEY_C]);
 			k.release (robot.KEY_B);
 			k.release (robot.KEY_C);
 		}
@@ -732,7 +726,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		while (!Keyboard.getState (robot.KEY_ESCAPE))
 		{
 			// Get the state of all keycodes
-			var state = Keyboard.getState();
+			state = Keyboard.getState();
 
 			if (state[robot.KEY_SPACE		]) log ("Space\t" );
 

@@ -60,6 +60,7 @@
 
 	"devDependencies":
 	{
+		"eslint": "^4.4.1",
 		"sprintf-js"	: "~1.1",
 		"node-png"		: "~0.4",
 		"readline-sync"	: "~1.4"
@@ -67,7 +68,8 @@
 
 	"scripts":
 	{
-		"install"		: "node Native/Install.js"
+		"install"		: "node Native/Install.js",
+		"eslint"		: "./node_modules/.bin/eslint Library/ Test/"
 	},
 
 	"engines":

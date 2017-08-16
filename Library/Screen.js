@@ -87,9 +87,7 @@ module.exports = function (robot, native)
 		// Convert screen objects into screen classes
 		for (var i = 0; i < this._screens.length; ++i)
 		{
-			this._screens[i] = Screen
-				(this._screens[i].bounds,
-				 this._screens[i].usable);
+			this._screens[i] = Screen(this._screens[i].bounds, this._screens[i].usable);
 		}
 
 		return result.status;
@@ -125,8 +123,7 @@ module.exports = function (robot, native)
 		// Loop through every available screen object
 		for (var i = 0; i < this._screens.length; ++i)
 		{
-			if (this._screens[i]._bounds.containsP
-				(p.x, p.y)) return this._screens[i];
+			if (this._screens[i]._bounds.containsP(p.x, p.y)) return this._screens[i];
 		}
 
 		// The primary screen is always the first screen object
@@ -135,7 +132,7 @@ module.exports = function (robot, native)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Screen.grabScreen = function (image, ax, ay, aw, ah, window)
+	Screen.grabScreen = function (image, ax, ay, aw, ah)
 	{
 		// Check if argument is native image
 		if (!(image instanceof robot.Image))
@@ -145,9 +142,8 @@ module.exports = function (robot, native)
 			normalize (ax, ay, aw, ah);
 
 		// Perform native image capture
-		return native.Screen.grabScreen
-			(image, b.x, b.y, b.w, b.h,
-			 arguments[arguments.length - 1]);
+		return native.Screen.grabScreen(image, b.x, b.y, b.w, b.h,
+				arguments[arguments.length - 1]);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

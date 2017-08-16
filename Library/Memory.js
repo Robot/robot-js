@@ -107,8 +107,7 @@ module.exports = function (robot, native)
 		// Check for number comparison
 		if (typeof value === "number")
 		{
-			return this.start <= value &&
-				   this.stop  >  value;
+			return this.start <= value && this.stop  >  value;
 		}
 
 		throw new TypeError ("Invalid arguments");
@@ -236,11 +235,10 @@ module.exports = function (robot, native)
 		if (!(region instanceof Region))
 			throw new TypeError ("Invalid arguments");
 
-		return this._setAccess
-			// Optimize the native call
-			(region.valid, region.bound,
-			 region.start, region.size,
-			 r, w, x);
+		// Optimize the native call
+		return this._setAccess(region.valid, region.bound,
+				region.start, region.size,
+				r, w, x);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

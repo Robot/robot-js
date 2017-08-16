@@ -61,8 +61,7 @@ mRobot.Clipboard		= require ("./Clipboard")(mRobot, mNative);
 mRobot.Hash.prototype.toString = function()
 {
 	return "0x" +
-		this.result.toString
-		(16).toUpperCase( );
+		this.result.toString(16).toUpperCase( );
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -215,8 +214,8 @@ mRobot.Module.prototype.clone = function()
 {
 	var copy = new mRobot.Module
 		(this._proc, this._name,
-		 this._path, this._base,
-		 this._size);
+			this._path, this._base,
+			this._size);
 
 	// Check if segments present
 	if (this._segments !== null)

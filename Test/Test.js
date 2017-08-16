@@ -14,7 +14,6 @@
 //----------------------------------------------------------------------------//
 
 var mRobot   = require ("..");
-var mFS      = require ("fs");
 var mSprintf = require ("sprintf-js").sprintf;
 var mReadLn  = require ("readline-sync");
 

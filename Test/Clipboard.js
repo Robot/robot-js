@@ -227,7 +227,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			var saveImage = function (name, image)
 			{
 				var result = new png ({
-					 width: image.getWidth (),
+					width: image.getWidth (),
 					height: image.getHeight()
 				});
 
@@ -302,7 +302,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		if (process.platform === "darwin" ||
 			process.platform === "win32")
 		{
-			var s = 0; var text;
+			var s = 0;
 			var timer = Timer();
 			var image = Image (1920, 1080);
 
@@ -338,12 +338,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			//----------------------------------------------------------------------------//
 
 			log ("Large text  (ms): ");
-			for (var i = 0; i < 5; ++i)
+			for (i = 0; i < 5; ++i)
 			{
 				timer.start();
 
 				assert (Clipboard.setText (largeText));
-				var     clipSequence = Clipboard.getSequence();
+				clipSequence = Clipboard.getSequence();
 				assert (clipSequence !== s); s = clipSequence;
 
 				assert (Clipboard.getText().length > 0);
@@ -358,12 +358,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			//----------------------------------------------------------------------------//
 
 			log ("Small image (ms): ");
-			for (var i = 0; i < 5; ++i)
+			for (i = 0; i < 5; ++i)
 			{
 				timer.start();
 
 				assert (Clipboard.setImage (smallImage));
-				var     clipSequence = Clipboard.getSequence();
+				clipSequence = Clipboard.getSequence();
 				assert (clipSequence !== s); s = clipSequence;
 
 				assert (Clipboard.getImage (image));
@@ -378,12 +378,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			//----------------------------------------------------------------------------//
 
 			log ("Large image (ms): ");
-			for (var i = 0; i < 5; ++i)
+			for (i = 0; i < 5; ++i)
 			{
 				timer.start();
 
 				assert (Clipboard.setImage (largeImage));
-				var     clipSequence = Clipboard.getSequence();
+				clipSequence = Clipboard.getSequence();
 				assert (clipSequence !== s); s = clipSequence;
 
 				assert (Clipboard.getImage (image));

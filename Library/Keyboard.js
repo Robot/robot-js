@@ -27,9 +27,7 @@ module.exports = function (robot, native)
 		if (!(this.autoDelay instanceof robot.Range))
 			throw new TypeError ("Invalid properties");
 
-		return this._click (keycode,
-				 this.autoDelay.min,
-				 this.autoDelay.max);
+		return this._click (keycode, this.autoDelay.min, this.autoDelay.max);
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

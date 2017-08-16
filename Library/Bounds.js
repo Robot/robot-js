@@ -173,13 +173,12 @@ module.exports = function (robot)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Bounds.prototype.containsP = function (ax, ay, inc)
+	Bounds.prototype.containsP = function (ax, ay)
 	{
 		var p = robot.Point.normalize (ax, ay);
 
 		// Retrieve last argument
-		var inclusive = arguments
-			[arguments.length - 1];
+		var inclusive = arguments[arguments.length - 1];
 
 		// If inclusive should be default
 		if (typeof inclusive !== "boolean")
@@ -198,13 +197,12 @@ module.exports = function (robot)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Bounds.prototype.containsB = function (ax, ay, aw, ah, inc)
+	Bounds.prototype.containsB = function (ax, ay, aw, ah)
 	{
 		var bnds = Bounds.normalize (ax, ay, aw, ah);
 
 		// Retrieve last argument
-		var inclusive = arguments
-			[arguments.length - 1];
+		var inclusive = arguments[arguments.length - 1];
 
 		// If inclusive should be default
 		if (typeof inclusive !== "boolean")
@@ -232,13 +230,12 @@ module.exports = function (robot)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	Bounds.prototype.intersects = function (ax, ay, aw, ah, inc)
+	Bounds.prototype.intersects = function (ax, ay, aw, ah)
 	{
 		var bnds = Bounds.normalize (ax, ay, aw, ah);
 
 		// Retrieve last argument
-		var inclusive = arguments
-			[arguments.length - 1];
+		var inclusive = arguments[arguments.length - 1];
 
 		// If inclusive should be default
 		if (typeof inclusive !== "boolean")
@@ -300,9 +297,8 @@ module.exports = function (robot)
 
 	Bounds.prototype.getCenter = function()
 	{
-		return robot.Point
-			(this.x + (this.w * 0.5 | 0),
-			 this.y + (this.h * 0.5 | 0));
+		return robot.Point (this.x + (this.w * 0.5 | 0),
+				this.y + (this.h * 0.5 | 0));
 	};
 
 	////////////////////////////////////////////////////////////////////////////////

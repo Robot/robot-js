@@ -22,7 +22,6 @@ module.exports = function (robot, log, sprintf, getline, assert)
 	////////////////////////////////////////////////////////////////////////////////
 
 	var Point   = robot.Point;
-	var Size    = robot.Size;
 	var Bounds  = robot.Bounds;
 
 	var Mouse   = robot.Mouse;
@@ -143,8 +142,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		var w3 = Window (w1.getHandle());
 		var w4 = Window ();
-		assert (w4.setHandle
-			(w2.getHandle()));
+		assert (w4.setHandle(w2.getHandle()));
 
 		assert (w3.isValid());
 		assert (w4.isValid());
@@ -541,7 +539,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		log ("List \"\" - " + list1.length + "\n");
 		assert (list1.length === list2.length);
 
-		for (var i = 0; i < list1.length; ++i)
+		for (i = 0; i < list1.length; ++i)
 		{
 			assert (list1[i].isValid());
 			assert (list2[i].isValid());
@@ -559,7 +557,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		log ("List *a* - " + list1.length + "\n");
 		assert (list1.length === list2.length);
 
-		for (var i = 0; i < list1.length; ++i)
+		for (i = 0; i < list1.length; ++i)
 		{
 			var title = list1[i].getTitle();
 			assert (title.indexOf ("a") >= 0 ||
@@ -591,7 +589,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (list1.length !==            0);
 		assert (list1.length === list2.length);
 
-		for (var i = 0; i < list1.length; ++i)
+		for (i = 0; i < list1.length; ++i)
 		{
 			assert (list1[i].isValid());
 			assert (list2[i].isValid());

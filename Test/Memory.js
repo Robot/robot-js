@@ -59,7 +59,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (!mod.getSegments().length);
 
 		var p = Process( ); assert (!  p.isValid());
-		  mem = Memory (p); assert (!mem.isValid());
+			mem = Memory (p); assert (!mem.isValid());
 		assert (mem.getProcess().eq (p));
 
 		assert (!p.isDebugged()       );
@@ -87,20 +87,17 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		var region = Memory.Region();
 		assert (!mem.setAccess (region, 0));
 		assert (!mem.setAccess (region, 1));
-		assert (!mem.setAccess (region,
-				 false, false, false));
+		assert (!mem.setAccess (region, false, false, false));
 
 		region.valid = true;
 		assert (!mem.setAccess (region, 0));
 		assert (!mem.setAccess (region, 1));
-		assert (!mem.setAccess (region,
-				 false, false, false));
+		assert (!mem.setAccess (region, false, false, false));
 
 		region.bound = true;
 		assert (!mem.setAccess (region, 0));
 		assert (!mem.setAccess (region, 1));
-		assert (!mem.setAccess (region,
-				 false, false, false));
+		assert (!mem.setAccess (region, false, false, false));
 
 		assert (!mem.find ("  ").length);
 
@@ -783,8 +780,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		//----------------------------------------------------------------------------//
 
 		{
-			var s1 = Memory.Stats();
-			var s2 = Memory.Stats();
+			s1 = Memory.Stats();
+			s2 = Memory.Stats();
 
 			assert (s1.eq, s1, [   ]);
 			assert (s1.ne, s1, [   ]);
@@ -872,8 +869,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		var m = Memory (p); var i, j;
 		var list1 = m.getRegions();
-		var list2 = m.getRegions
-			(0x10000000, 0x80000000);
+		var list2 = m.getRegions(0x10000000, 0x80000000);
 
 		log ("Total regions: ");
 		log (list1.length + " | Bounded: ");
@@ -1075,7 +1071,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		log ("List *a* - " + list1.length + "\n");
 		assert (list1.length === list2.length);
 
-		for (var i = 0; i < list1.length; ++i)
+		for (i = 0; i < list1.length; ++i)
 		{
 			var name = list1[i].getName();
 			assert (name.indexOf ("a") >= 0 ||
@@ -1133,7 +1129,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			}
 
 			var mList = pList[p].getModules();
-			for (var m = 0; m < mList.length; ++m)
+			for (m = 0; m < mList.length; ++m)
 			{
 				assert (mList[m].isValid());
 				assert (mList[m].getBase());
@@ -1195,7 +1191,6 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		var m = Memory (p);
 		if (mem === null) mem = m;
-		var f = Memory.SKIP_ERRORS;
 		assert (l === mem.getPtrSize());
 
 		//----------------------------------------------------------------------------//
@@ -1207,18 +1202,18 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		if (process.platform === "linux")
 		{
-			 PINT16 = is64Bit ? 0x604202 : 0x804D112;
-			 PINT32 = is64Bit ? 0x604204 : 0x804D114;
-			 PINT64 = is64Bit ? 0x604208 : 0x804D118;
+			PINT16 = is64Bit ? 0x604202 : 0x804D112;
+			PINT32 = is64Bit ? 0x604204 : 0x804D114;
+			PINT64 = is64Bit ? 0x604208 : 0x804D118;
 
 			PREAL32 = is64Bit ? 0x604210 : 0x804D120;
 			PREAL64 = is64Bit ? 0x604218 : 0x804D128;
 
-			 PPTR16 = is64Bit ? 0x604220 : 0x804D130;
-			 PPTR32 = is64Bit ? 0x604228 : 0x804D134;
-			 PPTR64 = is64Bit ? 0x604230 : 0x804D138;
+			PPTR16 = is64Bit ? 0x604220 : 0x804D130;
+			PPTR32 = is64Bit ? 0x604228 : 0x804D134;
+			PPTR64 = is64Bit ? 0x604230 : 0x804D138;
 
-			 PARRAY = is64Bit ? 0x604238 : 0x804D13C;
+			PARRAY = is64Bit ? 0x604238 : 0x804D13C;
 
 			PFINITE = is64Bit ? 0x604240 : 0x804D140;
 			PVECTOR = is64Bit ? 0x604250 : 0x804D150;
@@ -1226,18 +1221,18 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		if (process.platform === "darwin")
 		{
-			 PINT16 = is64Bit ? 0xA400 : 0x0;
-			 PINT32 = is64Bit ? 0xA404 : 0x0;
-			 PINT64 = is64Bit ? 0xA408 : 0x0;
+			PINT16 = is64Bit ? 0xA400 : 0x0;
+			PINT32 = is64Bit ? 0xA404 : 0x0;
+			PINT64 = is64Bit ? 0xA408 : 0x0;
 
 			PREAL32 = is64Bit ? 0xA410 : 0x0;
 			PREAL64 = is64Bit ? 0xA418 : 0x0;
 
-			 PPTR16 = is64Bit ? 0xA420 : 0x0;
-			 PPTR32 = is64Bit ? 0xA428 : 0x0;
-			 PPTR64 = is64Bit ? 0xA430 : 0x0;
+			PPTR16 = is64Bit ? 0xA420 : 0x0;
+			PPTR32 = is64Bit ? 0xA428 : 0x0;
+			PPTR64 = is64Bit ? 0xA430 : 0x0;
 
-			 PARRAY = is64Bit ? 0xA3F8 : 0x0;
+			PARRAY = is64Bit ? 0xA3F8 : 0x0;
 
 			PFINITE = is64Bit ? 0xA438 : 0x0;
 			PVECTOR = is64Bit ? 0xA448 : 0x0;
@@ -1245,28 +1240,24 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		if (process.platform === "win32")
 		{
-			 PINT16 = is64Bit ? 0xAD820 : 0x84CC0;
-			 PINT32 = is64Bit ? 0xAD824 : 0x84CC4;
-			 PINT64 = is64Bit ? 0xAD828 : 0x84CC8;
+			PINT16 = is64Bit ? 0xAD820 : 0x84CC0;
+			PINT32 = is64Bit ? 0xAD824 : 0x84CC4;
+			PINT64 = is64Bit ? 0xAD828 : 0x84CC8;
 
 			PREAL32 = is64Bit ? 0xAD830 : 0x84CD0;
 			PREAL64 = is64Bit ? 0xAD838 : 0x84CD8;
 
-			 PPTR16 = is64Bit ? 0xAD840 : 0x84CD4;
-			 PPTR32 = is64Bit ? 0xAD848 : 0x84CE0;
-			 PPTR64 = is64Bit ? 0xAD850 : 0x84CE4;
+			PPTR16 = is64Bit ? 0xAD840 : 0x84CD4;
+			PPTR32 = is64Bit ? 0xAD848 : 0x84CE0;
+			PPTR64 = is64Bit ? 0xAD850 : 0x84CE4;
 
-			 PARRAY = is64Bit ? 0xAD858 : 0x84CE8;
+			PARRAY = is64Bit ? 0xAD858 : 0x84CE8;
 
 			PFINITE = is64Bit ? 0xAD860 : 0x84CF0;
 			PVECTOR = is64Bit ? 0xAD870 : 0x84D00;
 		}
 
 		//----------------------------------------------------------------------------//
-
-		var vInt16  = 0;
-		var vInt32  = 0;
-		var vInt64  = 0;
 
 		var vReal32 = 0;
 		var vReal64 = 0;
@@ -1280,9 +1271,9 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		//----------------------------------------------------------------------------//
 
-		assert ((vInt16  = mem.readInt16  (module + PINT16 )) === 100);
-		assert ((vInt32  = mem.readInt32  (module + PINT32 )) === 200);
-		assert ((vInt64  = mem.readInt64  (module + PINT64 )) === 300);
+		assert ((mem.readInt16  (module + PINT16 )) === 100);
+		assert ((mem.readInt32  (module + PINT32 )) === 200);
+		assert ((mem.readInt64  (module + PINT64 )) === 300);
 
 		assert ((vReal32 = mem.readReal32 (module + PREAL32)) === 400);
 		assert ((vReal64 = mem.readReal64 (module + PREAL64)) === 500);
@@ -1291,9 +1282,9 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert ((vPtr2   = mem.readPtr    (module + PPTR32 )) === module + PINT32);
 		assert ((vPtr3   = mem.readPtr    (module + PPTR64 )) === module + PINT64);
 
-		assert ((vInt16  = mem.readInt16  (vPtr1)) === 100);
-		assert ((vInt32  = mem.readInt32  (vPtr2)) === 200);
-		assert ((vInt64  = mem.readInt64  (vPtr3)) === 300);
+		assert ((mem.readInt16  (vPtr1)) === 100);
+		assert ((mem.readInt32  (vPtr2)) === 200);
+		assert ((mem.readInt64  (vPtr3)) === 300);
 
 		assert ( vPtr1   = mem.readPtr    (module + PARRAY));
 		assert ( vArray  = mem.readInt32  (vPtr1, 4       ));
@@ -1580,7 +1571,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 					// Skip if already succeeded
 					if (test4 === true) continue;
 
-					var value = Buffer ([ 0xDD, 0xCC, 0xBB, 0xAA ]);
+					value = Buffer ([ 0xDD, 0xCC, 0xBB, 0xAA ]);
 					assert (m.writeData (r2.start-2, value, 4, Memory.AUTO_ACCESS) === 4);
 					assert (m. readData (r2.start-2, value, 4, Memory.AUTO_ACCESS) === 4);
 					assert (value.readUInt32LE (0) === 0xAABBCCDD);
@@ -1592,7 +1583,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 					// Skip if already succeeded
 					if (test6 === true) continue;
 
-					var value = Buffer ([ 0xDD, 0xCC, 0xBB, 0xAA ]);
+					value = Buffer ([ 0xDD, 0xCC, 0xBB, 0xAA ]);
 					assert (m.writeData (r2.start-2, value, 4, Memory.AUTO_ACCESS) === 4);
 					assert (m. readData (r2.start-2, value, 4, Memory.AUTO_ACCESS) === 4);
 					value = value.readUInt32LE (0);
@@ -1622,7 +1613,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 				// Attempt to set access of the region if not tested
 				if (!test8 && m.setAccess (r2, true, false, false))
 				{
-					var value = Buffer ([ 0xDD, 0xCC, 0xBB, 0xAA ]);
+					value = Buffer ([ 0xDD, 0xCC, 0xBB, 0xAA ]);
 					assert (m.writeData (r2.start-2, value, 4, Memory.AUTO_ACCESS) === 4);
 					assert (m. readData (r2.start-2, value, 4, Memory.AUTO_ACCESS) === 4);
 					assert (value.readUInt32LE (0) === 0xAABBCCDD);
@@ -1893,17 +1884,15 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			process.platform === "win32")
 		{
 			var mS = list[0].getBase();
-			var mT = list[0].getBase() +
-					 list[0].getSize();
+			var mT = list[0].getBase() + list[0].getSize();
 		}
 
 		if (process.platform === "darwin")
 		{
 			var segs = list[0].getSegments();
 			assert (segs.length >= 2);
-			var mS = segs[1].base;
-			var mT = segs[1].base +
-					 segs[1].size;
+			mS = segs[1].base;
+			mT = segs[1].base + segs[1].size;
 		}
 
 		list1 = m.find ("00", mS, mT);
@@ -1960,8 +1949,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 		if (p2.getName().substr (0, 4) !== "Peon")
 		{
-			log ("Open peon app and input PID: "); var input = getline();
-			var pid = parseInt (input); assert (pid > 0); assert (p2.open (pid));
+			log ("Open peon app and input PID: "); input = getline();
+			pid = parseInt (input); assert (pid > 0); assert (p2.open (pid));
 			assert (p2.isValid()); assert (!p2.hasExited());
 			assert (p2.getName().substr (0, 4) === "Peon"); log ("\n");
 		}
