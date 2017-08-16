@@ -21,7 +21,6 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 	////////////////////////////////////////////////////////////////////////////////
 
-	var Color    = robot.Color;
 	var Image    = robot.Image;
 	var Point    = robot.Point;
 	var Bounds   = robot.Bounds;
@@ -121,21 +120,21 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		{
 			log ("Composition status: " +
 				(Screen.isCompositing() ?
-				 "enabled" : "disabled"));
+					"enabled" : "disabled"));
 			getline();
 
 			Screen.setCompositing (false);
 
 			log ("Composition status: " +
 				(Screen.isCompositing() ?
-				 "enabled" : "disabled"));
+					"enabled" : "disabled"));
 			getline();
 
 			Screen.setCompositing (true );
 
 			log ("Composition status: " +
 				(Screen.isCompositing() ?
-				 "enabled" : "disabled"));
+					"enabled" : "disabled"));
 			getline();
 
 			log ("\n");
@@ -197,14 +196,14 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		{
 			var p = Mouse.getPos();
 			var s = (usePoint = !usePoint) ?
-					 Screen.getScreen (p) :
-					 Screen.getScreen (p.x, p.y);
+				Screen.getScreen (p) :
+				Screen.getScreen (p.x, p.y);
 
 			assert (s !== null);
 
 			var curr = -1;
 			// Loop through every available screen
-			for (var i = 0; i < list.length; ++i)
+			for (i = 0; i < list.length; ++i)
 				if (list[i] === s) { curr = i; break; }
 
 			assert (curr >= 0);
@@ -241,12 +240,12 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		last = -1;
 		while (Window.getActive().eq (w))
 		{
-			var s = Screen.getScreen (w);
+			s = Screen.getScreen (w);
 			assert (s !== null);
 
-			var curr = -1;
+			curr = -1;
 			// Loop through every available screen
-			for (var i = 0; i < list.length; ++i)
+			for (i = 0; i < list.length; ++i)
 				if (list[i] === s) { curr = i; break; }
 
 			assert (curr >= 0);
@@ -276,7 +275,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			Screen.grabScreen (image2,  bounds, window); assert (image2.isValid());
 
 			var result = new png ({
-				 width: image1.getWidth (),
+				width: image1.getWidth (),
 				height: image1.getHeight()
 			});
 
@@ -363,8 +362,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		for (var i = 0; i < 5; ++i)
 		{
 			timer.start();
-			assert (Screen.grabScreen
-				(image, 0, 0, 16, 16));
+			assert (Screen.grabScreen(image, 0, 0, 16, 16));
 
 			log (timer.getElapsed() + " ");
 		}
@@ -374,11 +372,10 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		//----------------------------------------------------------------------------//
 
 		log ("Medium image (ms): ");
-		for (var i = 0; i < 5; ++i)
+		for (i = 0; i < 5; ++i)
 		{
 			timer.start();
-			assert (Screen.grabScreen
-				(image, 0, 0, 512, 512));
+			assert (Screen.grabScreen(image, 0, 0, 512, 512));
 
 			log (timer.getElapsed() + " ");
 		}
@@ -388,11 +385,10 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		//----------------------------------------------------------------------------//
 
 		log ("Large  image (ms): ");
-		for (var i = 0; i < 5; ++i)
+		for (i = 0; i < 5; ++i)
 		{
 			timer.start();
-			assert (Screen.grabScreen
-				(image, 0, 0, 1920, 1080));
+			assert (Screen.grabScreen(image, 0, 0, 1920, 1080));
 
 			log (timer.getElapsed() + " ");
 		}

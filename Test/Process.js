@@ -261,7 +261,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		log ("List *a* - " + list1.length + "\n");
 		assert (list1.length === list2.length);
 
-		for (var i = 0; i < list1.length; ++i)
+		for (i = 0; i < list1.length; ++i)
 		{
 			var name = list1[i].getName();
 			assert (name.indexOf ("a") >= 0 ||
@@ -293,7 +293,7 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		assert (list1.length !==            0);
 		assert (list1.length === list2.length);
 
-		for (var i = 0; i < list1.length; ++i)
+		for (i = 0; i < list1.length; ++i)
 		{
 			assert ( list1[i].isValid  ());
 			assert ( list2[i].isValid  ());

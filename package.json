@@ -69,7 +69,7 @@
 	"scripts":
 	{
 		"install"		: "node Native/Install.js",
-		"eslint"		: "./node_modules/.bin/eslint Library/ Test/",
+		"eslint"		: "./node_modules/.bin/eslint Library/ Test/"
 	},
 
 	"engines":

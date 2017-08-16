@@ -23,8 +23,6 @@ module.exports = function (robot, log, sprintf, getline, assert)
 
 	var Range    = robot.Range;
 	var Point    = robot.Point;
-	var Size     = robot.Size;
-	var Bounds   = robot.Bounds;
 
 	var Timer    = robot.Timer;
 	var Mouse    = robot.Mouse;
@@ -145,15 +143,14 @@ module.exports = function (robot, log, sprintf, getline, assert)
 		m.release (robot.BUTTON_LEFT);
 		// Get the state of all buttons
 		var state = Mouse.getState();
-		assert (!state[robot.BUTTON_LEFT] &&
-				 state[robot.BUTTON_MID]);
+		assert (!state[robot.BUTTON_LEFT] && state[robot.BUTTON_MID]);
 		m.release (robot.BUTTON_MID);
 
 		// Iterate until the escape key is pressed
 		while (!Keyboard.getState (robot.KEY_ESCAPE))
 		{
 			// Get the state of all buttons
-			var state = Mouse.getState();
+			state = Mouse.getState();
 
 			if (state[robot.BUTTON_LEFT ]) log ("Left\t" );
 			if (state[robot.BUTTON_MID  ]) log ("Mid\t"  );
