@@ -5,7 +5,7 @@
     ["OS=='mac'", {"variables": {"target_platform": "darwin"}}],
   ],
   "variables": {
-    "target_module_version": "<!(node <(module_root_dir)/abi.js <(node_root_dir))",
+    "target_module_version": "<!(node <(module_root_dir)/scripts/getabi.js <(node_root_dir))",
   },
   "target_defaults": {
     "configurations": {
