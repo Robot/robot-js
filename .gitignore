@@ -10,3 +10,4 @@ ipch/
 .DS_STORE
 Binaries/
 node_modules/
+build/

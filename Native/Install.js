@@ -83,6 +83,7 @@ var genericFailure = function (details)
 
 	// Delete target binary
 	mFS.unlinkSync (TARGET);
+	process.exit(1);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -99,6 +100,7 @@ var verifyFailure = function (details)
 
 	// Delete target binary
 	mFS.unlinkSync (TARGET);
+	process.exit(1);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
