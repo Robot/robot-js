@@ -11,7 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Image.h"
+#include "NodeImage.h"
 DEFINE_ROBOT_TYPE (Image);
 
 

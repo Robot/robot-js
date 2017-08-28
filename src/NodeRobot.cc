@@ -11,17 +11,17 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Image.h"
+#include "NodeImage.h"
 
-#include "Keyboard.h"
-#include "Mouse.h"
+#include "NodeKeyboard.h"
+#include "NodeMouse.h"
 
-#include "Process.h"
-#include "Memory.h"
+#include "NodeProcess.h"
+#include "NodeMemory.h"
 
-#include "Window.h"
-#include "Screen.h"
-#include "Clipboard.h"
+#include "NodeWindow.h"
+#include "NodeScreen.h"
+#include "NodeClipboard.h"
 
 Persistent<Function> JsColor;
 Persistent<Function> JsRange;

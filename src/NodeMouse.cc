@@ -11,7 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Mouse.h"
+#include "NodeMouse.h"
 DEFINE_ROBOT_TYPE (Mouse);
 
 

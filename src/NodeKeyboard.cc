@@ -11,7 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Keyboard.h"
+#include "NodeKeyboard.h"
 DEFINE_ROBOT_TYPE (Keyboard);
 
 

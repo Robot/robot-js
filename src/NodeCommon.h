@@ -15,7 +15,7 @@
 
 #include <node_buffer.h>
 #include <node_object_wrap.h>
-#include "../Robot/Robot.h"
+#include "Robot.h"
 
 using namespace v8;
 using namespace node;

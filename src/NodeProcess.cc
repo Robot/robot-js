@@ -11,8 +11,8 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Process.h"
-#include "Window.h"
+#include "NodeProcess.h"
+#include "NodeWindow.h"
 DEFINE_ROBOT_TYPE (Process);
 
 

@@ -11,8 +11,8 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Memory.h"
-#include "Process.h"
+#include "NodeMemory.h"
+#include "NodeProcess.h"
 DEFINE_ROBOT_TYPE (Memory);
 
 

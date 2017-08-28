@@ -11,8 +11,8 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Clipboard.h"
-#include "Image.h"
+#include "NodeClipboard.h"
+#include "NodeImage.h"
 
 
 

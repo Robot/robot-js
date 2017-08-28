@@ -11,9 +11,9 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
-#include "Screen.h"
-#include "Window.h"
-#include "Image.h"
+#include "NodeScreen.h"
+#include "NodeWindow.h"
+#include "NodeImage.h"
 
 extern Persistent<Function> JsBounds;
 
