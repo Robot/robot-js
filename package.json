@@ -76,6 +76,11 @@
 		"keylogging"
 	],
 
+	"dependencies":
+	{
+		"node-gyp"		: "~3.6"
+	},
+
 	"devDependencies":
 	{
 		"sprintf-js"	: "~1.1",
