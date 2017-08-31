@@ -29,7 +29,8 @@
 
 	"scripts":
 	{
-		"install"		: "node scripts/install.js || node-gyp rebuild"
+		"install"		: "node scripts/install.js || node-gyp rebuild",
+		"test"			: "node test/test.js types timer"
 	},
 
 	"config":
