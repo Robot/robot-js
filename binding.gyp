@@ -127,6 +127,22 @@
 						"V8_DEPRECATION_WARNINGS=1"
 					],
 
+					"sources":
+					[
+						"src/NodeRobot.rc"
+					],
+
+					"msvs_settings":
+					{
+						"VCResourceCompilerTool":
+						{
+							"PreprocessorDefinitions":
+							[
+								"TARGET_MODULE_VERSION=<(target_module_version)"
+							]
+						}
+					},
+
 					"configurations":
 					{
 						"Debug":
