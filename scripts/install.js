@@ -79,10 +79,15 @@ var genericFailure = function (details)
 		("ERROR: robot-js binaries failed to install. " +
 		 "You will need to install them manually, see " +
 		 "http://getrobot.net/docs/node.html for more " +
-		 "information. Details: " + details + "\n");
+		 "information. Details: " + details);
 
-	// Delete target binary
-	mFS.unlinkSync (TARGET);
+	try
+	{
+		// Delete target binary
+		mFS.unlinkSync (TARGET);
+
+	} catch (e) { }
+
 	process.exitCode = 1;
 };
 
@@ -96,10 +101,15 @@ var verifyFailure = function (details)
 		 "attack. If you want to continue anyway, use the " +
 		 "following command to disable verification: 'npm " +
 		 "config set robot-js:verify false'. Details: "     +
-		 details + "\n");
+		 details);
 
-	// Delete target binary
-	mFS.unlinkSync (TARGET);
+	try
+	{
+		// Delete target binary
+		mFS.unlinkSync (TARGET);
+
+	} catch (e) { }
+
 	process.exitCode = 1;
 };
 
