@@ -1,184 +1,193 @@
 {
-  "conditions": [
-    ["OS=='linux'", {"variables": {"target_platform": "linux"}}],
-    ["OS=='win'", {"variables": {"target_platform": "win32"}}],
-    ["OS=='mac'", {"variables": {"target_platform": "darwin"}}],
-  ],
-  "variables": {
-    "target_module_version": "<!(node <(module_root_dir)/scripts/getabi.js <(node_root_dir))",
-  },
-  "target_defaults": {
-    "configurations": {
-      "Debug": {
-        "defines": [
-          "DEBUG",
-        ],
-      },
-      "Release": {
-        "defines": [
-          "NDEBUG",
-        ],
-      },
-    },
-  },
-  "targets": [
-    {
-      "target_name": "robot",
-      "type": "static_library",
-      "configurations": {
-        "Debug": {
-          "msvs_settings": {
-            "VCCLCompilerTool": {
-              "ExceptionHandling": 1,
-            },
-          },
-        },
-        "Release": {
-          "msvs_settings": {
-            "VCCLCompilerTool": {
-              "ExceptionHandling": 1,
-            },
-          },
-        },
-      },
-      "xcode_settings": {
-        "MACOSX_DEPLOYMENT_TARGET": "10.7",
-        "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
-        "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
-        "CLANG_CXX_LIBRARY": "libc++",
-        "CLANG_CXX_LANGUAGE_STANDARD": "c++11",
-        "OTHER_CPLUSPLUSFLAGS": [
-          "-x objective-c++",
-          "-Wno-sign-compare",
-          "-Wno-unused-variable",
-          "-Wno-missing-field-initializers",
-        ],
-      },
-      "cflags_cc!": [
-        "-fno-exceptions",
-      ],
-      "cflags_cc": [
-        "-std=c++11",
-        "-fexceptions",
-        "-Wno-strict-aliasing",
-        "-Wno-unused-variable",
-        "-Wno-missing-field-initializers",
-      ],
-      "defines!": [
-        "_HAS_EXCEPTIONS=0",
-        "V8_DEPRECATION_WARNINGS=1",
-      ],
-      "sources": [
-        "Native/Robot/Bounds.cc",
-        "Native/Robot/Clipboard.cc",
-        "Native/Robot/Color.cc",
-        "Native/Robot/Hash.cc",
-        "Native/Robot/Image.cc",
-        "Native/Robot/Keyboard.cc",
-        "Native/Robot/Memory.cc",
-        "Native/Robot/Module.cc",
-        "Native/Robot/Mouse.cc",
-        "Native/Robot/Point.cc",
-        "Native/Robot/Process.cc",
-        "Native/Robot/Range.cc",
-        "Native/Robot/Screen.cc",
-        "Native/Robot/Size.cc",
-        "Native/Robot/Timer.cc",
-        "Native/Robot/Window.cc",
-      ],
-    },
-    {
-      "target_name": "<(target_platform)-<(target_arch)-<(target_module_version)",
-      "dependencies": ["robot"],
-      "conditions": [
-        ["OS=='linux'", {
-          "libraries": [
-            "-lrt",
-            "-lX11",
-            "-lXtst",
-            "-lXinerama",
-          ],
-        }],
-        ["OS=='win'", {
-          "libraries": [
-            "-lPsapi",
-          ],
-        }],
-        ["OS=='mac'", {
-          "libraries": [
-            "-framework ApplicationServices",
-            "-framework AppKit",
-          ],
-        }],
-      ],
-      "configurations": {
-        "Debug": {
-          "msvs_settings": {
-            "VCCLCompilerTool": {
-              "ExceptionHandling": 1,
-            },
-          },
-        },
-        "Release": {
-          "msvs_settings": {
-            "VCCLCompilerTool": {
-              "ExceptionHandling": 1,
-            },
-          },
-        },
-      },
-      "xcode_settings": {
-        "MACOSX_DEPLOYMENT_TARGET": "10.7",
-        "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
-        "GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
-        "CLANG_CXX_LIBRARY": "libc++",
-        "CLANG_CXX_LANGUAGE_STANDARD": "c++11",
-        "OTHER_CPLUSPLUSFLAGS": [
-          "-x objective-c++",
-          "-Wno-sign-compare",
-          "-Wno-unused-variable",
-          "-Wno-missing-field-initializers",
-        ],
-      },
-      "cflags_cc!": [
-        "-fno-exceptions",
-      ],
-      "cflags_cc": [
-        "-std=c++11",
-        "-fexceptions",
-        "-Wno-strict-aliasing",
-        "-Wno-unused-variable",
-        "-Wno-missing-field-initializers",
-      ],
-      "defines!": [
-        "_HAS_EXCEPTIONS=0",
-        "V8_DEPRECATION_WARNINGS=1",
-      ],
-      "include_dirs": [
-        "Native/Robot",
-      ],
-      "sources": [
-        "Native/Addon/Clipboard.cc",
-        "Native/Addon/Image.cc",
-        "Native/Addon/Keyboard.cc",
-        "Native/Addon/Memory.cc",
-        "Native/Addon/Mouse.cc",
-        "Native/Addon/Process.cc",
-        "Native/Addon/Robot.cc",
-        "Native/Addon/Screen.cc",
-        "Native/Addon/Window.cc",
-      ],
-    },
-    {
-      "target_name": "copy_binary",
-      "type": "none",
-      "dependencies" : ["<(target_platform)-<(target_arch)-<(target_module_version)"],
-      "copies": [
-        {
-          "files": ["<(PRODUCT_DIR)/<@(_dependencies).node"],
-          "destination": "<(module_root_dir)/Library",
-        },
-      ],
-    },
-  ]
+	"conditions":
+	[
+		[ "OS == 'linux'", { "variables": { "target_platform": "linux"  }}],
+		[ "OS == 'mac'",   { "variables": { "target_platform": "darwin" }}],
+		[ "OS == 'win'",   { "variables": { "target_platform": "win32"  }}]
+	],
+
+	"variables":
+	{
+		"target_module_version": "<!(node <(module_root_dir)/scripts/getabi.js <(node_root_dir))"
+	},
+
+	"targets":
+	[
+		{
+			"target_name": "<(target_platform)-<(target_arch)-<(target_module_version)",
+
+			"sources":
+			[
+				"src/robot/Source/Hash.cc",
+				"src/robot/Source/Color.cc",
+				"src/robot/Source/Image.cc",
+				"src/robot/Source/Range.cc",
+				"src/robot/Source/Point.cc",
+				"src/robot/Source/Size.cc",
+				"src/robot/Source/Bounds.cc",
+
+				"src/robot/Source/Keyboard.cc",
+				"src/robot/Source/Mouse.cc",
+				"src/robot/Source/Process.cc",
+				"src/robot/Source/Module.cc",
+				"src/robot/Source/Memory.cc",
+				"src/robot/Source/Window.cc",
+				"src/robot/Source/Screen.cc",
+				"src/robot/Source/Timer.cc",
+				"src/robot/Source/Clipboard.cc",
+
+				"src/NodeRobot.cc",
+				"src/NodeImage.cc",
+
+				"src/NodeKeyboard.cc",
+				"src/NodeMouse.cc",
+				"src/NodeProcess.cc",
+				"src/NodeMemory.cc",
+				"src/NodeWindow.cc",
+				"src/NodeScreen.cc",
+				"src/NodeClipboard.cc"
+			],
+
+			"include_dirs": [ "src/robot/Source/" ],
+
+			"conditions":
+			[
+				[ "OS == 'linux'", {
+
+					"libraries":
+					[
+						"-lrt",
+						"-lX11",
+						"-lXtst",
+						"-lXinerama"
+					],
+
+					"defines!":
+					[
+						"V8_DEPRECATION_WARNINGS=1"
+					],
+
+					"cflags_cc":
+					[
+						"-std=c++11",
+						"-fexceptions",
+						"-Wno-strict-aliasing",
+						"-Wno-unused-variable",
+						"-Wno-missing-field-initializers"
+					],
+
+					"cflags_cc!":
+					[
+						"-std=gnu++0x",
+						"-fno-exceptions"
+					]
+				}],
+
+				[ "OS == 'mac'", {
+
+					"libraries":
+					[
+						"-framework ApplicationServices",
+						"-framework AppKit"
+					],
+
+					"defines!":
+					[
+						"V8_DEPRECATION_WARNINGS=1"
+					],
+
+					"xcode_settings":
+					{
+						"MACOSX_DEPLOYMENT_TARGET": "10.8",
+						"CLANG_CXX_LANGUAGE_STANDARD": "c++11",
+						"CLANG_CXX_LIBRARY": "libc++",
+						"GCC_ENABLE_CPP_EXCEPTIONS": "YES",
+						"GCC_VERSION": "com.apple.compilers.llvm.clang.1_0",
+
+						"OTHER_CPLUSPLUSFLAGS":
+						[
+							"-x objective-c++",
+							"-Wno-sign-compare",
+							"-Wno-unused-variable",
+							"-Wno-missing-field-initializers"
+						]
+					}
+				}],
+
+				[ "OS == 'win'", {
+
+					"libraries":
+					[
+						"-lPsapi"
+					],
+
+					"defines!":
+					[
+						"_HAS_EXCEPTIONS=0",
+						"V8_DEPRECATION_WARNINGS=1"
+					],
+
+					"configurations":
+					{
+						"Debug":
+						{
+							"defines":
+							[
+								"UNICODE",
+								"DEBUG"
+							],
+
+							"msvs_settings":
+							{
+								"VCCLCompilerTool": { "ExceptionHandling": 1 },
+								"VCLinkerTool":     { "SubSystem":         2 }
+							}
+						},
+
+						"Release":
+						{
+							"defines":
+							[
+								"UNICODE",
+								"NDEBUG"
+							],
+
+							"msvs_settings":
+							{
+								"VCCLCompilerTool": { "ExceptionHandling": 1 },
+								"VCLinkerTool":     { "SubSystem":         2 }
+							}
+						}
+					},
+
+					"msvs_disabled_warnings": [ 4005, 4661 ],
+
+					"conditions":
+					[
+						[ "MSVS_VERSION == '2012'", { "msbuild_toolset": "v110_xp" }],
+						[ "MSVS_VERSION == '2013'", { "msbuild_toolset": "v120_xp" }],
+						[ "MSVS_VERSION == '2015'", { "msbuild_toolset": "v140_xp" }],
+						[ "MSVS_VERSION == '2017'", { "msbuild_toolset": "v141_xp" }]
+					]
+				}]
+			]
+		},
+		{
+			"target_name": "copy_binary",
+			"type": "none",
+
+			"dependencies":
+			[
+				"<(target_platform)-<(target_arch)-<(target_module_version)"
+			],
+
+			"copies":
+			[
+				{
+					"files": [ "<(PRODUCT_DIR)/<@(_dependencies).node" ],
+					"destination": "<(module_root_dir)/lib/"
+				}
+			]
+		}
+	]
 }
