@@ -181,11 +181,9 @@ function main (argc, argv)
 		res = 0;
 	}
 
-	// All the tests have concluded
-	log ("Press enter to exit\n");
-	getline();
 	return res;
 }
 
-// Call the main function to begin tests
-main (process.argv.length, process.argv);
+process.exitCode =
+	// Call the main function to begin tests
+	main (process.argv.length, process.argv);
