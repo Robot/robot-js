@@ -1,12 +1,4 @@
-ipch/
-.vs/
-*.db
 *.node
-*.user
-*.sdf
-*.suo
-*.opensdf
-*.opendb
-.DS_STORE
-Binaries/
+build/
 node_modules/
+.DS_STORE

@@ -1,8 +1,10 @@
 {
 	"name"				: "robot-js",
 	"version"			: "1.0.2",
+	"robot"				: "2.0.0",
 	"license"			: "Zlib",
-	"main"				: "Library/Robot.js",
+	"main"				: "lib/robot.js",
+	"gypfile"			: true,
 
 	"description"		: "Native system automation for node.js",
 	"homepage"			: "http://getrobot.net",
@@ -12,11 +14,6 @@
 		"name"			: "David Krutsko",
 		"email"			: "dave@krutsko.net",
 		"url"			: "http://krutsko.net"
-	},
-
-	"config":
-	{
-		"verify"		: true
 	},
 
 	"repository":
@@ -29,6 +26,35 @@
 	{
 		"url"			: "https://github.com/robot/robot-js/issues"
 	},
+
+	"scripts":
+	{
+		"install"		: "node scripts/install.js || node-gyp rebuild",
+		"test"			: "node test/test.js types timer"
+	},
+
+	"config":
+	{
+		"verify"		: true
+	},
+
+	"engines":
+	{
+		"node"			: ">= 0.12"
+	},
+
+	"os":
+	[
+		"linux",
+		"darwin",
+		"win32"
+	],
+
+	"cpu":
+	[
+		"x64",
+		"ia32"
+	],
 
 	"keywords":
 	[
@@ -51,27 +77,15 @@
 		"keylogging"
 	],
 
-	"os":
-	[
-		"linux",
-		"darwin",
-		"win32"
-	],
+	"dependencies":
+	{
+		"node-gyp"		: "~3.6"
+	},
 
 	"devDependencies":
 	{
 		"sprintf-js"	: "~1.1",
 		"node-png"		: "~0.4",
 		"readline-sync"	: "~1.4"
-	},
-
-	"scripts":
-	{
-		"install"		: "node Native/Install.js"
-	},
-
-	"engines":
-	{
-		"node"			: ">= 0.12"
 	}
 }
