@@ -176,15 +176,7 @@
 						}
 					},
 
-					"msvs_disabled_warnings": [ 4005, 4661 ],
-
-					"conditions":
-					[
-						[ "MSVS_VERSION == '2012'", { "msbuild_toolset": "v110_xp" }],
-						[ "MSVS_VERSION == '2013'", { "msbuild_toolset": "v120_xp" }],
-						[ "MSVS_VERSION == '2015'", { "msbuild_toolset": "v140_xp" }],
-						[ "MSVS_VERSION == '2017'", { "msbuild_toolset": "v141_xp" }]
-					]
+					"msvs_disabled_warnings": [ 4005, 4661 ]
 				}]
 			]
 		},
