@@ -16,6 +16,7 @@
 var mFS     = require ("fs"    );
 var mCrypto = require ("crypto");
 var mHTTP   = require ("http"  );
+var mColors = require ("colors/safe");
 
 
 
@@ -39,7 +40,7 @@ var BINARY =
 
 var SOURCE = REMOTE + process.env.npm_package_version + "/" + BINARY;
 var SIGS   = REMOTE + process.env.npm_package_version + "/signatures.txt";
-var TARGET = "./Library/" + BINARY;
+var TARGET = "./lib/" + BINARY;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Fingerprint: ssh-rsa 4096 25:9D:39:06:78:19:07:7B:1C:85:31:6E:D1:FA:9B:EA
@@ -75,11 +76,13 @@ var target = mFS.createWriteStream (TARGET);
 
 var genericFailure = function (details)
 {
-	console.error
-		("ERROR: robot-js binaries failed to install. " +
-		 "You will need to install them manually, see " +
-		 "http://getrobot.net/docs/node.html for more " +
-		 "information. Details: " + details);
+	console.warn (mColors.yellow.bold (
+		"WARNING: robot-js precompiled binaries could " +
+		"not be downloaded, an attempt to compile them" +
+		" manually will be made. For more information," +
+		" please visit http://getrobot.net/docs/node.html." +
+		" Details: " + details
+	));
 
 	try
 	{
@@ -95,13 +98,14 @@ var genericFailure = function (details)
 
 var verifyFailure = function (details)
 {
-	console.error
-		("ERROR: robot-js binaries could not be verified. " +
-		 "This could be a result of a man-in-the-middle "   +
-		 "attack. If you want to continue anyway, use the " +
-		 "following command to disable verification: 'npm " +
-		 "config set robot-js:verify false'. Details: "     +
-		 details);
+	console.error (mColors.red.bold (
+		"ERROR: robot-js precompiled binaries could not " +
+		"be verified. This could be a result of a man-in" +
+		"-the-middle attack. If you want to continue " +
+		"anyway, use the following command to disable" +
+		" verification: 'npm config set robot-js:verify " +
+		"false'. Details: " + details
+	));
 
 	try
 	{
@@ -109,8 +113,6 @@ var verifyFailure = function (details)
 		mFS.unlinkSync (TARGET);
 
 	} catch (e) { }
-
-	process.exitCode = 1;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
