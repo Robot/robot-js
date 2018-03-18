@@ -28,8 +28,8 @@ var mPath = require ("path");
 
 var paths =
 [
-	mPath.join (process.argv[2], 'include', 'node', 'node_version.h'),
-	mPath.join (process.argv[2], 'src',             'node_version.h')
+	mPath.join (process.argv[2], "include", "node", "node_version.h"),
+	mPath.join (process.argv[2], "src",             "node_version.h")
 ];
 
 var contents = null;
