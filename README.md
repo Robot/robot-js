@@ -14,9 +14,9 @@
 		<img src="https://img.shields.io/badge/Robot-2.0.0-C86414.svg?style=flat-square" alt="Robot 2.0.0" />
 	</a>
 	<a target="_blank" href="https://npmjs.com/package/robot-js">
-		<img src="https://img.shields.io/badge/NPM-1.1.0-C86414.svg?style=flat-square" alt="NPM 1.1.0" />
+		<img src="https://img.shields.io/badge/NPM-2.0.0-C86414.svg?style=flat-square" alt="NPM 2.0.0" />
 	</a>
-	<img src="https://img.shields.io/badge/Node->=_0.12-C86414.svg?style=flat-square" alt="Node >= 0.12" />
+	<img src="https://img.shields.io/badge/Node-0.12_--_9-C86414.svg?style=flat-square" alt="Node 0.12 - 9" />
 	<a target="_blank" href="http://getrobot.net/docs/node.html">
 		<img src="https://img.shields.io/badge/Docs-API-C86414.svg?style=flat-square" alt="Docs API" />
 	</a>
