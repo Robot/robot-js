@@ -223,8 +223,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (!segment1.le (segment2)); assert (!segment1.le (segment2.base));
 			assert ( segment1.ge (segment2)); assert ( segment1.ge (segment2.base));
 
-			segment1.Base = 1000;
-			segment1.Size = 1000;
+			segment1.base = 1000;
+			segment1.size = 1000;
 			assert (!segment1.contains ( 999));
 			assert ( segment1.contains (1000));
 			assert ( segment1.contains (1001));
@@ -334,8 +334,8 @@ module.exports = function (robot, log, sprintf, getline, assert)
 			assert (!region1.le (region2)); assert (!region1.le (region2.start));
 			assert ( region1.ge (region2)); assert ( region1.ge (region2.start));
 
-			region1.Start = 1000;
-			region1.Stop  = 2000;
+			region1.start = 1000;
+			region1.stop  = 2000;
 			assert (!region1.contains ( 999));
 			assert ( region1.contains (1000));
 			assert ( region1.contains (1001));
