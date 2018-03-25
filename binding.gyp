@@ -192,13 +192,39 @@
 			"copies":
 			[
 				{
-					"files":
+					"conditions":
 					[
-						"<(PRODUCT_DIR)/<@(_dependencies).node",
-						"<(PRODUCT_DIR)/<@(_dependencies).pdb"
-					],
+						[ "OS == 'linux'", {
 
-					"destination": "<(module_root_dir)/lib/"
+							"files":
+							[
+								"<(PRODUCT_DIR)/<@(_dependencies).node"
+							],
+
+							"destination": "<(module_root_dir)/lib/"
+						}],
+
+						[ "OS == 'mac'", {
+
+							"files":
+							[
+								"<(PRODUCT_DIR)/<@(_dependencies).node"
+							],
+
+							"destination": "<(module_root_dir)/lib/"
+						}],
+
+						[ "OS == 'win'", {
+
+							"files":
+							[
+								"<(PRODUCT_DIR)/<@(_dependencies).node",
+								"<(PRODUCT_DIR)/<@(_dependencies).pdb"
+							],
+
+							"destination": "<(module_root_dir)/lib/"
+						}]
+					]
 				}
 			]
 		}
