@@ -51,15 +51,15 @@ function assert (cond, thisArg, args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-var testTypes     = require ("./Types"    )(mRobot, log, mSprintf, getline, assert);
-var testTimer     = require ("./Timer"    )(mRobot, log, mSprintf, getline, assert);
-var testKeyboard  = require ("./Keyboard" )(mRobot, log, mSprintf, getline, assert);
-var testMouse     = require ("./Mouse"    )(mRobot, log, mSprintf, getline, assert);
-var testProcess   = require ("./Process"  )(mRobot, log, mSprintf, getline, assert);
-var testWindow    = require ("./Window"   )(mRobot, log, mSprintf, getline, assert);
-var testMemory    = require ("./Memory"   )(mRobot, log, mSprintf, getline, assert);
-var testScreen    = require ("./Screen"   )(mRobot, log, mSprintf, getline, assert);
-var testClipboard = require ("./Clipboard")(mRobot, log, mSprintf, getline, assert);
+var testTypes     = require ("./types"    )(mRobot, log, mSprintf, getline, assert);
+var testTimer     = require ("./timer"    )(mRobot, log, mSprintf, getline, assert);
+var testKeyboard  = require ("./keyboard" )(mRobot, log, mSprintf, getline, assert);
+var testMouse     = require ("./mouse"    )(mRobot, log, mSprintf, getline, assert);
+var testProcess   = require ("./process"  )(mRobot, log, mSprintf, getline, assert);
+var testWindow    = require ("./window"   )(mRobot, log, mSprintf, getline, assert);
+var testMemory    = require ("./memory"   )(mRobot, log, mSprintf, getline, assert);
+var testScreen    = require ("./screen"   )(mRobot, log, mSprintf, getline, assert);
+var testClipboard = require ("./clipboard")(mRobot, log, mSprintf, getline, assert);
 
 
 
