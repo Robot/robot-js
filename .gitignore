@@ -1,4 +1,5 @@
 *.node
+*.pdb
 build/
 node_modules/
 .DS_STORE
