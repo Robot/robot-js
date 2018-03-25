@@ -1,0 +1,3 @@
+[submodule "src/robot"]
+	path = src/robot
+	url = https://github.com/robot/robot

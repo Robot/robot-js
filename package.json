@@ -1,8 +1,10 @@
 {
 	"name"				: "robot-js",
-	"version"			: "1.0.2",
+	"version"			: "2.0.0",
+	"robot"				: "2.0.0",
 	"license"			: "Zlib",
-	"main"				: "Library/Robot.js",
+	"main"				: "lib/robot.js",
+	"gypfile"			: true,
 
 	"description"		: "Native system automation for node.js",
 	"homepage"			: "http://getrobot.net",
@@ -25,6 +27,36 @@
 		"url"			: "https://github.com/robot/robot-js/issues"
 	},
 
+	"scripts":
+	{
+		"install"		: "node scripts/install.js || node-gyp rebuild",
+		"test"			: "node test/test.js types timer"
+	},
+
+	"config":
+	{
+		"verify"		: true
+	},
+
+	"engines":
+	{
+		"node"			: "0.12 - 9"
+	},
+
+	"os":
+	[
+		"linux",
+		"darwin",
+		"win32"
+	],
+
+	"cpu":
+	[
+		"arm",
+		"x64",
+		"ia32"
+	],
+
 	"keywords":
 	[
 		"autoit",
@@ -46,27 +78,16 @@
 		"keylogging"
 	],
 
-	"os":
-	[
-		"linux",
-		"darwin",
-		"win32"
-	],
+	"dependencies":
+	{
+		"colors"		: "~1.1",
+		"node-gyp"		: "~3.6"
+	},
 
 	"devDependencies":
 	{
-		"sprintf-js"	: "^1",
-		"node-png"		: "^0",
-		"readline-sync"	: "^1"
-	},
-
-	"scripts":
-	{
-		"install"		: "node Native/Install.js"
-	},
-
-	"engines":
-	{
-		"node"			: ">= 0.12"
+		"sprintf-js"	: "~1.1",
+		"node-png"		: "~0.4",
+		"readline-sync"	: "~1.4"
 	}
 }
