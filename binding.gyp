@@ -192,7 +192,12 @@
 			"copies":
 			[
 				{
-					"files": [ "<(PRODUCT_DIR)/<@(_dependencies).node" ],
+					"files":
+					[
+						"<(PRODUCT_DIR)/<@(_dependencies).node",
+						"<(PRODUCT_DIR)/<@(_dependencies).pdb"
+					],
+
 					"destination": "<(module_root_dir)/lib/"
 				}
 			]
