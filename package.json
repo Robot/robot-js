@@ -1,6 +1,6 @@
 {
 	"name"				: "robot-js",
-	"version"			: "2.0.0",
+	"version"			: "2.1.0",
 	"robot"				: "2.0.0",
 	"license"			: "Zlib",
 	"main"				: "lib/robot.js",
