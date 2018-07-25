@@ -129,7 +129,7 @@ void WindowWrap::GetProcess (const FunctionCallbackInfo<Value>& args)
 	auto ctor = NEW_CTOR (Process);
 
 	// Create a new instance of wrapper
-	auto instance = ctor->NewInstance();
+	auto instance = NEW_INSTANCE(ctor, 0, NULL);
 	UNWRAP (Process, instance);
 
 	auto process = mWindow->GetProcess();
@@ -306,7 +306,7 @@ void WindowWrap::GetList (const FunctionCallbackInfo<Value>& args)
 	for (int i = 0; i < length; ++i)
 	{
 		// Create a new instance of wrapper
-		auto instance = ctor->NewInstance();
+		auto instance = NEW_INSTANCE(ctor, 0, NULL);
 		UNWRAP (Window, instance);
 
 		// Make wrapper use new window
@@ -325,7 +325,7 @@ void WindowWrap::GetActive (const FunctionCallbackInfo<Value>& args)
 	auto ctor = NEW_CTOR (Window);
 
 	// Create a new instance of wrapper
-	auto instance = ctor->NewInstance();
+	auto instance = NEW_INSTANCE(ctor, 0, NULL);
 	UNWRAP (Window, instance);
 
 	auto window = Window::GetActive();
@@ -389,7 +389,7 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 	{
 		auto ctor = NEW_CTOR (Window);
 		// Return as a new instance
-		RETURN (ctor->NewInstance (1,
+		RETURN (NEW_INSTANCE(ctor, 1,
 			   (_jsArgs[0] = args[0], _jsArgs)));
 	}
 }

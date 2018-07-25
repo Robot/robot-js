@@ -200,10 +200,10 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 		else
 		{
 			// Normalize the size argument
-			auto s = Local<Function>::New
-				(isolate, JsSize)->NewInstance
-				(2, (_jsArgs[0] = args[0],
-					 _jsArgs[1] = args[1], _jsArgs));
+			auto s = NEW_INSTANCE(
+				Local<Function>::New(isolate, JsSize),
+				2, (_jsArgs[0] = args[0],
+					_jsArgs[1] = args[1], _jsArgs));
 
 			wrapper->mImage.Create
 				((uint16) s->Get (NEW_STR ("w"))->Int32Value(),
@@ -218,7 +218,7 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 	{
 		auto ctor = NEW_CTOR (Image);
 		// Return as a new instance
-		RETURN (ctor->NewInstance (2,
+		RETURN (NEW_INSTANCE(ctor, 2,
 			   (_jsArgs[0] = args[0],
 				_jsArgs[1] = args[1], _jsArgs)));
 	}
