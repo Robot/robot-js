@@ -147,7 +147,7 @@ void ProcessWrap::GetModules (const FunctionCallbackInfo<Value>& args)
 		const auto& current = list[i];
 
 		// Create a new module instance
-		auto obj = ctor->NewInstance();
+		auto obj = NEW_INSTANCE(ctor, 0, NULL);
 
 		obj->Set (NEW_STR ("_valid"), NEW_BOOL (current.IsValid()));
 		obj->Set (NEW_STR ("_name" ), NEW_STR  (current.GetName().data()));
@@ -188,7 +188,7 @@ void ProcessWrap::GetWindows (const FunctionCallbackInfo<Value>& args)
 	for (int i = 0; i < length; ++i)
 	{
 		// Create a new instance of wrapper
-		auto instance = ctor->NewInstance();
+		auto instance = NEW_INSTANCE(ctor, 0, NULL);
 		UNWRAP (Window, instance);
 
 		// Make wrapper use new window
@@ -237,7 +237,7 @@ void ProcessWrap::GetList (const FunctionCallbackInfo<Value>& args)
 	for (int i = 0; i < length; ++i)
 	{
 		// Create a new instance of wrapper
-		auto instance = ctor->NewInstance();
+		auto instance = NEW_INSTANCE(ctor, 0, NULL);
 		UNWRAP (Process, instance);
 
 		// Make wrapper use new process
@@ -256,7 +256,7 @@ void ProcessWrap::GetCurrent (const FunctionCallbackInfo<Value>& args)
 	auto ctor = NEW_CTOR (Process);
 
 	// Create a new instance of wrapper
-	auto instance = ctor->NewInstance();
+	auto instance = NEW_INSTANCE(ctor, 0, NULL);
 	UNWRAP (Process, instance);
 
 	auto process = Process::GetCurrent();
@@ -297,7 +297,7 @@ void ProcessWrap::GetSegments (const FunctionCallbackInfo<Value>& args)
 		const auto& current = list[i];
 
 		// Create a new module instance
-		auto obj = ctor->NewInstance();
+		auto obj = NEW_INSTANCE(ctor, 0, NULL);
 
 		obj->Set (NEW_STR ("valid"), NEW_BOOL (         current.Valid));
 		obj->Set (NEW_STR ("base" ), NEW_NUM  ((double) current.Base ));
@@ -338,7 +338,7 @@ void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 	{
 		auto ctor = NEW_CTOR (Process);
 		// Return as a new instance
-		RETURN (ctor->NewInstance (1,
+		RETURN (NEW_INSTANCE(ctor, 1,
 			   (_jsArgs[0] = args[0], _jsArgs)));
 	}
 }
