@@ -166,7 +166,7 @@ void MouseWrap::New (const FunctionCallbackInfo<Value>& args)
 	{
 		auto ctor = NEW_CTOR (Mouse);
 		// Return as a new instance
-		RETURN (NEW_INSTANCE(ctor, 0, NULL));
+		RETURN (NEW_INSTANCE (ctor, 0, NULL));
 	}
 }
 

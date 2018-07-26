@@ -201,7 +201,7 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 		{
 			// Normalize the size argument
 			auto s = NEW_INSTANCE(
-				Local<Function>::New(isolate, JsSize),
+				Local<Function>::New (isolate, JsSize),
 				2, (_jsArgs[0] = args[0],
 					_jsArgs[1] = args[1], _jsArgs));
 
@@ -218,7 +218,7 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 	{
 		auto ctor = NEW_CTOR (Image);
 		// Return as a new instance
-		RETURN (NEW_INSTANCE(ctor, 2,
+		RETURN (NEW_INSTANCE (ctor, 2,
 			   (_jsArgs[0] = args[0],
 				_jsArgs[1] = args[1], _jsArgs)));
 	}

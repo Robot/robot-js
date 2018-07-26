@@ -49,11 +49,11 @@ ROBOT_NS_USE_ALL;
 
 #if NODE_MODULE_VERSION >= 46
 
-	#define NEW_INSTANCE( f, argc, argv ) f->NewInstance(v8::Context::New(isolate), argc, argv).ToLocalChecked()
+	#define NEW_INSTANCE( f, argc, argv ) f->NewInstance (v8::Context::New (isolate), argc, argv).ToLocalChecked()
 
 #else
 
-	#define NEW_INSTANCE( f, argc, argv ) f->NewInstance(argc, argv)
+	#define NEW_INSTANCE( f, argc, argv ) f->NewInstance (argc, argv)
 
 #endif
 
@@ -76,28 +76,28 @@ ROBOT_NS_USE_ALL;
 		_jsArgs[1] = NEW_INT (g),							\
 		_jsArgs[2] = NEW_INT (b),							\
 		_jsArgs[3] = NEW_INT (a),							\
-		NEW_INSTANCE(Local<Function>::New(isolate, JsColor), 4, _jsArgs) \
+		NEW_INSTANCE (Local<Function>::New (isolate, JsColor), 4, _jsArgs) \
 	)
 
 #define NEW_RANGE( min, max )								\
 	(														\
 		_jsArgs[0] = NEW_INT (min),							\
 		_jsArgs[1] = NEW_INT (max),							\
-		NEW_INSTANCE(Local<Function>::New(isolate, JsRange), 2, _jsArgs) \
+		NEW_INSTANCE (Local<Function>::New (isolate, JsRange), 2, _jsArgs) \
 	)
 
 #define NEW_POINT( x, y )									\
 	(														\
 		_jsArgs[0] = NEW_INT (x),							\
 		_jsArgs[1] = NEW_INT (y),							\
-		NEW_INSTANCE(Local<Function>::New(isolate, JsPoint), 2, _jsArgs) \
+		NEW_INSTANCE (Local<Function>::New (isolate, JsPoint), 2, _jsArgs) \
 	)
 
 #define NEW_SIZE( w, h )									\
 	(														\
 		_jsArgs[0] = NEW_INT (w),							\
 		_jsArgs[1] = NEW_INT (h),							\
-		NEW_INSTANCE(Local<Function>::New(isolate, JsSize), 2, _jsArgs) \
+		NEW_INSTANCE (Local<Function>::New (isolate, JsSize), 2, _jsArgs) \
 	)
 
 #define NEW_BOUNDS( x, y, w, h )							\
@@ -106,13 +106,13 @@ ROBOT_NS_USE_ALL;
 		_jsArgs[1] = NEW_INT (y),							\
 		_jsArgs[2] = NEW_INT (w),							\
 		_jsArgs[3] = NEW_INT (h),							\
-		NEW_INSTANCE(Local<Function>::New(isolate, JsBounds), 4, _jsArgs) \
+		NEW_INSTANCE (Local<Function>::New (isolate, JsBounds), 4, _jsArgs) \
 	)
 
-#define NEW_MODULE  NEW_INSTANCE(Local<Function>::New(isolate, JsModule ), 0, NULL)
-#define NEW_SEGMENT NEW_INSTANCE(Local<Function>::New(isolate, JsSegment), 0, NULL)
-#define NEW_STATS   NEW_INSTANCE(Local<Function>::New(isolate, JsStats  ), 0, NULL)
-#define NEW_REGION  NEW_INSTANCE(Local<Function>::New(isolate, JsRegion ), 0, NULL)
+#define NEW_MODULE  NEW_INSTANCE (Local<Function>::New (isolate, JsModule ), 0, NULL)
+#define NEW_SEGMENT NEW_INSTANCE (Local<Function>::New (isolate, JsSegment), 0, NULL)
+#define NEW_STATS   NEW_INSTANCE (Local<Function>::New (isolate, JsStats  ), 0, NULL)
+#define NEW_REGION  NEW_INSTANCE (Local<Function>::New (isolate, JsRegion ), 0, NULL)
 
 ////////////////////////////////////////////////////////////////////////////////
 

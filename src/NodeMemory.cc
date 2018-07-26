@@ -57,7 +57,7 @@ void MemoryWrap::GetProcess (const FunctionCallbackInfo<Value>& args)
 	auto ctor = NEW_CTOR (Process);
 
 	// Create a new instance of wrapper
-	auto instance = NEW_INSTANCE(ctor, 0, NULL);
+	auto instance = NEW_INSTANCE (ctor, 0, NULL);
 	UNWRAP (Process, instance);
 
 	auto process = mMemory->GetProcess();
@@ -160,7 +160,7 @@ void MemoryWrap::GetRegions (const FunctionCallbackInfo<Value>& args)
 		const auto& current = list[i];
 
 		// Create a new region instance
-		auto obj = NEW_INSTANCE(ctor, 0, NULL);
+		auto obj = NEW_INSTANCE (ctor, 0, NULL);
 
 		obj->Set (NEW_STR ("valid"     ), NEW_BOOL (         current.Valid     ));
 		obj->Set (NEW_STR ("bound"     ), NEW_BOOL (         current.Bound     ));
@@ -602,7 +602,7 @@ void MemoryWrap::New (const FunctionCallbackInfo<Value>& args)
 	{
 		auto ctor = NEW_CTOR (Memory);
 		// Return as a new instance
-		RETURN (NEW_INSTANCE(ctor, 1,
+		RETURN (NEW_INSTANCE (ctor, 1,
 			   (_jsArgs[0] = args[0], _jsArgs)));
 	}
 }
