@@ -35,8 +35,8 @@ void ImageWrap::Create (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Image, args.Holder());
 
 	RETURN_BOOL (mImage->Create
-		((uint16) args[0]->Int32Value(),
-		 (uint16) args[1]->Int32Value()));
+		((uint16) INT32_VALUE (args[0]),
+		 (uint16) INT32_VALUE (args[1])));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,8 +106,8 @@ void ImageWrap::GetPixel (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Image, args.Holder());
 
 	Color color = mImage->GetPixel
-		((uint16) args[0]->Int32Value(),
-		 (uint16) args[1]->Int32Value());
+		((uint16) INT32_VALUE (args[0]),
+		 (uint16) INT32_VALUE (args[1]));
 
 	RETURN_COLOR (color.R, color.G,
 				  color.B, color.A);
@@ -120,12 +120,12 @@ void ImageWrap::SetPixel (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Image, args.Holder());
 
 	mImage->SetPixel
-		  ((uint16) args[0]->Int32Value(),
-		   (uint16) args[1]->Int32Value(),
-	Color ((uint8 ) args[2]->Int32Value(),
-		   (uint8 ) args[3]->Int32Value(),
-		   (uint8 ) args[4]->Int32Value(),
-		   (uint8 ) args[5]->Int32Value()));
+		  ((uint16) INT32_VALUE (args[0]),
+		   (uint16) INT32_VALUE (args[1]),
+	Color ((uint8 ) INT32_VALUE (args[2]),
+		   (uint8 ) INT32_VALUE (args[3]),
+		   (uint8 ) INT32_VALUE (args[4]),
+		   (uint8 ) INT32_VALUE (args[5])));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,10 +135,10 @@ void ImageWrap::Fill (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Image, args.Holder());
 
 	RETURN_BOOL (mImage->Fill (Color
-		((uint8) args[0]->Int32Value(),
-		 (uint8) args[1]->Int32Value(),
-		 (uint8) args[2]->Int32Value(),
-		 (uint8) args[3]->Int32Value())));
+		((uint8) INT32_VALUE (args[0]),
+		 (uint8) INT32_VALUE (args[1]),
+		 (uint8) INT32_VALUE (args[2]),
+		 (uint8) INT32_VALUE (args[3]))));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -151,7 +151,7 @@ void ImageWrap::Swap (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsString())
 		THROW (Type, "Invalid arguments");
 
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	auto swap = *value ? *value : "";
 	RETURN_BOOL (mImage->Swap (swap));
 }
@@ -167,8 +167,8 @@ void ImageWrap::Flip (const FunctionCallbackInfo<Value>& args)
 		!args[1]->IsBoolean())
 		THROW (Type, "Invalid arguments");
 
-	bool h = args[0]->BooleanValue();
-	bool v = args[1]->BooleanValue();
+	bool h = BOOLEAN_VALUE (args[0]);
+	bool v = BOOLEAN_VALUE (args[1]);
 	RETURN_BOOL (mImage->Flip (h, v));
 }
 
@@ -178,7 +178,7 @@ void ImageWrap::Equals (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE;
 	auto* wrapper1 = ObjectWrap::Unwrap<ImageWrap> (args      .Holder());
-	auto* wrapper2 = ObjectWrap::Unwrap<ImageWrap> (args[0]->ToObject());
+	auto* wrapper2 = ObjectWrap::Unwrap<ImageWrap> (TO_OBJECT (args[0]));
 	RETURN_BOOL (wrapper1->mImage == wrapper2->mImage);
 }
 
@@ -201,13 +201,13 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 		{
 			// Normalize the size argument
 			auto s = NEW_INSTANCE(
+				Local<Function>::New(isolate, JsSize),
 				Local<Function>::New (isolate, JsSize),
-				2, (_jsArgs[0] = args[0],
-					_jsArgs[1] = args[1], _jsArgs));
+					 _jsArgs[1] = args[1], _jsArgs));
 
 			wrapper->mImage.Create
-				((uint16) s->Get (NEW_STR ("w"))->Int32Value(),
-				 (uint16) s->Get (NEW_STR ("h"))->Int32Value());
+				(INT32_VALUE ((uint16) OBJECT_GET (s, NEW_STR ("w"))),
+				 INT32_VALUE ((uint16) OBJECT_GET (s, NEW_STR ("h"))));
 		}
 
 		REGISTER_ROBOT_TYPE;
@@ -226,7 +226,7 @@ void ImageWrap::New (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void ImageWrap::Initialize (Handle<Object> exports)
+void ImageWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -256,7 +256,6 @@ void ImageWrap::Initialize (Handle<Object> exports)
 	NODE_SET_PROTOTYPE_METHOD (tpl, "_equals",    Equals   );
 
 	// Assign function template to our class creator
-	constructor.Reset (isolate, tpl->GetFunction());
-	exports->Set
-			(NEW_STR ("Image"), tpl->GetFunction());
+	constructor.Reset (isolate, GET_FUNCTION (tpl));
+	OBJECT_SET (exports, NEW_STR ("Image"), GET_FUNCTION (tpl));
 }

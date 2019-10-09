@@ -30,9 +30,9 @@ void MouseWrap::Click (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mMouse->AutoDelay.Min = args[1]->Int32Value();
-	mMouse->AutoDelay.Max = args[2]->Int32Value();
-	mMouse->Click ((Button) args[0]->Int32Value());
+	mMouse->AutoDelay.Min = INT32_VALUE (args[1]);
+	mMouse->AutoDelay.Max = INT32_VALUE (args[2]);
+	mMouse->Click ((Button) INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,9 +45,9 @@ void MouseWrap::Press (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mMouse->AutoDelay.Min = args[1]->Int32Value();
-	mMouse->AutoDelay.Max = args[2]->Int32Value();
-	mMouse->Press ((Button) args[0]->Int32Value());
+	mMouse->AutoDelay.Min = INT32_VALUE (args[1]);
+	mMouse->AutoDelay.Max = INT32_VALUE (args[2]);
+	mMouse->Press ((Button) INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,9 +60,9 @@ void MouseWrap::Release (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mMouse->AutoDelay.Min = args[1]->Int32Value();
-	mMouse->AutoDelay.Max = args[2]->Int32Value();
-	mMouse->Release ((Button) args[0]->Int32Value());
+	mMouse->AutoDelay.Min = INT32_VALUE (args[1]);
+	mMouse->AutoDelay.Max = INT32_VALUE (args[2]);
+	mMouse->Release ((Button) INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,9 +75,9 @@ void MouseWrap::ScrollH (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mMouse->AutoDelay.Min = args[1]->Int32Value();
-	mMouse->AutoDelay.Max = args[2]->Int32Value();
-	mMouse->ScrollH (args[0]->Int32Value());
+	mMouse->AutoDelay.Min = INT32_VALUE (args[1]);
+	mMouse->AutoDelay.Max = INT32_VALUE (args[2]);
+	mMouse->ScrollH (INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,9 +90,9 @@ void MouseWrap::ScrollV (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mMouse->AutoDelay.Min = args[1]->Int32Value();
-	mMouse->AutoDelay.Max = args[2]->Int32Value();
-	mMouse->ScrollV (args[0]->Int32Value());
+	mMouse->AutoDelay.Min = INT32_VALUE (args[1]);
+	mMouse->AutoDelay.Max = INT32_VALUE (args[2]);
+	mMouse->ScrollV (INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -110,8 +110,8 @@ void MouseWrap::GetPos (const FunctionCallbackInfo<Value>& args)
 void MouseWrap::SetPos (const FunctionCallbackInfo<Value>& args)
 {
 	ISOLATE; Mouse::SetPos
-		(args[0]->Int32Value(),
-		 args[1]->Int32Value());
+		(INT32_VALUE (args[0]),
+		 INT32_VALUE (args[1]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -129,7 +129,7 @@ void MouseWrap::GetState (const FunctionCallbackInfo<Value>& args)
 		{
 			// Loop every state and add it to resulting object
 			for (auto i = state.begin(); i != state.end(); ++i)
-				res->Set (NEW_INT (i->first), NEW_BOOL (i->second));
+				OBJECT_SET (res, NEW_INT (i->first), NEW_BOOL (i->second));
 		}
 
 		RETURN (res);
@@ -140,7 +140,7 @@ void MouseWrap::GetState (const FunctionCallbackInfo<Value>& args)
 	{
 		RETURN_BOOL (Mouse::GetState
 			// Get info about a single button
-			((Button) args[0]->Int32Value()));
+			((Button) INT32_VALUE (args[0])));
 	}
 
 	THROW (Type, "Invalid arguments");
@@ -155,7 +155,7 @@ void MouseWrap::New (const FunctionCallbackInfo<Value>& args)
 	if (args.IsConstructCall())
 	{
 		(new MouseWrap())->Wrap (args.This());
-		args.This()->Set (NEW_STR ("autoDelay"),
+		OBJECT_SET (args.This(), NEW_STR ("autoDelay"),
 						  NEW_RANGE ( 40,  90));
 
 		REGISTER_ROBOT_TYPE;
@@ -172,7 +172,7 @@ void MouseWrap::New (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void MouseWrap::Initialize (Handle<Object> exports)
+void MouseWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -193,7 +193,6 @@ void MouseWrap::Initialize (Handle<Object> exports)
 	NODE_SET_METHOD ((Local<Template>) tpl,  "getState", GetState);
 
 	// Assign function template to our class creator
-	constructor.Reset (isolate, tpl->GetFunction());
-	exports->Set
-			(NEW_STR ("Mouse"), tpl->GetFunction());
+	constructor.Reset (isolate, GET_FUNCTION (tpl));
+	OBJECT_SET (exports, NEW_STR ("Mouse"), GET_FUNCTION (tpl));
 }

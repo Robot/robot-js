@@ -43,18 +43,18 @@ void ScreenWrap::Synchronize (const FunctionCallbackInfo<Value>& args)
 		auto obj = NEW_OBJ;
 		Bounds b = list[i]->GetBounds();
 		Bounds u = list[i]->GetUsable();
-		obj->Set (NEW_STR ("bounds"), NEW_BOUNDS (b.X, b.Y, b.W, b.H));
-		obj->Set (NEW_STR ("usable"), NEW_BOUNDS (u.X, u.Y, u.W, u.H));
-		screens->Set (i, obj);
+		OBJECT_SET (obj, NEW_STR ("bounds"), NEW_BOUNDS (b.X, b.Y, b.W, b.H));
+		OBJECT_SET (obj, NEW_STR ("usable"), NEW_BOUNDS (u.X, u.Y, u.W, u.H));
+		OBJECT_SET (screens, i, obj);
 	}
 
 	auto res = NEW_OBJ;
 	Bounds b = Screen::GetTotalBounds();
 	Bounds u = Screen::GetTotalUsable();
-	res->Set (NEW_STR ("screens"), screens);
-	res->Set (NEW_STR ("status" ), status );
-	res->Set (NEW_STR ("totalBounds"), NEW_BOUNDS (b.X, b.Y, b.W, b.H));
-	res->Set (NEW_STR ("totalUsable"), NEW_BOUNDS (u.X, u.Y, u.W, u.H));
+	OBJECT_SET (res, NEW_STR ("screens"), screens);
+	OBJECT_SET (res, NEW_STR ("status" ), status );
+	OBJECT_SET (res, NEW_STR ("totalBounds"), NEW_BOUNDS (b.X, b.Y, b.W, b.H));
+	OBJECT_SET (res, NEW_STR ("totalUsable"), NEW_BOUNDS (u.X, u.Y, u.W, u.H));
 	RETURN (res);
 }
 
@@ -67,8 +67,8 @@ void ScreenWrap::GrabScreen (const FunctionCallbackInfo<Value>& args)
 	auto win = UnwrapRobot<WindowWrap> (args[5]);
 
 	RETURN_BOOL (Screen::GrabScreen (img->mImage,
-		args[1]->Int32Value(), args[2]->Int32Value(),
-		args[3]->Int32Value(), args[4]->Int32Value(),
+		INT32_VALUE (args[1]), INT32_VALUE (args[2]),
+		INT32_VALUE (args[3]), INT32_VALUE (args[4]),
 		win ? win->mWindow : Window()));
 }
 
@@ -89,14 +89,13 @@ void ScreenWrap::SetCompositing (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsBoolean())
 		THROW (Type, "Invalid arguments");
 
-	bool ec =
-		args[0]->BooleanValue();
+	bool ec = BOOLEAN_VALUE (args[0]);
 	Screen::SetCompositing (ec);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void ScreenWrap::Initialize (Handle<Object> exports)
+void ScreenWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -111,5 +110,5 @@ void ScreenWrap::Initialize (Handle<Object> exports)
 	NODE_SET_METHOD (result, "setCompositing", SetCompositing);
 
 	// Export screen functions inside object
-	exports->Set (NEW_STR ("Screen"), result);
+	OBJECT_SET (exports, NEW_STR ("Screen"), result);
 }

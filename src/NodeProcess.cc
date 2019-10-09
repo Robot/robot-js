@@ -33,7 +33,7 @@ void ProcessWrap::Open (const FunctionCallbackInfo<Value>& args)
 
 	// Try and open the process
 	RETURN_BOOL (mProcess->Open
-		(args[0]->Int32Value()));
+		(INT32_VALUE (args[0])));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,7 @@ void ProcessWrap::GetModules (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	const char* regex = 0;
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	// Retrieve regex value
 	if (args[0]->IsString())
 		regex = *value ? *value : "";
@@ -149,13 +149,13 @@ void ProcessWrap::GetModules (const FunctionCallbackInfo<Value>& args)
 		// Create a new module instance
 		auto obj = NEW_INSTANCE (ctor, 0, NULL);
 
-		obj->Set (NEW_STR ("_valid"), NEW_BOOL (current.IsValid()));
-		obj->Set (NEW_STR ("_name" ), NEW_STR  (current.GetName().data()));
-		obj->Set (NEW_STR ("_path" ), NEW_STR  (current.GetPath().data()));
-		obj->Set (NEW_STR ("_base" ), NEW_NUM  ((double) current.GetBase()));
-		obj->Set (NEW_STR ("_size" ), NEW_NUM  ((double) current.GetSize()));
-		obj->Set (NEW_STR ("_proc" ), args.Holder());
-		res->Set (i, obj);
+		OBJECT_SET (obj, NEW_STR ("_valid"), NEW_BOOL (current.IsValid()));
+		OBJECT_SET (obj, NEW_STR ("_name" ), NEW_STR  (current.GetName().data()));
+		OBJECT_SET (obj, NEW_STR ("_path" ), NEW_STR  (current.GetPath().data()));
+		OBJECT_SET (obj, NEW_STR ("_base" ), NEW_NUM  ((double) current.GetBase()));
+		OBJECT_SET (obj, NEW_STR ("_size" ), NEW_NUM  ((double) current.GetSize()));
+		OBJECT_SET (obj, NEW_STR ("_proc" ), args.Holder());
+		OBJECT_SET (res, i, obj);
 	}
 
 	RETURN (res);
@@ -174,7 +174,7 @@ void ProcessWrap::GetWindows (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	const char* regex = 0;
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	// Retrieve regex value
 	if (args[0]->IsString())
 		regex = *value ? *value : "";
@@ -193,7 +193,7 @@ void ProcessWrap::GetWindows (const FunctionCallbackInfo<Value>& args)
 
 		// Make wrapper use new window
 		mWindowWrap->mWindow = list[i];
-		res->Set (i, instance);
+		OBJECT_SET (res, i, instance);
 	}
 
 	RETURN (res);
@@ -207,7 +207,7 @@ void ProcessWrap::Equals (const FunctionCallbackInfo<Value>& args)
 	ProcessWrap* wrapper = nullptr;
 	if ((wrapper = UnwrapRobot<ProcessWrap> (args[0])))
 		RETURN_BOOL (*mProcess == wrapper->mProcess);
-		RETURN_BOOL (*mProcess == args[0]->Int32Value());
+		RETURN_BOOL (*mProcess == INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -223,7 +223,7 @@ void ProcessWrap::GetList (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	const char* regex = 0;
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	// Retrieve regex value
 	if (args[0]->IsString())
 		regex = *value ? *value : "";
@@ -242,7 +242,7 @@ void ProcessWrap::GetList (const FunctionCallbackInfo<Value>& args)
 
 		// Make wrapper use new process
 		mProcessWrap->mProcess = list[i];
-		res->Set (i, instance);
+		OBJECT_SET (res, i, instance);
 	}
 
 	RETURN (res);
@@ -276,14 +276,14 @@ void ProcessWrap::IsSys64Bit (const FunctionCallbackInfo<Value>& args)
 
 void ProcessWrap::GetSegments (const FunctionCallbackInfo<Value>& args)
 {
-	ISOWRAP (Process, args[0]->ToObject());
+	ISOWRAP (Process, TO_OBJECT (args[0]));
 	auto ctor = Local<Function>::
 		 New (isolate, JsSegment);
 
 	// Create new module
 	Robot::Module module
 		(*mProcess, "", "", (uintptr)
-		 args[1]->NumberValue(), 0);
+		 NUMBER_VALUE (args[1]), 0);
 
 	// Retrieve the list of segments
 	auto list = module.GetSegments();
@@ -299,11 +299,11 @@ void ProcessWrap::GetSegments (const FunctionCallbackInfo<Value>& args)
 		// Create a new module instance
 		auto obj = NEW_INSTANCE (ctor, 0, NULL);
 
-		obj->Set (NEW_STR ("valid"), NEW_BOOL (         current.Valid));
-		obj->Set (NEW_STR ("base" ), NEW_NUM  ((double) current.Base ));
-		obj->Set (NEW_STR ("size" ), NEW_NUM  ((double) current.Size ));
-		obj->Set (NEW_STR ("name" ), NEW_STR  (         current.Name ));
-		res->Set (i, obj);
+		OBJECT_SET (obj, NEW_STR ("valid"), NEW_BOOL (         current.Valid));
+		OBJECT_SET (obj, NEW_STR ("base" ), NEW_NUM  ((double) current.Base ));
+		OBJECT_SET (obj, NEW_STR ("size" ), NEW_NUM  ((double) current.Size ));
+		OBJECT_SET (obj, NEW_STR ("name" ), NEW_STR  (         current.Name ));
+		OBJECT_SET (res, i, obj);
 	}
 
 	RETURN (res);
@@ -328,7 +328,7 @@ void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 
 		if (args[0]->IsInt32())
 			// Open process if argument available
-			process->Open (args[0]->Int32Value());
+			process->Open (INT32_VALUE (args[0]));
 
 		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
@@ -345,7 +345,7 @@ void ProcessWrap::New (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void ProcessWrap::Initialize (Handle<Object> exports)
+void ProcessWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -380,7 +380,6 @@ void ProcessWrap::Initialize (Handle<Object> exports)
 	NODE_SET_METHOD ((Local<Template>) tpl, "_getSegments", GetSegments);
 
 	// Assign function template to our class creator
-	constructor.Reset (isolate, tpl->GetFunction());
-	exports->Set
-		  (NEW_STR ("Process"), tpl->GetFunction());
+	constructor.Reset (isolate, GET_FUNCTION (tpl));
+	OBJECT_SET (exports, NEW_STR ("Process"), GET_FUNCTION (tpl));
 }

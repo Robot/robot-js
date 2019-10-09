@@ -79,17 +79,17 @@ void MemoryWrap::GetStats (const FunctionCallbackInfo<Value>& args)
 
 	// Retrieve memory statistics value
 	bool reset = args[0]->IsBoolean() ?
-		 args[0]->BooleanValue() : false;
+		 BOOLEAN_VALUE (args[0]) : false;
 	auto stats = mMemory->GetStats (reset);
 
 	auto res = NEW_STATS;
-	res->Set (NEW_STR ("systemReads" ), NEW_INT (stats.SystemReads ));
-	res->Set (NEW_STR ("cachedReads" ), NEW_INT (stats.CachedReads ));
-	res->Set (NEW_STR ("systemWrites"), NEW_INT (stats.SystemWrites));
-	res->Set (NEW_STR ("accessWrites"), NEW_INT (stats.AccessWrites));
+	OBJECT_SET (res, NEW_STR ("systemReads" ), NEW_INT (stats.SystemReads ));
+	OBJECT_SET (res, NEW_STR ("cachedReads" ), NEW_INT (stats.CachedReads ));
+	OBJECT_SET (res, NEW_STR ("systemWrites"), NEW_INT (stats.SystemWrites));
+	OBJECT_SET (res, NEW_STR ("accessWrites"), NEW_INT (stats.AccessWrites));
 
-	res->Set (NEW_STR ( "readErrors" ), NEW_INT (stats. ReadErrors ));
-	res->Set (NEW_STR ("writeErrors" ), NEW_INT (stats.WriteErrors ));
+	OBJECT_SET (res, NEW_STR ( "readErrors" ), NEW_INT (stats. ReadErrors ));
+	OBJECT_SET (res, NEW_STR ("writeErrors" ), NEW_INT (stats.WriteErrors ));
 	RETURN (res);
 }
 
@@ -105,23 +105,23 @@ void MemoryWrap::GetRegion (const FunctionCallbackInfo<Value>& args)
 
 	// Get memory region information
 	auto region = mMemory->GetRegion
-		((uintptr) args[0]->NumberValue());
+		((uintptr) NUMBER_VALUE (args[0]));
 
 	auto res = NEW_REGION;
-	res->Set (NEW_STR ("valid"     ), NEW_BOOL (         region.Valid     ));
-	res->Set (NEW_STR ("bound"     ), NEW_BOOL (         region.Bound     ));
+	OBJECT_SET (res, NEW_STR ("valid"     ), NEW_BOOL (         region.Valid     ));
+	OBJECT_SET (res, NEW_STR ("bound"     ), NEW_BOOL (         region.Bound     ));
 
-	res->Set (NEW_STR ("start"     ), NEW_NUM  ((double) region.Start     ));
-	res->Set (NEW_STR ("stop"      ), NEW_NUM  ((double) region.Stop      ));
-	res->Set (NEW_STR ("size"      ), NEW_NUM  ((double) region.Size      ));
+	OBJECT_SET (res, NEW_STR ("start"     ), NEW_NUM  ((double) region.Start     ));
+	OBJECT_SET (res, NEW_STR ("stop"      ), NEW_NUM  ((double) region.Stop      ));
+	OBJECT_SET (res, NEW_STR ("size"      ), NEW_NUM  ((double) region.Size      ));
 
-	res->Set (NEW_STR ("readable"  ), NEW_BOOL (         region.Readable  ));
-	res->Set (NEW_STR ("writable"  ), NEW_BOOL (         region.Writable  ));
-	res->Set (NEW_STR ("executable"), NEW_BOOL (         region.Executable));
-	res->Set (NEW_STR ("access"    ), NEW_INT  (( int32) region.Access    ));
+	OBJECT_SET (res, NEW_STR ("readable"  ), NEW_BOOL (         region.Readable  ));
+	OBJECT_SET (res, NEW_STR ("writable"  ), NEW_BOOL (         region.Writable  ));
+	OBJECT_SET (res, NEW_STR ("executable"), NEW_BOOL (         region.Executable));
+	OBJECT_SET (res, NEW_STR ("access"    ), NEW_INT  (( int32) region.Access    ));
 
-	res->Set (NEW_STR ("private"   ), NEW_BOOL (         region.Private   ));
-	res->Set (NEW_STR ("guarded"   ), NEW_BOOL (         region.Guarded   ));
+	OBJECT_SET (res, NEW_STR ("private"   ), NEW_BOOL (         region.Private   ));
+	OBJECT_SET (res, NEW_STR ("guarded"   ), NEW_BOOL (         region.Guarded   ));
 	RETURN (res);
 }
 
@@ -144,9 +144,9 @@ void MemoryWrap::GetRegions (const FunctionCallbackInfo<Value>& args)
 	auto stop  = (uintptr) -1;
 
 	if (args[0]->IsNumber())
-		start = (uintptr) args[0]->NumberValue();
+		start = (uintptr) NUMBER_VALUE (args[0]);
 	if (args[1]->IsNumber())
-		stop  = (uintptr) args[1]->NumberValue();
+		stop  = (uintptr) NUMBER_VALUE (args[1]);
 
 	// Get a region list with the specified range
 	auto list = mMemory->GetRegions (start, stop);
@@ -162,21 +162,21 @@ void MemoryWrap::GetRegions (const FunctionCallbackInfo<Value>& args)
 		// Create a new region instance
 		auto obj = NEW_INSTANCE (ctor, 0, NULL);
 
-		obj->Set (NEW_STR ("valid"     ), NEW_BOOL (         current.Valid     ));
-		obj->Set (NEW_STR ("bound"     ), NEW_BOOL (         current.Bound     ));
+		OBJECT_SET (obj, NEW_STR ("valid"     ), NEW_BOOL (         current.Valid     ));
+		OBJECT_SET (obj, NEW_STR ("bound"     ), NEW_BOOL (         current.Bound     ));
 
-		obj->Set (NEW_STR ("start"     ), NEW_NUM  ((double) current.Start     ));
-		obj->Set (NEW_STR ("stop"      ), NEW_NUM  ((double) current.Stop      ));
-		obj->Set (NEW_STR ("size"      ), NEW_NUM  ((double) current.Size      ));
+		OBJECT_SET (obj, NEW_STR ("start"     ), NEW_NUM  ((double) current.Start     ));
+		OBJECT_SET (obj, NEW_STR ("stop"      ), NEW_NUM  ((double) current.Stop      ));
+		OBJECT_SET (obj, NEW_STR ("size"      ), NEW_NUM  ((double) current.Size      ));
 
-		obj->Set (NEW_STR ("readable"  ), NEW_BOOL (         current.Readable  ));
-		obj->Set (NEW_STR ("writable"  ), NEW_BOOL (         current.Writable  ));
-		obj->Set (NEW_STR ("executable"), NEW_BOOL (         current.Executable));
-		obj->Set (NEW_STR ("access"    ), NEW_INT  (( int32) current.Access    ));
+		OBJECT_SET (obj, NEW_STR ("readable"  ), NEW_BOOL (         current.Readable  ));
+		OBJECT_SET (obj, NEW_STR ("writable"  ), NEW_BOOL (         current.Writable  ));
+		OBJECT_SET (obj, NEW_STR ("executable"), NEW_BOOL (         current.Executable));
+		OBJECT_SET (obj, NEW_STR ("access"    ), NEW_INT  (( int32) current.Access    ));
 
-		obj->Set (NEW_STR ("private"   ), NEW_BOOL (         current.Private   ));
-		obj->Set (NEW_STR ("guarded"   ), NEW_BOOL (         current.Guarded   ));
-		res->Set (i, obj);
+		OBJECT_SET (obj, NEW_STR ("private"   ), NEW_BOOL (         current.Private   ));
+		OBJECT_SET (obj, NEW_STR ("guarded"   ), NEW_BOOL (         current.Guarded   ));
+		OBJECT_SET (res, i, obj);
 	}
 
 	RETURN (res);
@@ -190,25 +190,25 @@ void MemoryWrap::SetAccess (const FunctionCallbackInfo<Value>& args)
 
 	// Synthesize a region
 	Memory::Region region;
-	region.Valid =           args[0]->BooleanValue();
-	region.Bound =           args[1]->BooleanValue();
-	region.Start = (uintptr) args[2]-> NumberValue();
-	region.Size  = (uintptr) args[3]-> NumberValue();
+	region.Valid =           BOOLEAN_VALUE (args[0]);
+	region.Bound =           BOOLEAN_VALUE (args[1]);
+	region.Start = (uintptr) NUMBER_VALUE  (args[2]);
+	region.Size  = (uintptr) NUMBER_VALUE  (args[3]);
 
 	if (args[4]->IsBoolean() &&
 		args[5]->IsBoolean() &&
 		args[6]->IsBoolean())
 	{
 		RETURN_BOOL (mMemory->SetAccess
-		(region, args[4]->BooleanValue(),
-				 args[5]->BooleanValue(),
-				 args[6]->BooleanValue()));
+		(region, BOOLEAN_VALUE (args[4]),
+				 BOOLEAN_VALUE (args[5]),
+				 BOOLEAN_VALUE (args[6])));
 	}
 
 	if (args[4]->IsUint32())
 	{
 		RETURN_BOOL (mMemory->SetAccess
-			(region, args[4]->Uint32Value()));
+			(region, UINT32_VALUE (args[4])));
 	}
 
 	THROW (Type, "Invalid arguments");
@@ -237,14 +237,14 @@ void MemoryWrap::Find (const FunctionCallbackInfo<Value>& args)
 	auto limit = (uintptr)  0;
 
 	if (args[1]->IsNumber())
-		start = (uintptr) args[1]->NumberValue();
+		start = (uintptr) NUMBER_VALUE (args[1]);
 	if (args[2]->IsNumber())
-		stop  = (uintptr) args[2]->NumberValue();
+		stop  = (uintptr) NUMBER_VALUE (args[2]);
 	if (args[3]->IsNumber())
-		limit = (uintptr) args[3]->NumberValue();
+		limit = (uintptr) NUMBER_VALUE (args[3]);
 
-	String::Utf8Value jsPattern (args[0]);
-	String::Utf8Value jsFlags   (args[4]);
+	UTF8_VAR (jsPattern, args[0]);
+	UTF8_VAR (jsFlags,   args[4]);
 
 	auto pattern = *jsPattern ? *jsPattern : "";
 	auto flags   = *jsFlags   ? *jsFlags   : "";
@@ -260,7 +260,7 @@ void MemoryWrap::Find (const FunctionCallbackInfo<Value>& args)
 	for (int i = 0; i < length; ++i)
 	{
 		// The result is simply a list of numbers
-		res->Set (i, NEW_NUM ((double) list[i]));
+		OBJECT_SET (res, i, NEW_NUM ((double) list[i]));
 	}
 
 	RETURN (res);
@@ -286,15 +286,15 @@ void MemoryWrap::CreateCache (const FunctionCallbackInfo<Value>& args)
 	auto maximumSize = (uintptr) 0;
 
 	if (args[3]->IsNumber())
-		enlargeSize = (uintptr) args[3]->NumberValue();
+		enlargeSize = (uintptr) NUMBER_VALUE (args[3]);
 	if (args[4]->IsNumber())
-		maximumSize = (uintptr) args[4]->NumberValue();
+		maximumSize = (uintptr) NUMBER_VALUE (args[4]);
 
 	// Attempt to create memory cache
 	RETURN_BOOL (mMemory->CreateCache
-		((uintptr) args[0]->NumberValue(),
-		 (uintptr) args[1]->NumberValue(),
-		 (uintptr) args[2]->NumberValue(),
+		((uintptr) NUMBER_VALUE (args[0]),
+		 (uintptr) NUMBER_VALUE (args[1]),
+		 (uintptr) NUMBER_VALUE (args[2]),
 		 enlargeSize, maximumSize));
 }
 
@@ -347,14 +347,14 @@ void MemoryWrap::ReadData (const FunctionCallbackInfo<Value>& args)
 	if (!Buffer::HasInstance (args[1]))
 		THROW (Type, "Invalid arguments");
 
-	auto address = (uintptr) args[0]->NumberValue();
-	auto length  = (uintptr) args[2]->NumberValue();
+	auto address = (uintptr) NUMBER_VALUE (args[0]);
+	auto length  = (uintptr) NUMBER_VALUE (args[2]);
 	auto flags   = Memory::Default;
 
 	if (args[3]->IsUint32())
-		flags = (Memory::Flags) args[3]->Uint32Value();
+		flags = (Memory::Flags) UINT32_VALUE (args[3]);
 
-	auto buffer = args[1]->ToObject();
+	auto buffer = TO_OBJECT (args[1]);
 	// Get data pointers from node buffer
 	auto data = Buffer::Data   (buffer);
 	auto size = Buffer::Length (buffer);
@@ -384,14 +384,14 @@ void MemoryWrap::WriteData (const FunctionCallbackInfo<Value>& args)
 	if (!Buffer::HasInstance (args[1]))
 		THROW (Type, "Invalid arguments");
 
-	auto address = (uintptr) args[0]->NumberValue();
-	auto length  = (uintptr) args[2]->NumberValue();
+	auto address = (uintptr) NUMBER_VALUE (args[0]);
+	auto length  = (uintptr) NUMBER_VALUE (args[2]);
 	auto flags   = Memory::Default;
 
 	if (args[3]->IsUint32())
-		flags = (Memory::Flags) args[3]->Uint32Value();
+		flags = (Memory::Flags) UINT32_VALUE (args[3]);
 
-	auto buffer = args[1]->ToObject();
+	auto buffer = TO_OBJECT (args[1]);
 	// Get data pointers from node buffer
 	auto data = Buffer::Data   (buffer);
 	auto size = Buffer::Length (buffer);
@@ -419,16 +419,16 @@ void MemoryWrap::ReadType (const FunctionCallbackInfo<Value>& args)
 		!args[4]->IsUndefined()))
 		THROW (Type, "Invalid arguments");
 
-	auto address = (uintptr ) args[0]->NumberValue();
-	auto type    = (DataType) args[1]->Uint32Value();
-	auto length  = (uint32  ) args[2]->Uint32Value();
+	auto address = (uintptr ) NUMBER_VALUE (args[0]);
+	auto type    = (DataType) UINT32_VALUE (args[1]);
+	auto length  = (uint32  ) UINT32_VALUE (args[2]);
 	auto count   = (uint32  ) 1;
 	auto stride  = (uint32  ) 0;
 
 	if (args[3]->IsUint32())
-		count  = (uint32) args[3]->Uint32Value();
+		count  = (uint32) UINT32_VALUE (args[3]);
 	if (args[4]->IsUint32())
-		stride = (uint32) args[4]->Uint32Value();
+		stride = (uint32) UINT32_VALUE (args[4]);
 
 	// Return null if there is nothing to read
 	if (count == 0 || length == 0) RETURN_NULL;
@@ -486,17 +486,17 @@ void MemoryWrap::ReadType (const FunctionCallbackInfo<Value>& args)
 	{
 		switch (type)
 		{
-			case TypeInt8  : res->Set (i, NEW_INT  ((int32 ) *(int8  *) offset)); continue;
-			case TypeInt16 : res->Set (i, NEW_INT  ((int32 ) *(int16 *) offset)); continue;
-			case TypeInt32 : res->Set (i, NEW_INT  ((int32 ) *(int32 *) offset)); continue;
-			case TypeInt64 : res->Set (i, NEW_NUM  ((double) *(int64 *) offset)); continue;
-			case TypeReal32: res->Set (i, NEW_NUM  ((double) *(real32*) offset)); continue;
-			case TypeReal64: res->Set (i, NEW_NUM  ((double) *(real64*) offset)); continue;
-			case TypeBool  : res->Set (i, NEW_BOOL ((bool  ) *(bool  *) offset)); continue;
+			case TypeInt8  : OBJECT_SET (res, i, NEW_INT  ((int32 ) *(int8  *) offset)); continue;
+			case TypeInt16 : OBJECT_SET (res, i, NEW_INT  ((int32 ) *(int16 *) offset)); continue;
+			case TypeInt32 : OBJECT_SET (res, i, NEW_INT  ((int32 ) *(int32 *) offset)); continue;
+			case TypeInt64 : OBJECT_SET (res, i, NEW_NUM  ((double) *(int64 *) offset)); continue;
+			case TypeReal32: OBJECT_SET (res, i, NEW_NUM  ((double) *(real32*) offset)); continue;
+			case TypeReal64: OBJECT_SET (res, i, NEW_NUM  ((double) *(real64*) offset)); continue;
+			case TypeBool  : OBJECT_SET (res, i, NEW_BOOL ((bool  ) *(bool  *) offset)); continue;
 			default: assert (false);
 		}
 
-		res->Set (i, NEW_STR (std::string (offset, length).data()));
+		OBJECT_SET (res, i, NEW_STR (std::string (offset, length).data()));
 	}
 
 	delete[] data;
@@ -515,9 +515,9 @@ void MemoryWrap::WriteType (const FunctionCallbackInfo<Value>& args)
 		!args[3]->IsUndefined()))
 		THROW (Type, "Invalid arguments");
 
-	auto address = (uintptr ) args[0]->NumberValue();
-	auto type    = (DataType) args[2]->Uint32Value();
-	auto length  = (uint32  ) args[3]->Uint32Value();
+	auto address = (uintptr ) NUMBER_VALUE (args[0]);
+	auto type    = (DataType) UINT32_VALUE (args[2]);
+	auto length  = (uint32  ) UINT32_VALUE (args[3]);
 
 	if (type == TypeString)
 	{
@@ -525,7 +525,7 @@ void MemoryWrap::WriteType (const FunctionCallbackInfo<Value>& args)
 		if (!args[1]->IsString())
 			THROW (Type, "Invalid arguments");
 
-		String::Utf8Value value (args[1]);
+		UTF8_VAR (value, args[1]);
 		auto data = *value ? *value : "";
 
 		// Set the required length
@@ -553,13 +553,13 @@ void MemoryWrap::WriteType (const FunctionCallbackInfo<Value>& args)
 		int64 data=0;
 		switch (type)
 		{
-			case TypeInt8  : *(int8  *) &data = (int8  ) args[1]->  Int32Value(); break;
-			case TypeInt16 : *(int16 *) &data = (int16 ) args[1]->  Int32Value(); break;
-			case TypeInt32 : *(int32 *) &data = (int32 ) args[1]->  Int32Value(); break;
-			case TypeInt64 : *(int64 *) &data = (int64 ) args[1]-> NumberValue(); break;
-			case TypeReal32: *(real32*) &data = (real32) args[1]-> NumberValue(); break;
-			case TypeReal64: *(real64*) &data = (real64) args[1]-> NumberValue(); break;
-			case TypeBool  : *(bool  *) &data = (bool  ) args[1]->BooleanValue(); break;
+			case TypeInt8  : *(int8  *) &data = (int8  ) INT32_VALUE   (args[1]); break;
+			case TypeInt16 : *(int16 *) &data = (int16 ) INT32_VALUE   (args[1]); break;
+			case TypeInt32 : *(int32 *) &data = (int32 ) INT32_VALUE   (args[1]); break;
+			case TypeInt64 : *(int64 *) &data = (int64 ) NUMBER_VALUE  (args[1]); break;
+			case TypeReal32: *(real32*) &data = (real32) NUMBER_VALUE  (args[1]); break;
+			case TypeReal64: *(real64*) &data = (real64) NUMBER_VALUE  (args[1]); break;
+			case TypeBool  : *(bool  *) &data = (bool  ) BOOLEAN_VALUE (args[1]); break;
 			default: assert (false);
 		}
 
@@ -589,10 +589,10 @@ void MemoryWrap::New (const FunctionCallbackInfo<Value>& args)
 
 		memory->Wrap (args.This());
 		auto m = &memory->mMemory;
-		args.This()->Set (NEW_STR ("_ptrSize"   ), NEW_NUM ((double) m->GetPtrSize   ()));
-		args.This()->Set (NEW_STR ("_minAddress"), NEW_NUM ((double) m->GetMinAddress()));
-		args.This()->Set (NEW_STR ("_maxAddress"), NEW_NUM ((double) m->GetMaxAddress()));
-		args.This()->Set (NEW_STR ("_pageSize"  ), NEW_NUM ((double) m->GetPageSize  ()));
+		OBJECT_SET (args.This(), NEW_STR ("_ptrSize"   ), NEW_NUM ((double) m->GetPtrSize   ()));
+		OBJECT_SET (args.This(), NEW_STR ("_minAddress"), NEW_NUM ((double) m->GetMinAddress()));
+		OBJECT_SET (args.This(), NEW_STR ("_maxAddress"), NEW_NUM ((double) m->GetMaxAddress()));
+		OBJECT_SET (args.This(), NEW_STR ("_pageSize"  ), NEW_NUM ((double) m->GetPageSize  ()));
 
 		REGISTER_ROBOT_TYPE;
 		RETURN (args.This());
@@ -609,7 +609,7 @@ void MemoryWrap::New (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void MemoryWrap::Initialize (Handle<Object> exports)
+void MemoryWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -654,7 +654,6 @@ void MemoryWrap::Initialize (Handle<Object> exports)
 	tpl->Set (NEW_STR ("AUTO_ACCESS" ), NEW_INT (Memory::AutoAccess));
 
 	// Assign function template to our class creator
-	constructor.Reset (isolate, tpl->GetFunction());
-	exports->Set
-		   (NEW_STR ("Memory"), tpl->GetFunction());
+	constructor.Reset (isolate, GET_FUNCTION (tpl));
+	OBJECT_SET (exports, NEW_STR ("Memory"), GET_FUNCTION (tpl));
 }

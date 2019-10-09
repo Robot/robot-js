@@ -53,7 +53,7 @@ void ClipboardWrap::SetText (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsString())
 		THROW (Type, "Invalid arguments");
 
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	auto text = *value ? *value : "";
 	RETURN_BOOL (Clipboard::SetText (text));
 }
@@ -100,7 +100,7 @@ void ClipboardWrap::GetSequence (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void ClipboardWrap::Initialize (Handle<Object> exports)
+void ClipboardWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -121,5 +121,5 @@ void ClipboardWrap::Initialize (Handle<Object> exports)
 	NODE_SET_METHOD (result, "getSequence", GetSequence);
 
 	// Export clipboard functions inside object
-	exports->Set (NEW_STR ("Clipboard"), result);
+	OBJECT_SET (exports, NEW_STR ("Clipboard"), result);
 }
