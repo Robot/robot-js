@@ -11,6 +11,7 @@
 // Prefaces                                                                   //
 //----------------------------------------------------------------------------//
 
+#include <node.h>
 #include <Windows.h>
 #define  STRINGIFY( s ) _STRINGIFY( s )
 #define _STRINGIFY( s ) #s

@@ -26,10 +26,10 @@ void KeyboardWrap::Click (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Keyboard, args.Holder());
 
-	mKeyboard->AutoDelay.Min = args[1]->Int32Value();
-	mKeyboard->AutoDelay.Max = args[2]->Int32Value();
+	mKeyboard->AutoDelay.Min = INT32_VALUE (args[1]);
+	mKeyboard->AutoDelay.Max = INT32_VALUE (args[2]);
 	if (args[0]->IsInt32())
-		mKeyboard->Click ((Key) args[0]->Int32Value());
+		mKeyboard->Click ((Key) INT32_VALUE (args[0]));
 
 	else
 	{
@@ -37,7 +37,7 @@ void KeyboardWrap::Click (const FunctionCallbackInfo<Value>& args)
 		if (!args[0]->IsString())
 			THROW (Type, "Invalid arguments");
 
-		String::Utf8Value value (args[0]);
+		UTF8_VAR (value, args[0]);
 		auto keys = *value ? *value : "";
 		// Perform a series of keycode actions
 		RETURN_BOOL (mKeyboard->Click (keys));
@@ -54,9 +54,9 @@ void KeyboardWrap::Press (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mKeyboard->AutoDelay.Min = args[1]->Int32Value();
-	mKeyboard->AutoDelay.Max = args[2]->Int32Value();
-	mKeyboard->Press ((Key) args[0]->Int32Value());
+	mKeyboard->AutoDelay.Min = INT32_VALUE (args[1]);
+	mKeyboard->AutoDelay.Max = INT32_VALUE (args[2]);
+	mKeyboard->Press ((Key) INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,9 +69,9 @@ void KeyboardWrap::Release (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsInt32())
 		THROW (Type, "Invalid arguments");
 
-	mKeyboard->AutoDelay.Min = args[1]->Int32Value();
-	mKeyboard->AutoDelay.Max = args[2]->Int32Value();
-	mKeyboard->Release ((Key) args[0]->Int32Value());
+	mKeyboard->AutoDelay.Min = INT32_VALUE (args[1]);
+	mKeyboard->AutoDelay.Max = INT32_VALUE (args[2]);
+	mKeyboard->Release ((Key) INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ void KeyboardWrap::Compile (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsString())
 		THROW (Type, "Invalid arguments");
 
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	auto keys = *value ? *value : "";
 
 	KeyList list;
@@ -97,9 +97,9 @@ void KeyboardWrap::Compile (const FunctionCallbackInfo<Value>& args)
 		for (int i = 0; i < length; ++i)
 		{
 			auto obj = NEW_OBJ;
-			obj->Set (NEW_STR ("down"), NEW_BOOL (list[i].first ));
-			obj->Set (NEW_STR ("key" ), NEW_INT  (list[i].second));
-			res->Set (i, obj);
+			OBJECT_SET (obj, NEW_STR ("down"), NEW_BOOL (list[i].first ));
+			OBJECT_SET (obj, NEW_STR ("key" ), NEW_INT  (list[i].second));
+			OBJECT_SET (res, i, obj);
 		}
 
 		RETURN (res);
@@ -123,7 +123,7 @@ void KeyboardWrap::GetState (const FunctionCallbackInfo<Value>& args)
 		{
 			// Loop every state and add it to resulting object
 			for (auto i = state.begin(); i != state.end(); ++i)
-				res->Set (NEW_INT (i->first), NEW_BOOL (i->second));
+				OBJECT_SET (res, NEW_INT (i->first), NEW_BOOL (i->second));
 		}
 
 		RETURN (res);
@@ -134,7 +134,7 @@ void KeyboardWrap::GetState (const FunctionCallbackInfo<Value>& args)
 	{
 		RETURN_BOOL (Keyboard::GetState
 			// Get info about a single key
-			((Key) args[0]->Int32Value()));
+			((Key) INT32_VALUE (args[0])));
 	}
 
 	THROW (Type, "Invalid arguments");
@@ -149,7 +149,7 @@ void KeyboardWrap::New (const FunctionCallbackInfo<Value>& args)
 	if (args.IsConstructCall())
 	{
 		(new KeyboardWrap())->Wrap (args.This());
-		args.This()->Set (NEW_STR ("autoDelay"),
+		OBJECT_SET (args.This(), NEW_STR ("autoDelay"),
 						  NEW_RANGE ( 40,  90));
 
 		REGISTER_ROBOT_TYPE;
@@ -166,7 +166,7 @@ void KeyboardWrap::New (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void KeyboardWrap::Initialize (Handle<Object> exports)
+void KeyboardWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -184,7 +184,6 @@ void KeyboardWrap::Initialize (Handle<Object> exports)
 	NODE_SET_METHOD ((Local<Template>) tpl, "getState", GetState);
 
 	// Assign function template to our class creator
-	constructor.Reset (isolate, tpl->GetFunction());
-	exports->Set
-		 (NEW_STR ("Keyboard"), tpl->GetFunction());
+	constructor.Reset (isolate, GET_FUNCTION (tpl));
+	OBJECT_SET (exports, NEW_STR ("Keyboard"), GET_FUNCTION (tpl));
 }

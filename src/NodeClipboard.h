@@ -38,5 +38,5 @@ private:
 	static void		GetSequence		(const FunctionCallbackInfo<Value>& args);
 
 public:
-	static void		Initialize		(Handle<Object> exports);
+	static void		Initialize		(Local<Object> exports);
 };

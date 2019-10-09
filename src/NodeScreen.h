@@ -32,5 +32,5 @@ private:
 	static void		SetCompositing	(const FunctionCallbackInfo<Value>& args);
 
 public:
-	static void		Initialize		(Handle<Object> exports);
+	static void		Initialize		(Local<Object> exports);
 };

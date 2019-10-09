@@ -62,7 +62,11 @@ ROBOT_NS_USE_ALL;
 #define NEW_INT( value ) Integer::New         (isolate, value )
 #define NEW_NUM( value ) Number ::New         (isolate, value )
 #define NEW_BOOL(value ) Boolean::New         (isolate, value )
+#if NODE_MODULE_VERSION >= 67
+#define NEW_STR( value ) String ::NewFromUtf8 (isolate, value, v8::NewStringType::kNormal).ToLocalChecked()
+#else
 #define NEW_STR( value ) String ::NewFromUtf8 (isolate, value )
+#endif
 #define NEW_OBJ          Object ::New         (isolate        )
 #define NEW_ARR( length) Array  ::New         (isolate, length)
 #define NEW_NULL         Null                 (isolate        )
@@ -113,6 +117,40 @@ ROBOT_NS_USE_ALL;
 #define NEW_SEGMENT NEW_INSTANCE (Local<Function>::New (isolate, JsSegment), 0, NULL)
 #define NEW_STATS   NEW_INSTANCE (Local<Function>::New (isolate, JsStats  ), 0, NULL)
 #define NEW_REGION  NEW_INSTANCE (Local<Function>::New (isolate, JsRegion ), 0, NULL)
+
+////////////////////////////////////////////////////////////////////////////////
+
+#if NODE_MODULE_VERSION >= 70
+#define BOOLEAN_VALUE( value ) (value->BooleanValue (isolate))
+#define UTF8_VAR( var, value ) String::Utf8Value var (isolate, value)
+#else
+#define BOOLEAN_VALUE( value ) (value->BooleanValue())
+#define UTF8_VAR( var, value ) String::Utf8Value var (value)
+#endif
+
+#if NODE_MODULE_VERSION >= 67
+#define TO_OBJECT( value ) (value->ToObject (isolate->GetCurrentContext()).ToLocalChecked())
+#define NUMBER_VALUE( value ) (value->NumberValue (isolate->GetCurrentContext()).ToChecked())
+#define INT32_VALUE( value ) (value->Int32Value (isolate->GetCurrentContext()).ToChecked())
+#define UINT32_VALUE( value ) (value->Uint32Value (isolate->GetCurrentContext()).ToChecked())
+#define OBJECT_GET( map, key ) (map->Get (isolate->GetCurrentContext(), key).ToLocalChecked())
+#define OBJECT_SET( map, key, value ) (map->Set (isolate->GetCurrentContext(), key, value).ToChecked())
+#define GET_FUNCTION( tpl ) (tpl->GetFunction (isolate->GetCurrentContext()).ToLocalChecked())
+#else
+#define TO_OBJECT( value ) (value->ToObject())
+#define NUMBER_VALUE( value ) (value->NumberValue())
+#define INT32_VALUE( value ) (value->Int32Value())
+#define UINT32_VALUE( value ) (value->Uint32Value())
+#define OBJECT_GET( map, key ) (map->Get (key))
+#define OBJECT_SET( map, key, value ) (map->Set (key, value))
+#define GET_FUNCTION( tpl ) (tpl->GetFunction())
+#endif
+
+#if NODE_MODULE_VERSION >= 48
+#define GET_PRIVATE( obj, key ) ((obj->GetPrivate (isolate->GetCurrentContext(), Private::ForApi (isolate, NEW_STR (key)))).ToLocalChecked())
+#else
+#define GET_PRIVATE( obj, key ) (obj->GetHiddenValue (NEW_STR (key)))
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -219,7 +257,7 @@ enum RobotType
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class T>
-inline T* UnwrapRobot (Handle<Value> value)
+inline T* UnwrapRobot (Local<Value> value)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -228,30 +266,16 @@ inline T* UnwrapRobot (Handle<Value> value)
 	if (!value->IsObject()) return nullptr;
 
 	// Retrieve the local object
-	auto obj = value->ToObject();
-
-#if NODE_MODULE_VERSION >= 48
-
-	auto context = isolate->GetCurrentContext();
-	auto privateKeyValue = Private::ForApi
-		(isolate, NEW_STR ("_ROBOT_TYPE"));
-
-	auto type = obj->GetPrivate (context,
-		privateKeyValue).ToLocalChecked();
-
-#else
+	auto obj = TO_OBJECT (value);
 
 	// Convert and get hidden type
-	auto type = obj->GetHiddenValue
-		  (NEW_STR ("_ROBOT_TYPE"));
-
-#endif
+	auto type = GET_PRIVATE (obj, "_ROBOT_TYPE");
 
 	// The value must contain a handle
 	if (type.IsEmpty()) return nullptr;
 
 	// Compare hidden type with class type
-	if (type->Int32Value() != T::ClassType)
+	if (INT32_VALUE (type) != T::ClassType)
 		return nullptr;
 
 	// Return the final unwrapped class

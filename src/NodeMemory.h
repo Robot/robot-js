@@ -51,7 +51,7 @@ private:
 	static void		New				(const FunctionCallbackInfo<Value>& args);
 
 public:
-	static void		Initialize		(Handle<Object> exports);
+	static void		Initialize		(Local<Object> exports);
 
 public:
 	Memory mMemory;

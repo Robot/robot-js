@@ -79,7 +79,7 @@ void WindowWrap::SetTopMost (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	mWindow->SetTopMost
-		  (args[0]->BooleanValue());
+		  (BOOLEAN_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@ void WindowWrap::SetBorderless (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	mWindow->SetBorderless
-		  (args[0]->BooleanValue());
+		  (BOOLEAN_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@ void WindowWrap::SetMinimized (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	mWindow->SetMinimized
-		  (args[0]->BooleanValue());
+		  (BOOLEAN_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ void WindowWrap::SetMaximized (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	mWindow->SetMaximized
-		  (args[0]->BooleanValue());
+		  (BOOLEAN_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ void WindowWrap::SetHandle (const FunctionCallbackInfo<Value>& args)
 
 	// Attempt to set new win handle
 	RETURN_BOOL (mWindow->SetHandle
-		((uintptr) args[0]->NumberValue()));
+		((uintptr) NUMBER_VALUE (args[0])));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -187,7 +187,7 @@ void WindowWrap::SetTitle (const FunctionCallbackInfo<Value>& args)
 	if (!args[0]->IsString())
 		THROW (Type, "Invalid arguments");
 
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	auto title = *value ? *value : "";
 	mWindow->SetTitle (title);
 }
@@ -211,10 +211,10 @@ void WindowWrap::SetBounds (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Window, args.Holder());
 
 	mWindow->SetBounds
-		(args[0]->Int32Value(),
-		 args[1]->Int32Value(),
-		 args[2]->Int32Value(),
-		 args[3]->Int32Value());
+		(INT32_VALUE (args[0]),
+		 INT32_VALUE (args[1]),
+		 INT32_VALUE (args[2]),
+		 INT32_VALUE (args[3]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -236,10 +236,10 @@ void WindowWrap::SetClient (const FunctionCallbackInfo<Value>& args)
 	ISOWRAP (Window, args.Holder());
 
 	mWindow->SetClient
-		(args[0]->Int32Value(),
-		 args[1]->Int32Value(),
-		 args[2]->Int32Value(),
-		 args[3]->Int32Value());
+		(INT32_VALUE (args[0]),
+		 INT32_VALUE (args[1]),
+		 INT32_VALUE (args[2]),
+		 INT32_VALUE (args[3]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -247,8 +247,8 @@ void WindowWrap::SetClient (const FunctionCallbackInfo<Value>& args)
 void WindowWrap::MapToClient (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Window, args.Holder());
-	Point position (args[0]->Int32Value(),
-					args[1]->Int32Value());
+	Point position (INT32_VALUE (args[0]),
+					INT32_VALUE (args[1]));
 
 	// Convert the screen point to client point
 	position = mWindow->MapToClient (position);
@@ -260,8 +260,8 @@ void WindowWrap::MapToClient (const FunctionCallbackInfo<Value>& args)
 void WindowWrap::MapToScreen (const FunctionCallbackInfo<Value>& args)
 {
 	ISOWRAP (Window, args.Holder());
-	Point position (args[0]->Int32Value(),
-					args[1]->Int32Value());
+	Point position (INT32_VALUE (args[0]),
+					INT32_VALUE (args[1]));
 
 	// Convert the client point to screen point
 	position = mWindow->MapToScreen (position);
@@ -276,7 +276,7 @@ void WindowWrap::Equals (const FunctionCallbackInfo<Value>& args)
 	WindowWrap* wrapper = nullptr;
 	if ((wrapper = UnwrapRobot<WindowWrap> (args[0])))
 		RETURN_BOOL (*mWindow == wrapper->mWindow);
-		RETURN_BOOL (*mWindow == args[0]->Int32Value());
+		RETURN_BOOL (*mWindow == INT32_VALUE (args[0]));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -292,7 +292,7 @@ void WindowWrap::GetList (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	const char* regex = 0;
-	String::Utf8Value value (args[0]);
+	UTF8_VAR (value, args[0]);
 	// Retrieve regex value
 	if (args[0]->IsString())
 		regex = *value ? *value : "";
@@ -311,7 +311,7 @@ void WindowWrap::GetList (const FunctionCallbackInfo<Value>& args)
 
 		// Make wrapper use new window
 		mWindowWrap->mWindow = list[i];
-		res->Set (i, instance);
+		OBJECT_SET (res, i, instance);
 	}
 
 	RETURN (res);
@@ -338,7 +338,7 @@ void WindowWrap::GetActive (const FunctionCallbackInfo<Value>& args)
 
 void WindowWrap::SetActive (const FunctionCallbackInfo<Value>& args)
 {
-	ISOWRAP (Window, args[0]->ToObject());
+	ISOWRAP (Window, TO_OBJECT (args[0]));
 	Window::SetActive (mWindowWrap->mWindow);
 }
 
@@ -353,7 +353,7 @@ void WindowWrap::IsAxEnabled (const FunctionCallbackInfo<Value>& args)
 		THROW (Type, "Invalid arguments");
 
 	bool options = args[0]->IsBoolean() ?
-		 args[0]->BooleanValue() : false;
+		 BOOLEAN_VALUE (args[0]) : false;
 	RETURN_BOOL (Window::IsAxEnabled (options));
 }
 
@@ -378,7 +378,7 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 		{
 			window->SetHandle
 				// Set the handle if arg available
-				((uintptr) args[0]->NumberValue());
+				((uintptr) NUMBER_VALUE (args[0]));
 		}
 
 		REGISTER_ROBOT_TYPE;
@@ -396,7 +396,7 @@ void WindowWrap::New (const FunctionCallbackInfo<Value>& args)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void WindowWrap::Initialize (Handle<Object> exports)
+void WindowWrap::Initialize (Local<Object> exports)
 {
 	// Get the current isolated V8 instance
 	Isolate* isolate = Isolate::GetCurrent();
@@ -441,7 +441,6 @@ void WindowWrap::Initialize (Handle<Object> exports)
 	NODE_SET_METHOD ((Local<Template>) tpl,  "isAxEnabled", IsAxEnabled);
 
 	// Assign function template to our class creator
-	constructor.Reset (isolate, tpl->GetFunction());
-	exports->Set
-		   (NEW_STR ("Window"), tpl->GetFunction());
+	constructor.Reset (isolate, GET_FUNCTION (tpl));
+	OBJECT_SET (exports, NEW_STR ("Window"), GET_FUNCTION (tpl));
 }
